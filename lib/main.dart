@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyStatelessWidget());
+  runApp(MyApp());
 }
 
-//       3.6.3/1-3.6.3/3
+//       3.6.4.3-3.6.4.4
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -14,30 +14,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyFirstWidget(),
+      home: MyStatefullWidget(),
     );
   }
 }
 
-class MyFirstWidget extends StatelessWidget {
-  const MyFirstWidget({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text('Hello!'),
-      ),
-    );
-  }
-}
-//       3.6.3/4-3.6.3/7
+//       3.6.4.5
 
 class MyStatelessWidget extends StatelessWidget {
-  int counter = 1;
-
-  void buildCall() {
-    counter++;
+  buildCall() {
+    //return context.runtimeType;
   }
 
   @override
@@ -61,10 +47,9 @@ class MyStatelessWidget extends StatelessWidget {
                   ),
                   onPressed: () {
                     buildCall();
-                    print(counter);
+                    print("${context.runtimeType}");
                   },
                 ),
-                Text('Build was called $counter times'),
               ],
             ),
           ),
@@ -74,17 +59,15 @@ class MyStatelessWidget extends StatelessWidget {
   }
 }
 
-//       3.6.3/8
+//       3.6.4.6
 class MyStatefullWidget extends StatefulWidget {
   @override
   _MyStatefullWidgetState createState() => _MyStatefullWidgetState();
 }
 
 class _MyStatefullWidgetState extends State<MyStatefullWidget> {
-  int counter = 1;
-
-  void buildCounter() {
-    counter++;
+  buildCounter() {
+    return context.runtimeType;
   }
 
   @override
@@ -109,11 +92,10 @@ class _MyStatefullWidgetState extends State<MyStatefullWidget> {
                   onPressed: () {
                     setState(() {
                       buildCounter();
-                      print(counter);
+                      print("${context.runtimeType}");
                     });
                   },
                 ),
-                Text('Build was called $counter times'),
               ],
             ),
           ),
