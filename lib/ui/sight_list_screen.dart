@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:places/domain/sight.dart';
+import 'package:places/res/Text_styles.dart';
+import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/mocks.dart';
 
 class SightListScreen extends StatefulWidget {
-  SightListScreen({Key key}) : super(key: key);
+  final List<Sight> sights;
+
+  const SightListScreen({Key key, this.sights}) : super(key: key);
 
   @override
   _SightListScreenState createState() => _SightListScreenState();
@@ -15,40 +21,22 @@ class _SightListScreenState extends State<SightListScreen> {
         toolbarHeight: 210,
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: RichText(
+        title: Text(
+          'Список \nинтересных мест',
           textAlign: TextAlign.left,
-          text: TextSpan(
-            text: 'С',
-            style: TextStyle(
-              color: Colors.green,
-              fontSize: 40,
-              fontWeight: FontWeight.bold,
-            ),
+          style: titleText,
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
             children: [
-              TextSpan(
-                text: 'писок\n',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              TextSpan(
-                text: 'и',
-                style: TextStyle(
-                  color: Colors.yellow,
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              TextSpan(
-                text: 'нтересных мест',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              SightCard(sight: mocks[0]),
+              SizedBox(height: 16),
+              SightCard(sight: mocks[1]),
+              SizedBox(height: 16),
+              SightCard(sight: mocks[2]),
             ],
           ),
         ),
