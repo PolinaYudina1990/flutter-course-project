@@ -1,3 +1,5 @@
+import 'package:places/domain/details.dart';
+
 import 'domain/sight.dart';
 
 final List<Sight> mocks = [
@@ -26,3 +28,11 @@ final List<Sight> mocks = [
     type: 'природа',
   )
 ];
+
+final mocksDetails = SightDetails(
+  name: 'Пряности и радости',
+  details:
+      'Пряный вкус радостной жизни вместе с шеф-поваром Изо Дзандзава, благодаря которой у гостей ресторана есть возможность выбирать из двух направлений: европейского и восточного',
+  type: 'ресторан',
+  workHours: 'закрыто до 09:00',
+);

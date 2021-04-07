@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Text_styles.dart';
+import 'package:places/res/colors.dart';
 
 //import 'package:places/mocks.dart';
 
@@ -25,7 +26,7 @@ class SightCard extends StatelessWidget {
   Widget _descriptionBox() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: boxDescription,
         borderRadius: const BorderRadius.only(
           bottomLeft: const Radius.circular(15),
           bottomRight: const Radius.circular(15),
@@ -38,7 +39,7 @@ class SightCard extends StatelessWidget {
         children: [
           Text(
             '${sight.name}',
-            style: textReg16,
+            style: textReg16bold,
           ),
           SizedBox(
             height: 10,
@@ -59,7 +60,7 @@ class SightCard extends StatelessWidget {
           //image
           height: Height,
           decoration: BoxDecoration(
-            color: Colors.orange,
+            color: colorPrimary,
             borderRadius: const BorderRadius.only(
               topLeft: const Radius.circular(15),
               topRight: const Radius.circular(15),
@@ -77,7 +78,7 @@ class SightCard extends StatelessWidget {
           //!button to visit
           top: 16,
           right: 16,
-          child: Icon(Icons.favorite_outline, size: 30, color: Colors.white),
+          child: Icon(Icons.favorite_outline, size: 30, color: backgroundColor),
         ),
       ],
     );
