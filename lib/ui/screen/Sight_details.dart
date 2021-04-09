@@ -79,9 +79,7 @@ class SightDetail extends StatelessWidget {
                   height: 20,
                 ),
                 Row(
-                  //mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  //crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     PlanButton(),
                     SizedBox(

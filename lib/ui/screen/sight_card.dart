@@ -3,11 +3,7 @@ import 'package:places/domain/sight.dart';
 import 'package:places/res/Text_styles.dart';
 import 'package:places/res/colors.dart';
 
-//import 'package:places/mocks.dart';
-
 class SightCard extends StatelessWidget {
-  static const double Height = 100;
-
   final Sight sight;
 
   const SightCard({this.sight});
@@ -17,13 +13,16 @@ class SightCard extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        _imageBox(),
-        _descriptionBox(),
+        ImageBox(),
+        DescriptionBox(),
       ],
     );
   }
+}
 
-  Widget _descriptionBox() {
+class DescriptionBox extends SightCard {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: boxDescription,
@@ -35,7 +34,7 @@ class SightCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       width: double.infinity,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
             '${sight.name}',
@@ -52,12 +51,17 @@ class SightCard extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _imageBox() {
+class ImageBox extends SightCard {
+  static const double Height = 100;
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: [
         Container(
-          //image
+          //!image
           height: Height,
           decoration: BoxDecoration(
             color: colorPrimary,
