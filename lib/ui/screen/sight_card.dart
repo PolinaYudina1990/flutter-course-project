@@ -13,14 +13,21 @@ class SightCard extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        ImageBox(),
-        DescriptionBox(),
+        ImageBox(sight: sight),
+        DescriptionBox(sight: sight),
       ],
     );
   }
 }
 
-class DescriptionBox extends SightCard {
+class DescriptionBox extends StatelessWidget {
+  final Sight sight;
+
+  const DescriptionBox({
+    Key key,
+    @required this.sight,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,7 +60,14 @@ class DescriptionBox extends SightCard {
   }
 }
 
-class ImageBox extends SightCard {
+class ImageBox extends StatelessWidget {
+  final Sight sight;
+
+  const ImageBox({
+    Key key,
+    @required this.sight,
+  }) : super(key: key);
+
   static const double Height = 100;
 
   @override
