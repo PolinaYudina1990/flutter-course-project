@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Text_styles.dart';
 import 'package:places/res/colors.dart';
+import 'package:places/ui/screen/cardAppBar.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/mocks.dart';
 
@@ -18,16 +19,17 @@ class _SightListScreenState extends State<SightListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 210,
-        elevation: 0,
-        backgroundColor: appBarColor,
-        title: Text(
-          'Список \nинтересных мест',
-          textAlign: TextAlign.left,
-          style: titleText,
-        ),
-      ),
+      appBar: CustomAppBar(),
+      // AppBar(
+      //   toolbarHeight: 210,
+      //   elevation: 0,
+      //   backgroundColor: appBarColor,
+      //   title: Text(
+      //     'Список \nинтересных мест',
+      //     textAlign: TextAlign.left,
+      //     style: titleText,
+      //   ),
+      // ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
