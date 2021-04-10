@@ -41,7 +41,7 @@ class DescriptionBox extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       width: double.infinity,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             '${sight.name}',
