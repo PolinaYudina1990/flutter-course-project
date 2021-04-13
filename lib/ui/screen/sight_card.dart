@@ -75,10 +75,33 @@ class ImageBox extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          //!image
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: const Radius.circular(15),
+              topRight: const Radius.circular(15),
+            ),
+            child: Image.network(
+              '${sight.url}',
+              height: double.infinity,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes
+                        : null,
+                  ),
+                );
+              },
+            ),
+          ),
           height: Height,
           decoration: BoxDecoration(
-            color: colorPrimary,
+            color: backgroundColor,
             borderRadius: const BorderRadius.only(
               topLeft: const Radius.circular(15),
               topRight: const Radius.circular(15),
