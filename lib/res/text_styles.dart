@@ -22,3 +22,9 @@ final textReg15 = _text.copyWith(
   color: Colors.black87,
   fontSize: 15,
 );
+
+final textReg16Vis = _text.copyWith(
+    color: Colors.black87, fontSize: 16, fontWeight: FontWeight.bold);
+
+final textReg15green = _text.copyWith(
+    color: Colors.green[800], fontSize: 15, fontWeight: FontWeight.w400);
