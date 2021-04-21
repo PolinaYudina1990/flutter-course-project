@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
-import 'package:places/res/Text_styles.dart';
 import 'package:places/res/colors.dart';
 
 class SightCard extends StatelessWidget {
@@ -32,7 +31,7 @@ class DescriptionBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: boxDescription,
+        color: Theme.of(context).backgroundColor,
         borderRadius: const BorderRadius.only(
           bottomLeft: const Radius.circular(15),
           bottomRight: const Radius.circular(15),
@@ -45,14 +44,14 @@ class DescriptionBox extends StatelessWidget {
         children: [
           Text(
             '${sight.name}',
-            style: textReg16bold,
+            style: Theme.of(context).textTheme.headline5,
           ),
           SizedBox(
             height: 10,
           ),
           Text(
             '${sight.details}',
-            style: textReg15desc,
+            style: Theme.of(context).textTheme.subtitle2,
           ),
         ],
       ),
@@ -101,7 +100,6 @@ class ImageBox extends StatelessWidget {
           ),
           height: Height,
           decoration: BoxDecoration(
-            color: backgroundColor,
             borderRadius: const BorderRadius.only(
               topLeft: const Radius.circular(15),
               topRight: const Radius.circular(15),
@@ -113,13 +111,13 @@ class ImageBox extends StatelessWidget {
             left: 16,
             child: Text(
               '${sight.type}',
-              style: textReg14,
+              style: Theme.of(context).textTheme.bodyText2,
             )),
         Positioned(
           //!button to visit
           top: 16,
           right: 16,
-          child: Icon(Icons.favorite_outline, size: 30, color: backgroundColor),
+          child: Icon(Icons.favorite_outline, size: 30, color: iconColor),
         ),
       ],
     );

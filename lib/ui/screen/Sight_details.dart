@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/details.dart';
-
-import 'package:places/res/Text_styles.dart';
 import 'package:places/res/colors.dart';
 
 class SightDetail extends StatelessWidget {
@@ -47,7 +45,7 @@ class SightDetail extends StatelessWidget {
               left: 1,
               child: Container(
                 decoration: BoxDecoration(
-                  color: dividerColor,
+                  color: Theme.of(context).dividerColor,
                   borderRadius: const BorderRadius.all(
                     Radius.circular(3),
                   ),
@@ -69,23 +67,33 @@ class SightDetail extends StatelessWidget {
                 SizedBox(
                   height: 30,
                 ),
-                Text('${description.name}', style: textMedium20),
+                Text('${description.name}',
+                    style: Theme.of(context).textTheme.headline2),
                 SizedBox(
                   height: 10,
                 ),
                 Row(
                   children: [
-                    Text('${description.type}', style: textReg15bold),
+                    Text('${description.type}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5
+                            .copyWith(fontWeight: FontWeight.bold)),
                     SizedBox(
                       width: 30,
                     ),
-                    Text('${description.workHours}', style: textReg15desc),
+                    Text('${description.workHours}',
+                        style: Theme.of(context).textTheme.subtitle2),
                   ],
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                Text('${description.details}', style: textReg15),
+                Text('${description.details}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline5
+                        .copyWith(fontWeight: FontWeight.normal)),
                 SizedBox(
                   height: 30,
                 ),
@@ -93,7 +101,7 @@ class SightDetail extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                Divider(color: dividerColor),
+                Divider(color: primaryColor2),
                 SizedBox(
                   height: 20,
                 ),
@@ -125,7 +133,7 @@ class AppBarBackButton extends StatelessWidget {
       width: 40,
       height: 40,
       decoration: BoxDecoration(
-        color: backgroundColor,
+        color: lmBackgroundColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(5),
         ),
@@ -148,7 +156,7 @@ class NavigationButton extends StatelessWidget {
       height: 50,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: navButtonColor,
+        color: buttonColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(10),
         ),
@@ -157,7 +165,7 @@ class NavigationButton extends StatelessWidget {
         child: Text(
           'ПОСТРОИТЬ МАРШРУТ',
           style: TextStyle(
-            color: backgroundColor,
+            color: lmBackgroundColor,
             fontWeight: FontWeight.bold,
             fontSize: 17,
           ),
@@ -178,11 +186,15 @@ class PlanButton extends StatelessWidget {
       height: 40,
       child: Row(
         children: [
-          Icon(Icons.calendar_today, color: darkGrey),
+          Icon(Icons.calendar_today, color: planIcon),
           SizedBox(
             width: 5,
           ),
-          Text('Запланировать', style: textReg15desc)
+          Text('Запланировать',
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5
+                  .copyWith(fontWeight: FontWeight.normal, color: planIcon))
         ],
       ),
     );
@@ -200,11 +212,17 @@ class FavoriteButton extends StatelessWidget {
       height: 40,
       child: Row(
         children: [
-          Icon(Icons.favorite_border),
+          Icon(Icons.favorite_border, color: Theme.of(context).iconTheme.color),
           SizedBox(
             width: 5,
           ),
-          Text('В Избранное', style: textReg15)
+          Text(
+            'В Избранное',
+            style: Theme.of(context)
+                .textTheme
+                .headline5
+                .copyWith(fontWeight: FontWeight.normal),
+          )
         ],
       ),
     );

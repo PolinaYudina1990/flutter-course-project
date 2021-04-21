@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:places/res/colors.dart';
 import '../sight_list_screen.dart';
 import 'VisitingScreen.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key}) : super(key: key);
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -13,6 +10,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   TabController tabController;
+
+  var isDarkMode = false;
+  final Function changeTheme;
+  _HomeScreenState({this.changeTheme});
 
   @override
   void initState() {
@@ -43,19 +44,27 @@ class _HomeScreenState extends State<HomeScreen>
         onTap: (index) => tabController.animateTo(index),
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.library_books, color: dividerColor),
+            icon: Icon(
+              Icons.library_books,
+            ),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.map, color: dividerColor),
+            icon: Icon(
+              Icons.map,
+            ),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite, color: dividerColor),
+            icon: Icon(
+              Icons.favorite,
+            ),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings, color: dividerColor),
+            icon: Icon(
+              Icons.settings,
+            ),
             label: '',
           ),
         ],
