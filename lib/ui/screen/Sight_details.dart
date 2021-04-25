@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/details.dart';
 import 'package:places/res/colors.dart';
 
@@ -133,14 +134,16 @@ class AppBarBackButton extends StatelessWidget {
       width: 40,
       height: 40,
       decoration: BoxDecoration(
-        color: lmBackgroundColor,
+        color: Theme.of(context).backgroundColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(5),
         ),
       ),
       child: Center(
           child: IconButton(
-        onPressed: () {},
+        onPressed: () {
+          print('button "back" pressed ');
+        },
         icon: Icon(Icons.keyboard_arrow_left),
       )),
     );
@@ -149,28 +152,32 @@ class AppBarBackButton extends StatelessWidget {
 
 class NavigationButton extends StatelessWidget {
   const NavigationButton({Key key}) : super(key: key);
+  final String iconName = 'lib/res/icons/route.svg';
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: buttonColor,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
+    return TextButton.icon(
+      style: TextButton.styleFrom(
+        backgroundColor: buttonColor,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+      ),
+      icon: SvgPicture.asset(
+        iconName,
+        width: 30,
+        color: iconColor,
+      ),
+      label: Text(
+        'ПОСТРОИТЬ МАРШРУТ',
+        style: TextStyle(
+          color: iconColor,
+          fontWeight: FontWeight.bold,
+          fontSize: 17,
         ),
       ),
-      child: Center(
-        child: Text(
-          'ПОСТРОИТЬ МАРШРУТ',
-          style: TextStyle(
-            color: lmBackgroundColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
-          ),
-        ),
-      ),
+      onPressed: () {
+        print('button "ПОСТРОИТЬ МАРШРУТ" pressed ');
+      },
     );
   }
 }
@@ -182,8 +189,11 @@ class PlanButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 40,
+    return TextButton(
+      //height: 40,
+      onPressed: () {
+        print('button "plan" pressed ');
+      },
       child: Row(
         children: [
           Icon(Icons.calendar_today, color: planIcon),
@@ -208,11 +218,17 @@ class FavoriteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 40,
+    return TextButton(
+      onPressed: () {
+        print('button "put in favorite" pressed');
+      },
       child: Row(
         children: [
-          Icon(Icons.favorite_border, color: Theme.of(context).iconTheme.color),
+          SvgPicture.asset(
+            'lib/res/icons/heart.svg',
+            width: 25,
+            color: Theme.of(context).iconTheme.color,
+          ),
           SizedBox(
             width: 5,
           ),

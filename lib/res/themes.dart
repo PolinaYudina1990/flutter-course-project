@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:places/res/text_styles.dart';
-
 import 'colors.dart';
 
 final lightTheme = ThemeData(
@@ -40,7 +39,6 @@ final darkTheme = ThemeData(
   backgroundColor: dmBoxDescription,
   dividerColor: dmDividerColor,
   canvasColor: dmBackgroundColor,
-  //iconTheme: IconThemeData(color: dmIconColor),
   tabBarTheme: TabBarTheme(
     labelColor: dmBackgroundColor,
     unselectedLabelColor: dmTabBarUnselected,
