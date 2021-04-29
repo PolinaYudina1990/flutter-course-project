@@ -36,4 +36,9 @@ const String titleSightListScreen = 'Список \nинтересных мес�
 //FilterScreen
 
     actionAppBar = 'Отмена',
-    distanceTitle = 'Расстояние';
+    distanceTitle = 'Расстояние',
+    categories = 'Категории',
+
+//SettingsScreen
+    tutorial = 'Смотреть туториал',
+    settings = 'Настройки';

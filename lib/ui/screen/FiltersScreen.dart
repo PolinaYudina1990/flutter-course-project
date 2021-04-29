@@ -20,9 +20,6 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   RangeValues distance = RangeValues(100, 10000);
 
-  // final Sight sight;
-  // _FilterScreenState({this.sight});
-
   List<FilterType> category = [
     FilterType(hotel, 'Отель', false),
     FilterType(restaurant, 'Ресторан', false),
@@ -31,7 +28,6 @@ class _FilterScreenState extends State<FilterScreen> {
     FilterType(museum, 'Музей', false),
     FilterType(caffe, 'Кафе', false),
   ];
-  //List<FilterType> _categories;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +65,7 @@ class _FilterScreenState extends State<FilterScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                'Категории',
+                categories,
                 style: Theme.of(context)
                     .textTheme
                     .headline5
@@ -80,10 +76,7 @@ class _FilterScreenState extends State<FilterScreen> {
               child: GridView.count(
                   primary: false,
                   padding: const EdgeInsets.all(20),
-                  //crossAxisSpacing: 20,
-                  //mainAxisSpacing: 20,
                   crossAxisCount: 3,
-                  //childAspectRatio: 1,
                   children: category
                       .map((element) => WidgetCategory(element))
                       .toList()),
@@ -213,7 +206,6 @@ class _WidgetCategoryState extends State<WidgetCategory> {
                 borderRadius: BorderRadius.circular(100.0),
                 onTap: () {
                   setState(() {
-                    //toggle();
                     FilterScreen.of(context).selectCategory(widget.filterType);
                   });
                 },
