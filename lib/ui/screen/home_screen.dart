@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen>
         controller: tabController,
         children: [
           SightListScreen(),
-          Center(child: Text('Here will be navigator screen')),
+          Center(child: Text('Here will be map')),
           FavoriteScreen(),
           Center(child: Text('Here will be settings')),
         ],
