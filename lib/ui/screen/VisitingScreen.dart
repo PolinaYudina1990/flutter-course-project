@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 import '../../mocks.dart';
 
@@ -21,7 +22,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           elevation: 0,
           centerTitle: true,
           title: Text(
-            'Избранное',
+            titleVisitedScreen,
             style: Theme.of(context).textTheme.headline4,
           ),
           bottom: PreferredSize(
@@ -39,12 +40,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                     tabs: [
                       Tab(
                         child: Text(
-                          'Хочу посетить',
+                          tabBar1,
                         ),
                       ),
                       Tab(
                         child: Text(
-                          'Посетил',
+                          tabBar2,
                         ),
                       ),
                     ]),
