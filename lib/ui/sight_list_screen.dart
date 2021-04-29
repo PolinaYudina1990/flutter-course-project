@@ -67,15 +67,24 @@ class _SightListScreenState extends State<SightListScreen> {
                 ),
               ),
               SizedBox(height: 30),
-              SightCard(sight: mocks[0]),
-              SizedBox(height: 16),
-              SightCard(sight: mocks[1]),
-              SizedBox(height: 16),
-              SightCard(sight: mocks[2]),
+              sightList(),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+Widget sightList() {
+  return Column(children: [
+    ListView.separated(
+      separatorBuilder: (BuildContext context, int index) =>
+          SizedBox(height: 30),
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: mocks.length,
+      itemBuilder: (context, index) => SightCard(sight: mocks[index]),
+    ),
+  ]);
 }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:places/domain/details.dart';
+import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 
 class SightDetail extends StatelessWidget {
-  final SightDetails description;
-  const SightDetail({this.description});
+  final Sight sight;
+  const SightDetail({this.sight});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +19,10 @@ class SightDetail extends StatelessWidget {
           children: [
             Container(
               child: Image.network(
-                '${description.url}',
+                '${sight.url}',
                 height: double.infinity,
                 width: double.infinity,
-                fit: BoxFit.fitWidth,
+                fit: BoxFit.fill,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
 
@@ -69,14 +69,14 @@ class SightDetail extends StatelessWidget {
                 SizedBox(
                   height: 30,
                 ),
-                Text('${description.name}',
+                Text('${sight.name}',
                     style: Theme.of(context).textTheme.headline2),
                 SizedBox(
                   height: 10,
                 ),
                 Row(
                   children: [
-                    Text('${description.type}',
+                    Text('${sight.type}',
                         style: Theme.of(context)
                             .textTheme
                             .headline5
@@ -84,14 +84,14 @@ class SightDetail extends StatelessWidget {
                     SizedBox(
                       width: 30,
                     ),
-                    Text('${description.workHours}',
+                    Text('${sight.workHours}',
                         style: Theme.of(context).textTheme.subtitle2),
                   ],
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                Text('${description.details}',
+                Text('${sight.details}',
                     style: Theme.of(context)
                         .textTheme
                         .headline5

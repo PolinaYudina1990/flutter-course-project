@@ -4,20 +4,55 @@ import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 
+import '../../mocks.dart';
+import 'Sight_details.dart';
+
 class SightCard extends StatelessWidget {
   final Sight sight;
 
-  const SightCard({this.sight});
+  const SightCard({Key key, this.sight}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ImageBox(sight: sight),
-        DescriptionBox(sight: sight),
-      ],
-    );
+    return Stack(children: [
+      Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ImageBox(sight: sight),
+          DescriptionBox(sight: sight),
+          // Positioned.fill(
+          //   child: _cardClickArea(context),
+          // ),
+        ],
+      ),
+      Positioned.fill(
+        child: Material(
+          type: MaterialType.transparency,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SightDetail(sight: sight)));
+            },
+          ),
+        ),
+      ),
+      Positioned(
+        top: 10,
+        right: 10,
+        child: InkWell(
+          onTap: () {
+            print('button "add to fav" pressed');
+          },
+          child: SvgPicture.asset(
+            favorite,
+            width: 25,
+            color: iconColor,
+          ),
+        ),
+      ),
+    ]);
   }
 }
 
@@ -46,6 +81,7 @@ class DescriptionBox extends StatelessWidget {
         children: [
           Text(
             '${sight.name}',
+            maxLines: 1,
             style: Theme.of(context).textTheme.headline5,
           ),
           SizedBox(
@@ -53,6 +89,7 @@ class DescriptionBox extends StatelessWidget {
           ),
           Text(
             '${sight.details}',
+            maxLines: 2,
             style: Theme.of(context).textTheme.subtitle2,
           ),
         ],
@@ -115,20 +152,6 @@ class ImageBox extends StatelessWidget {
               '${sight.type}',
               style: Theme.of(context).textTheme.bodyText2,
             )),
-        Positioned(
-          top: 0,
-          right: 0,
-          child: IconButton(
-            onPressed: () {
-              print('button "add to fav" pressed');
-            },
-            icon: SvgPicture.asset(
-              favorite,
-              width: 25,
-              color: iconColor,
-            ),
-          ),
-        ),
       ],
     );
   }

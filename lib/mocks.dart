@@ -1,5 +1,3 @@
-import 'package:places/domain/details.dart';
-
 import 'domain/sight.dart';
 
 final List<Sight> mocks = [
@@ -16,7 +14,8 @@ final List<Sight> mocks = [
     workHours: 'закрыто до 09:00',
     coordinatePoint: CoordinatePoint(52.532044, 107.087643),
     url: 'https://i1.photo.2gis.com/images/branch/31/4362862183976801_9315.jpg',
-    details: 'Кафе, Европейская кухня',
+    details:
+        'Пряный вкус радостной жизни вместе с шеф-поваром Изо Дзандзава, благодаря которой у гостей ресторана есть возможность выбирать из двух направлений: европейского и восточного',
     type: 'Кафе',
   ),
   Sight(
@@ -30,11 +29,11 @@ final List<Sight> mocks = [
   )
 ];
 
-final mocksDetails = SightDetails(
-  name: 'Пряности и радости',
-  url: 'https://i1.photo.2gis.com/images/branch/31/4362862183976801_9315.jpg',
-  details:
-      'Пряный вкус радостной жизни вместе с шеф-поваром Изо Дзандзава, благодаря которой у гостей ресторана есть возможность выбирать из двух направлений: европейского и восточного',
-  type: 'ресторан',
-  workHours: 'закрыто до 09:00',
-);
+// final mocksDetails = SightDetails(
+//   name: 'Пряности и радости',
+//   url: 'https://i1.photo.2gis.com/images/branch/31/4362862183976801_9315.jpg',
+//   details:
+//       'Пряный вкус радостной жизни вместе с шеф-поваром Изо Дзандзава, благодаря которой у гостей ресторана есть возможность выбирать из двух направлений: европейского и восточного',
+//   type: 'ресторан',
+//   workHours: 'закрыто до 09:00',
+// );
