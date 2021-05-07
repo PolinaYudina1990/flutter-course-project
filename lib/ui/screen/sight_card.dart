@@ -3,8 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
-
-import '../../mocks.dart';
 import 'Sight_details.dart';
 
 class SightCard extends StatelessWidget {
@@ -20,9 +18,6 @@ class SightCard extends StatelessWidget {
         children: [
           ImageBox(sight: sight),
           DescriptionBox(sight: sight),
-          // Positioned.fill(
-          //   child: _cardClickArea(context),
-          // ),
         ],
       ),
       Positioned.fill(
@@ -149,7 +144,7 @@ class ImageBox extends StatelessWidget {
             top: 16,
             left: 16,
             child: Text(
-              '${sight.type}',
+              '${sight.titleType}',
               style: Theme.of(context).textTheme.bodyText2,
             )),
       ],

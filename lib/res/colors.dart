@@ -6,6 +6,7 @@ const Color primaryColor = Colors.white,
     planIcon = Color(0xFF757575),
     iconColor = Colors.white,
     greenLight = Color(0xFF81C784),
+    greenYellow = Color(0xFF9CCC65),
     buttonColor = Colors.green;
 
 //for Light Theme

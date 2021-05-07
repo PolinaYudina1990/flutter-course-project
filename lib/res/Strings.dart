@@ -1,18 +1,19 @@
 //SightListScreen
 
 const String titleSightListScreen = 'Список \nинтересных мест',
+    addButtonName = 'НОВОЕ МЕСТО',
 
 //svg Icons
     filterIcon = 'lib/res/icons/filter.svg',
     hintText = 'Поиск',
     favorite = 'lib/res/icons/heart.svg',
     navigation = 'lib/res/icons/route.svg',
-    caffe = 'lib/res/icons/caffe.svg',
-    hotel = 'lib/res/icons/hotel.svg',
-    restaurant = 'lib/res/icons/restaurant.svg',
-    park = 'lib/res/icons/park.svg',
-    museum = 'lib/res/icons/museum.svg',
-    particular = 'lib/res/icons/particular.svg',
+    caffeIcon = 'lib/res/icons/caffe.svg',
+    hotelIcon = 'lib/res/icons/hotel.svg',
+    restaurantIcon = 'lib/res/icons/restaurant.svg',
+    parkIcon = 'lib/res/icons/park.svg',
+    museumIcon = 'lib/res/icons/museum.svg',
+    particularIcon = 'lib/res/icons/particular.svg',
     tickIcon = 'lib/res/icons/checked.svg',
 
 //SightDetail.dart
@@ -37,7 +38,23 @@ const String titleSightListScreen = 'Список \nинтересных мес�
 
     actionAppBar = 'Отмена',
     distanceTitle = 'Расстояние',
-    categories = 'Категории',
+    categoriesTitle = 'Категории',
+
+//AddSightScreen
+    titleAddSight = 'Новое место',
+    categoryTitle = 'КАТЕГОРИЯ',
+    nameTitle = 'НАЗВАНИЕ',
+    point1Title = 'ШИРОТА',
+    point2Title = 'ДОЛГОТА',
+    chooseOnMap = 'Указать на карте',
+    descriptionTitle = 'ОПИСАНИЕ',
+    showOnMap = 'Указать на карте',
+
+// AddCategoryScreen
+    titleAddCategory = 'Категория',
+
+// SelectCategoryScreen
+    buttonSave = 'СОХРАНИТЬ',
 
 //SettingsScreen
     tutorial = 'Смотреть туториал',

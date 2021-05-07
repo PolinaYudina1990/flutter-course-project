@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:places/domain/categories.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
@@ -8,7 +9,8 @@ import 'dart:math' as Math;
 import '../../mocks.dart';
 
 class FilterScreen extends StatefulWidget {
-  FilterScreen({Key key}) : super(key: key);
+  final List<FilterType> categories;
+  FilterScreen({this.categories});
 
   @override
   _FilterScreenState createState() => _FilterScreenState();
@@ -19,15 +21,6 @@ class FilterScreen extends StatefulWidget {
 
 class _FilterScreenState extends State<FilterScreen> {
   RangeValues distance = RangeValues(100, 10000);
-
-  List<FilterType> category = [
-    FilterType(hotel, 'Отель', false),
-    FilterType(restaurant, 'Ресторан', false),
-    FilterType(particular, 'Особое место', false),
-    FilterType(park, 'Парк', false),
-    FilterType(museum, 'Музей', false),
-    FilterType(caffe, 'Кафе', false),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +37,7 @@ class _FilterScreenState extends State<FilterScreen> {
             TextButton(
                 onPressed: () {
                   setState(() {
-                    category.forEach((element) {
+                    categories.forEach((element) {
                       element.isSelected = false;
                     });
                   });
@@ -65,7 +58,7 @@ class _FilterScreenState extends State<FilterScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                categories,
+                categoriesTitle,
                 style: Theme.of(context)
                     .textTheme
                     .headline5
@@ -77,7 +70,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   primary: false,
                   padding: const EdgeInsets.all(20),
                   crossAxisCount: 3,
-                  children: category
+                  children: categories
                       .map((element) => WidgetCategory(element))
                       .toList()),
             ),
@@ -157,7 +150,7 @@ class _FilterScreenState extends State<FilterScreen> {
 
   int countPlaceInRange() {
     final selectedTypes = [
-      for (var category in category)
+      for (var category in categories)
         if (category.isSelected) category.title,
     ];
     int result = 0;
@@ -256,17 +249,5 @@ class _WidgetCategoryState extends State<WidgetCategory> {
         ),
       ],
     );
-  }
-}
-
-class FilterType {
-  String icon;
-  String title;
-  bool isSelected;
-
-  FilterType(this.icon, this.title, this.isSelected);
-
-  void select() {
-    isSelected = !isSelected;
   }
 }
