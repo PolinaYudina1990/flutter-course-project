@@ -1,6 +1,6 @@
 //SightListScreen
 
-const String titleSightListScreen = 'Список \nинтересных мест',
+const String titleSightListScreen = 'Список интересных мест',
     addButtonName = 'НОВОЕ МЕСТО',
 
 //svg Icons
@@ -15,6 +15,7 @@ const String titleSightListScreen = 'Список \nинтересных мес�
     museumIcon = 'lib/res/icons/museum.svg',
     particularIcon = 'lib/res/icons/particular.svg',
     tickIcon = 'lib/res/icons/checked.svg',
+    closeIcon = 'lib/res/icons/close-circle.svg',
 
 //SightDetail.dart
     buildNavigation = 'ПОСТРОИТЬ МАРШРУТ',
@@ -55,6 +56,12 @@ const String titleSightListScreen = 'Список \nинтересных мес�
 
 // SelectCategoryScreen
     buttonSave = 'СОХРАНИТЬ',
+
+// SightSearchScreen
+    emptyScreenText1 = 'Ничего не найдено.',
+    emptyScreenText2 = 'Попробуйте изменить параметры поиска',
+    historyScreenText1 = 'ВЫ ИСКАЛИ',
+    historyScreenText2 = 'Очистить историю',
 
 //SettingsScreen
     tutorial = 'Смотреть туториал',

@@ -4,14 +4,16 @@ class Sight {
   final CoordinatePoint coordinatePoint;
   final String url;
   final String details;
-  final String type;
+  final SightType type;
+  final String titleType;
   Sight(
       {this.name,
       this.workHours,
       this.coordinatePoint,
       this.url,
       this.details,
-      this.type});
+      this.type,
+      this.titleType});
 }
 
 class CoordinatePoint {
@@ -20,3 +22,5 @@ class CoordinatePoint {
 
   CoordinatePoint(this.lat, this.lng);
 }
+
+enum SightType { hotel, restourant, particular, park, museum, cafe }
