@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 
 class SightCard extends StatelessWidget {
@@ -122,7 +123,7 @@ class ImageBox extends StatelessWidget {
               print('button "add to fav" pressed');
             },
             icon: SvgPicture.asset(
-              'lib/res/icons/heart.svg',
+              favorite,
               width: 25,
               color: iconColor,
             ),

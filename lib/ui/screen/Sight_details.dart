@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/details.dart';
+import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 
 class SightDetail extends StatelessWidget {
@@ -152,7 +153,6 @@ class AppBarBackButton extends StatelessWidget {
 
 class NavigationButton extends StatelessWidget {
   const NavigationButton({Key key}) : super(key: key);
-  final String iconName = 'lib/res/icons/route.svg';
 
   @override
   Widget build(BuildContext context) {
@@ -163,12 +163,12 @@ class NavigationButton extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(10))),
       ),
       icon: SvgPicture.asset(
-        iconName,
+        navigation,
         width: 30,
         color: iconColor,
       ),
       label: Text(
-        'ПОСТРОИТЬ МАРШРУТ',
+        buildNavigation,
         style: TextStyle(
           color: iconColor,
           fontWeight: FontWeight.bold,
@@ -190,7 +190,6 @@ class PlanButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      //height: 40,
       onPressed: () {
         print('button "plan" pressed ');
       },
@@ -200,7 +199,7 @@ class PlanButton extends StatelessWidget {
           SizedBox(
             width: 5,
           ),
-          Text('Запланировать',
+          Text(toPlan,
               style: Theme.of(context)
                   .textTheme
                   .headline5
@@ -225,7 +224,7 @@ class FavoriteButton extends StatelessWidget {
       child: Row(
         children: [
           SvgPicture.asset(
-            'lib/res/icons/heart.svg',
+            favorite,
             width: 25,
             color: Theme.of(context).iconTheme.color,
           ),
@@ -233,7 +232,7 @@ class FavoriteButton extends StatelessWidget {
             width: 5,
           ),
           Text(
-            'В Избранное',
+            toFavorite,
             style: Theme.of(context)
                 .textTheme
                 .headline5
