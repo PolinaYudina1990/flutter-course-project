@@ -7,7 +7,7 @@ final List<Sight> mocks = [
     name: 'Воронежский областной краеведческий музей',
     lat: 51.666647,
     lon: 39.193374,
-    url: '1',
+    url: 'https://susanintop.com/wp-content/uploads/2018/11/422217.jpg',
     details: 'Один из ведущих музеев Воронежа',
     type: 'музеи',
   ),
@@ -15,7 +15,7 @@ final List<Sight> mocks = [
     name: 'Remy Coffee',
     lat: 45.666647,
     lon: 32.193374,
-    url: '2',
+    url: 'https://i1.photo.2gis.com/images/branch/31/4362862183976801_9315.jpg',
     details: 'Кафе, Европейская кухня',
     type: 'кафе',
   ),
@@ -23,7 +23,8 @@ final List<Sight> mocks = [
     name: 'Кривоборье',
     lat: 52.026349,
     lon: 39.185882,
-    url: '3',
+    url:
+        'https://s3.nat-geo.ru/images/2019/9/14/a2b870a6af174201bad38a109ca4bb85.max-2500x1500.jpg',
     details: 'Деревня в Рамонском районе Воронежской области',
     type: 'природа',
   )
