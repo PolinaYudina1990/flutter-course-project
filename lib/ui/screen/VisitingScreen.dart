@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 import '../../mocks.dart';
 
@@ -21,7 +22,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           elevation: 0,
           centerTitle: true,
           title: Text(
-            'Избранное',
+            titleVisitedScreen,
             style: Theme.of(context).textTheme.headline4,
           ),
           bottom: PreferredSize(
@@ -39,12 +40,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                     tabs: [
                       Tab(
                         child: Text(
-                          'Хочу посетить',
+                          tabBar1,
                         ),
                       ),
                       Tab(
                         child: Text(
-                          'Посещенные места',
+                          tabBar2,
                         ),
                       ),
                     ]),
@@ -128,16 +129,26 @@ class FavoriteWishVisit extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyText2,
                   )),
               Positioned(
-                //!button calendar plan
-                top: 16,
-                right: 50,
-                child: Icon(Icons.date_range, size: 28, color: iconColor),
+                //!button share
+                top: 1,
+                right: 40,
+                child: IconButton(
+                  icon: Icon(Icons.share, size: 28, color: iconColor),
+                  onPressed: () {
+                    print('button "share" pressed');
+                  },
+                ),
               ),
               Positioned(
                 //!button close
-                top: 16,
-                right: 16,
-                child: Icon(Icons.close, size: 30, color: iconColor),
+                top: 0,
+                right: 0,
+                child: IconButton(
+                  icon: Icon(Icons.close, size: 30, color: iconColor),
+                  onPressed: () {
+                    print('button "close" pressed');
+                  },
+                ),
               ),
             ],
           ),
@@ -245,15 +256,25 @@ class FavoriteVisited extends StatelessWidget {
                   )),
               Positioned(
                 //!button share
-                top: 16,
-                right: 50,
-                child: Icon(Icons.share, size: 28, color: iconColor),
+                top: 1,
+                right: 40,
+                child: IconButton(
+                  icon: Icon(Icons.share, size: 28, color: iconColor),
+                  onPressed: () {
+                    print('button "share" pressed');
+                  },
+                ),
               ),
               Positioned(
                 //!button close
-                top: 16,
-                right: 16,
-                child: Icon(Icons.close, size: 30, color: iconColor),
+                top: 0,
+                right: 0,
+                child: IconButton(
+                  icon: Icon(Icons.close, size: 30, color: iconColor),
+                  onPressed: () {
+                    print('button "close" pressed');
+                  },
+                ),
               ),
             ],
           ),

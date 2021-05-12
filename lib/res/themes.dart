@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:places/res/text_styles.dart';
-
 import 'colors.dart';
 
 final lightTheme = ThemeData(
@@ -32,6 +31,14 @@ final lightTheme = ThemeData(
     bodyText1: textReg15.copyWith(color: lmBody1Color),
     bodyText2: textReg14.copyWith(color: lmBody2Color),
   ),
+  sliderTheme: SliderThemeData(
+    activeTrackColor: buttonColor,
+    inactiveTrackColor: planIcon,
+    thumbColor: primaryColor,
+    overlayColor: planIcon,
+    overlayShape: RoundSliderOverlayShape(overlayRadius: 10),
+    trackHeight: 1,
+  ),
 );
 
 final darkTheme = ThemeData(
@@ -40,7 +47,6 @@ final darkTheme = ThemeData(
   backgroundColor: dmBoxDescription,
   dividerColor: dmDividerColor,
   canvasColor: dmBackgroundColor,
-  //iconTheme: IconThemeData(color: dmIconColor),
   tabBarTheme: TabBarTheme(
     labelColor: dmBackgroundColor,
     unselectedLabelColor: dmTabBarUnselected,
@@ -63,5 +69,13 @@ final darkTheme = ThemeData(
     subtitle2: textReg15.copyWith(color: dmsubtitle2Color),
     bodyText1: textReg15.copyWith(color: dmBody1Color),
     bodyText2: textReg14.copyWith(color: dmBody2Color),
+  ),
+  sliderTheme: SliderThemeData(
+    activeTrackColor: buttonColor,
+    inactiveTrackColor: planIcon,
+    thumbColor: primaryColor,
+    overlayColor: planIcon,
+    overlayShape: RoundSliderOverlayShape(overlayRadius: 10),
+    trackHeight: 1,
   ),
 );

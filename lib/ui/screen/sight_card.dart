@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 
 class SightCard extends StatelessWidget {
@@ -114,10 +116,18 @@ class ImageBox extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyText2,
             )),
         Positioned(
-          //!button to visit
-          top: 16,
-          right: 16,
-          child: Icon(Icons.favorite_outline, size: 30, color: iconColor),
+          top: 0,
+          right: 0,
+          child: IconButton(
+            onPressed: () {
+              print('button "add to fav" pressed');
+            },
+            icon: SvgPicture.asset(
+              favorite,
+              width: 25,
+              color: iconColor,
+            ),
+          ),
         ),
       ],
     );

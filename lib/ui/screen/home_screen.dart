@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../sight_list_screen.dart';
+import 'SettingsScreen.dart';
 import 'VisitingScreen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,10 +11,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   TabController tabController;
-
-  var isDarkMode = false;
-  final Function changeTheme;
-  _HomeScreenState({this.changeTheme});
 
   @override
   void initState() {
@@ -32,9 +29,9 @@ class _HomeScreenState extends State<HomeScreen>
         controller: tabController,
         children: [
           SightListScreen(),
-          Center(child: Text('Here will be navigator screen')),
+          Center(child: Text('Here will be map')),
           FavoriteScreen(),
-          Center(child: Text('Here will be settings')),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
