@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/colors.dart';
-import 'package:places/res/text_styles.dart';
-
 import '../../mocks.dart';
 
 class FavoriteScreen extends StatefulWidget {
@@ -21,11 +19,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         appBar: AppBar(
           toolbarHeight: 150,
           elevation: 0,
-          backgroundColor: appBarColor,
           centerTitle: true,
           title: Text(
             'Избранное',
-            style: textMedium20,
+            style: Theme.of(context).textTheme.headline4,
           ),
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(150.0),
@@ -33,18 +30,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.grey[300],
+                    color: Theme.of(context).backgroundColor,
                     borderRadius: BorderRadius.circular(30)),
                 child: TabBar(
                     indicatorSize: TabBarIndicatorSize.tab,
-                    labelStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                    unselectedLabelColor: Colors.grey[600],
-                    indicator: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Color(0xFF3B3E6B)),
+                    labelStyle:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     tabs: [
                       Tab(
                         child: Text(
@@ -122,7 +113,7 @@ class FavoriteWishVisit extends StatelessWidget {
                 ),
                 height: Height,
                 decoration: BoxDecoration(
-                  color: backgroundColor,
+                  color: Theme.of(context).backgroundColor,
                   borderRadius: const BorderRadius.only(
                     topLeft: const Radius.circular(15),
                     topRight: const Radius.circular(15),
@@ -134,25 +125,25 @@ class FavoriteWishVisit extends StatelessWidget {
                   left: 16,
                   child: Text(
                     '${sight.type}',
-                    style: textReg14,
+                    style: Theme.of(context).textTheme.bodyText2,
                   )),
               Positioned(
                 //!button calendar plan
                 top: 16,
                 right: 50,
-                child: Icon(Icons.date_range, size: 28, color: backgroundColor),
+                child: Icon(Icons.date_range, size: 28, color: iconColor),
               ),
               Positioned(
                 //!button close
                 top: 16,
                 right: 16,
-                child: Icon(Icons.close, size: 30, color: backgroundColor),
+                child: Icon(Icons.close, size: 30, color: iconColor),
               ),
             ],
           ),
           Container(
             decoration: BoxDecoration(
-              color: boxDescription,
+              color: Theme.of(context).backgroundColor,
               borderRadius: const BorderRadius.only(
                 bottomLeft: const Radius.circular(15),
                 bottomRight: const Radius.circular(15),
@@ -167,21 +158,21 @@ class FavoriteWishVisit extends StatelessWidget {
                 Text(
                   '${sight.name}',
                   maxLines: 2,
-                  style: textReg16Vis,
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 SizedBox(
                   height: 5,
                 ),
                 Text(
                   'Запланировано на 12 окт.2020',
-                  style: textReg15green,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 SizedBox(
                   height: 5,
                 ),
                 Text(
                   '${sight.workHours}',
-                  style: textReg15desc,
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
               ],
             ),
@@ -238,7 +229,7 @@ class FavoriteVisited extends StatelessWidget {
                 ),
                 height: Height,
                 decoration: BoxDecoration(
-                  color: backgroundColor,
+                  color: Theme.of(context).backgroundColor,
                   borderRadius: const BorderRadius.only(
                     topLeft: const Radius.circular(15),
                     topRight: const Radius.circular(15),
@@ -250,25 +241,25 @@ class FavoriteVisited extends StatelessWidget {
                   left: 16,
                   child: Text(
                     '${sight.type}',
-                    style: textReg14,
+                    style: Theme.of(context).textTheme.bodyText2,
                   )),
               Positioned(
                 //!button share
                 top: 16,
                 right: 50,
-                child: Icon(Icons.share, size: 28, color: backgroundColor),
+                child: Icon(Icons.share, size: 28, color: iconColor),
               ),
               Positioned(
                 //!button close
                 top: 16,
                 right: 16,
-                child: Icon(Icons.close, size: 30, color: backgroundColor),
+                child: Icon(Icons.close, size: 30, color: iconColor),
               ),
             ],
           ),
           Container(
             decoration: BoxDecoration(
-              color: boxDescription,
+              color: Theme.of(context).backgroundColor,
               borderRadius: const BorderRadius.only(
                 bottomLeft: const Radius.circular(15),
                 bottomRight: const Radius.circular(15),
@@ -283,21 +274,21 @@ class FavoriteVisited extends StatelessWidget {
                 Text(
                   '${sight.name}',
                   maxLines: 2,
-                  style: textReg16Vis,
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 SizedBox(
                   height: 5,
                 ),
                 Text(
                   'Цель достигнута 12 окт. 2020',
-                  style: textReg15desc,
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
                 SizedBox(
                   height: 5,
                 ),
                 Text(
                   '${sight.workHours}',
-                  style: textReg15desc,
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
               ],
             ),
