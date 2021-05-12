@@ -28,3 +28,5 @@ final List<Sight> mocks = [
     titleType: 'Особое место',
   )
 ];
+
+List<String> history = [];

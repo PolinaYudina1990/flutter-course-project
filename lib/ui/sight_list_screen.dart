@@ -5,6 +5,7 @@ import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 import 'package:places/ui/screen/AddSightScree.dart';
 import 'package:places/ui/screen/FiltersScreen.dart';
+import 'package:places/ui/screen/SightSearchScreen.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/mocks.dart';
 
@@ -22,11 +23,11 @@ class _SightListScreenState extends State<SightListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 180,
         elevation: 0,
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
         title: Text(
           titleSightListScreen,
-          textAlign: TextAlign.left,
           style: Theme.of(context).textTheme.headline3,
         ),
       ),
@@ -34,7 +35,8 @@ class _SightListScreenState extends State<SightListScreen> {
         children: [
           SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding:
+                  const EdgeInsets.only(left: 16.0, right: 16.0, top: 30.0),
               child: Stack(
                 children: [
                   Column(
@@ -56,19 +58,19 @@ class _SightListScreenState extends State<SightListScreen> {
       ),
     );
   }
-}
 
-Widget sightList() {
-  return Column(children: [
-    ListView.separated(
-      separatorBuilder: (BuildContext context, int index) =>
-          SizedBox(height: 30),
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: mocks.length,
-      itemBuilder: (context, index) => SightCard(sight: mocks[index]),
-    ),
-  ]);
+  Widget sightList() {
+    return Column(children: [
+      ListView.separated(
+        separatorBuilder: (BuildContext context, int index) =>
+            SizedBox(height: 30),
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: mocks.length,
+        itemBuilder: (context, index) => SightCard(sight: mocks[index]),
+      ),
+    ]);
+  }
 }
 
 class SearchField extends StatefulWidget {
@@ -81,36 +83,46 @@ class SearchField extends StatefulWidget {
 class _SearchFieldState extends State<SearchField> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).backgroundColor,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: TextField(
-        textAlign: TextAlign.start,
-        style: Theme.of(context).textTheme.headline5,
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.search,
-            color: planIcon,
-          ),
-          suffixIcon: IconButton(
-            icon: SvgPicture.asset(
-              filterIcon,
-              width: 20,
-              color: buttonColor,
+    return Stack(alignment: Alignment.centerRight, children: [
+      Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).backgroundColor,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: TextField(
+          readOnly: true,
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SearchScreen()));
+          },
+          textAlign: TextAlign.start,
+          style: Theme.of(context).textTheme.headline5,
+          decoration: InputDecoration(
+            prefixIcon: Icon(
+              Icons.search,
+              color: planIcon,
             ),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => FilterScreen()));
-              //! FilterButton
-            },
+            border: InputBorder.none,
+            hintText: hintText,
           ),
-          border: InputBorder.none,
-          hintText: hintText,
         ),
       ),
-    );
+      IconButton(
+        icon: SvgPicture.asset(
+          filterIcon,
+          width: 20,
+          color: buttonColor,
+        ),
+        onPressed: () {
+          _getFilteredList(context);
+        },
+      ),
+    ]);
+  }
+
+  void _getFilteredList(BuildContext context) async {
+    await Navigator.push(context,
+        MaterialPageRoute(builder: (BuildContext context) => FilterScreen()));
   }
 }
 

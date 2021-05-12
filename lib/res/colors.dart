@@ -2,23 +2,25 @@ import 'package:flutter/material.dart';
 
 // Common
 const Color primaryColor = Colors.white,
-    primaryColor2 = Color(0xFF000000),
+    primaryColor2 = Color(0xFF252849),
     planIcon = Color(0xFF757575),
     iconColor = Colors.white,
+    secondary2 = Color(0xFF7C7E92),
+    secondary1 = Color(0xFF3B3E5B),
     greenLight = Color(0xFF81C784),
-    greenYellow = Color(0xFF9CCC65),
+    greenYellow = Color(0xFF4CAF50),
     buttonColor = Colors.green;
 
 //for Light Theme
 const Color lmboxDescription = Color(0xFFEEEEEE),
     appBarColor = Colors.transparent,
     darkGrey = Colors.grey,
-    lmDividerColor = Colors.black,
+    lmDividerColor = Color(0xFF7C7E92),
     lmheadline2Color = Color(0xDD000000),
-    lmheadline3Color = Color(0xFF000000),
+    lmheadline3Color = Color(0xFF252849),
     lmheadline4Color = Color(0xDD000000),
-    lmheadline5Color = Colors.black,
-    lmsubtitle2Color = Color(0x8A000000),
+    lmheadline5Color = Color(0xFF252849),
+    lmsubtitle2Color = Color(0xFF7C7E92),
     lmBody1Color = Color(0xFF2E7D32),
     lmBody2Color = Colors.white,
     lmsubtitle1Color = Colors.black,

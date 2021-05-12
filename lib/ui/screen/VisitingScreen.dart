@@ -18,15 +18,15 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 150,
+          backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
           title: Text(
             titleVisitedScreen,
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headline3,
           ),
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(150.0),
+            preferredSize: Size.fromHeight(80.0),
             child: Padding(
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Container(
