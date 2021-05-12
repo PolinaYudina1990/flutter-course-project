@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:places/ui/screen/Sight_details.dart';
-import 'package:places/ui/sight_list_screen.dart';
-import 'domain/details.dart';
-import 'mocks.dart';
+import 'package:places/ui/screen/home_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,8 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SightDetail(description: mocksDetails),
-      //home: SightListScreen(),
+      home: HomeScreen(),
     );
   }
 }
