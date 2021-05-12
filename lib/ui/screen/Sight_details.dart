@@ -76,7 +76,7 @@ class SightDetail extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Text('${sight.type}',
+                    Text('${sight.titleType}',
                         style: Theme.of(context)
                             .textTheme
                             .headline5

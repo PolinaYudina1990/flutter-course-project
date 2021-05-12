@@ -125,7 +125,7 @@ class FavoriteWishVisit extends StatelessWidget {
                   top: 16,
                   left: 16,
                   child: Text(
-                    '${sight.type}',
+                    '${sight.titleType}',
                     style: Theme.of(context).textTheme.bodyText2,
                   )),
               Positioned(
@@ -251,7 +251,7 @@ class FavoriteVisited extends StatelessWidget {
                   top: 16,
                   left: 16,
                   child: Text(
-                    '${sight.type}',
+                    '${sight.titleType}',
                     style: Theme.of(context).textTheme.bodyText2,
                   )),
               Positioned(
