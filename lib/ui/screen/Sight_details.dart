@@ -17,7 +17,26 @@ class SightDetail extends StatelessWidget {
         backgroundColor: appBarColor,
         flexibleSpace: Stack(
           children: [
-            Container(color: colorPrimary),
+            Container(
+              child: Image.network(
+                '${description.url}',
+                height: double.infinity,
+                width: double.infinity,
+                fit: BoxFit.fitWidth,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes
+                          : null,
+                    ),
+                  );
+                },
+              ),
+            ),
             Positioned(
               top: 40,
               left: 15,
