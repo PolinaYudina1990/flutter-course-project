@@ -10,12 +10,18 @@ class SightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ImageBox(sight: sight),
-        DescriptionBox(sight: sight),
-      ],
+    return AspectRatio(
+      aspectRatio: 3 / 2,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ImageBox(sight: sight),
+          SizedBox(
+            height: 10,
+          ),
+          DescriptionBox(sight: sight),
+        ],
+      ),
     );
   }
 }
@@ -30,6 +36,7 @@ class DescriptionBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size.width;
     return Container(
       decoration: BoxDecoration(
         color: boxDescription,
@@ -43,9 +50,12 @@ class DescriptionBox extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '${sight.name}',
-            style: textReg16bold,
+          ConstrainedBox(
+            constraints: BoxConstraints.tightFor(width: size * 0.5),
+            child: Text(
+              '${sight.name}',
+              style: textReg16bold,
+            ),
           ),
           SizedBox(
             height: 10,
