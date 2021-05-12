@@ -61,6 +61,7 @@ class DescriptionBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size.width;
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
