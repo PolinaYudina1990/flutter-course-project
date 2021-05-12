@@ -23,7 +23,7 @@ final lightTheme = ThemeData(
   ),
   textTheme: TextTheme(
     headline2: textMedbold.copyWith(color: lmheadline2Color),
-    headline3: titleText1.copyWith(color: lmheadline3Color),
+    headline3: appBarText.copyWith(color: lmheadline3Color),
     headline4: titleText2.copyWith(color: lmheadline4Color),
     headline5: textReg16bold.copyWith(color: lmheadline5Color),
     subtitle1: textReg15bold.copyWith(color: lmsubtitle1Color),
@@ -62,7 +62,7 @@ final darkTheme = ThemeData(
   ),
   textTheme: TextTheme(
     headline2: textMedbold.copyWith(color: dmheadline2Color),
-    headline3: titleText1.copyWith(color: dmheadline3Color),
+    headline3: appBarText.copyWith(color: dmheadline3Color),
     headline4: titleText2.copyWith(color: dmheadline4Color),
     headline5: textReg16bold.copyWith(color: dmheadline5Color),
     subtitle1: textReg15bold.copyWith(color: dmsubtitle1Color),

@@ -36,65 +36,65 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Stack(
         children: [
           SingleChildScrollView(
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(left: 16.0, right: 16.0, top: 30.0),
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).backgroundColor,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: TextField(
-                      focusNode: _focusNode,
-                      controller: _queryText,
-                      textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.headline5.copyWith(
-                          color: secondary1, fontWeight: FontWeight.normal),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: planIcon,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: SvgPicture.asset(
-                            closeIcon,
-                            width: 20,
-                            color: primaryColor2,
-                          ),
-                          onPressed: () {
-                            _queryText.clear();
-                            _onChangedSearch('');
-                            //! ClearButton
-                          },
-                        ),
-                        border: InputBorder.none,
-                        hintText: hintText,
-                      ),
-                      onChanged: _onChangedSearch,
-                      onSubmitted: (value) {
-                        setState(() {
-                          history.add(value);
-                          print(history);
-                          _focusNode.unfocus();
-                        });
-                      },
-                    ),
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 30.0),
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).backgroundColor,
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                  SizedBox(height: 30),
-                  AnimatedSwitcher(
-                    duration: Duration(milliseconds: 400),
-                    child: _queryText.text.isEmpty
-                        ? _historyValues()
-                        : _load
-                            ? CircularProgressIndicator()
-                            : result.isEmpty
-                                ? _emptyScreen()
-                                : _searchResult(),
-                  )
-                ],
-              ),
+                  child: TextField(
+                    focusNode: _focusNode,
+                    controller: _queryText,
+                    cursorColor: primaryColor2,
+                    cursorHeight: 24,
+                    cursorWidth: 1,
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context).textTheme.headline5.copyWith(
+                        color: secondary1, fontWeight: FontWeight.normal),
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: planIcon,
+                      ),
+                      suffixIcon: IconButton(
+                        icon: SvgPicture.asset(
+                          closeIcon,
+                          width: 20,
+                          color: primaryColor2,
+                        ),
+                        onPressed: () {
+                          _queryText.clear();
+                          _onChangedSearch('');
+                          //! ClearButton
+                        },
+                      ),
+                      border: InputBorder.none,
+                      hintText: hintText,
+                    ),
+                    onChanged: _onChangedSearch,
+                    onSubmitted: (value) {
+                      setState(() {
+                        history.add(value);
+                        print(history);
+                        _focusNode.unfocus();
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(height: 30),
+                AnimatedSwitcher(
+                  duration: Duration(milliseconds: 400),
+                  child: _queryText.text.isEmpty
+                      ? _historyValues()
+                      : _load
+                          ? CircularProgressIndicator()
+                          : result.isEmpty
+                              ? _emptyScreen()
+                              : _searchResult(),
+                )
+              ],
             ),
           ),
         ],

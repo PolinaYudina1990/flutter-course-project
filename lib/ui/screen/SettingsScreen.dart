@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
-//import 'package:places/main.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {

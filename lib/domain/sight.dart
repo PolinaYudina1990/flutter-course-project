@@ -6,6 +6,8 @@ class Sight {
   final String details;
   final SightType type;
   final String titleType;
+  bool wantToVisit;
+  bool visited;
   Sight(
       {this.name,
       this.workHours,
@@ -13,7 +15,9 @@ class Sight {
       this.url,
       this.details,
       this.type,
-      this.titleType});
+      this.titleType,
+      this.wantToVisit,
+      this.visited});
 }
 
 class CoordinatePoint {

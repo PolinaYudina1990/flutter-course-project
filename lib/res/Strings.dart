@@ -16,6 +16,8 @@ const String titleSightListScreen = 'Список интересных мест'
     particularIcon = 'lib/res/icons/particular.svg',
     tickIcon = 'lib/res/icons/checked.svg',
     closeIcon = 'lib/res/icons/close-circle.svg',
+    favorite2 = 'lib/res/icons/heart2.svg',
+    favoriteempty1 = 'lib/res/icons/photo.svg',
 
 //SightDetail.dart
     buildNavigation = 'ПОСТРОИТЬ МАРШРУТ',
@@ -26,6 +28,9 @@ const String titleSightListScreen = 'Список интересных мест'
     titleVisitedScreen = 'Избранное',
     tabBar1 = 'Хочу посетить',
     tabBar2 = 'Посетил',
+    emptyScreenWantToVisit = 'Пусто',
+    emptyScreenWantToVisit2 =
+        'Отмечайте понравившиеся места и они появятся здесь',
 
 //Categories
     firstCategory = 'Отель',

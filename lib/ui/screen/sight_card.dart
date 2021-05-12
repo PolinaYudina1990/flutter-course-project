@@ -5,19 +5,24 @@ import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 import 'Sight_details.dart';
 
-class SightCard extends StatelessWidget {
+class SightCard extends StatefulWidget {
   final Sight sight;
 
   const SightCard({Key key, this.sight}) : super(key: key);
 
+  @override
+  _SightCardState createState() => _SightCardState();
+}
+
+class _SightCardState extends State<SightCard> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
       Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ImageBox(sight: sight),
-          DescriptionBox(sight: sight),
+          ImageBox(sight: widget.sight),
+          DescriptionBox(sight: widget.sight),
         ],
       ),
       Positioned.fill(
@@ -28,7 +33,7 @@ class SightCard extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => SightDetail(sight: sight)));
+                      builder: (context) => SightDetail(sight: widget.sight)));
             },
           ),
         ),
@@ -38,13 +43,18 @@ class SightCard extends StatelessWidget {
         right: 10,
         child: InkWell(
           onTap: () {
-            print('button "add to fav" pressed');
+            setState(() {
+              widget.sight.wantToVisit = !widget.sight.wantToVisit;
+              print(widget.sight.wantToVisit);
+            });
           },
-          child: SvgPicture.asset(
-            favorite,
-            width: 25,
-            color: iconColor,
-          ),
+          child: widget.sight.wantToVisit
+              ? SvgPicture.asset(favorite2, width: 25, color: iconColor)
+              : SvgPicture.asset(
+                  favorite,
+                  width: 25,
+                  color: iconColor,
+                ),
         ),
       ),
     ]);

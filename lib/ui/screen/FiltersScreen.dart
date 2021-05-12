@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:places/components/geoposition.dart';
 import 'package:places/domain/categories.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
@@ -10,7 +11,7 @@ import '../../mocks.dart';
 
 class FilterScreen extends StatefulWidget {
   final List<FilterType> categories;
-  FilterScreen({this.categories});
+  FilterScreen({@required this.categories});
 
   @override
   _FilterScreenState createState() => _FilterScreenState();
@@ -21,6 +22,7 @@ class FilterScreen extends StatefulWidget {
 
 class _FilterScreenState extends State<FilterScreen> {
   RangeValues distance = RangeValues(100, 10000);
+  List<Sight> filteredList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +112,7 @@ class _FilterScreenState extends State<FilterScreen> {
                       onChanged: (RangeValues values) {
                         setState(() {
                           distance = values;
+                          print(sortedByRadius);
                         });
                       },
                     ),
@@ -155,7 +158,7 @@ class _FilterScreenState extends State<FilterScreen> {
     ];
     int result = 0;
     mocks.forEach((sight) {
-      if (selectedTypes.contains(sight.type) &&
+      if (selectedTypes.contains(sight.titleType) &&
           arePointsNear(sight.coordinatePoint,
               CoordinatePoint(52.512044, 107.037643), distance)) {
         result++;
