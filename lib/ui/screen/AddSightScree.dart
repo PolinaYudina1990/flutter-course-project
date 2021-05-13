@@ -133,7 +133,7 @@ class _AddNewSightState extends State<AddNewSight> {
         TextField(
           focusNode: name,
           cursorColor: primaryColor2,
-          cursorHeight: 25,
+          cursorHeight: 24,
           style: Theme.of(context)
               .textTheme
               .headline5

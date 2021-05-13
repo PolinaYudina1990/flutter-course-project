@@ -34,23 +34,20 @@ class _SightListScreenState extends State<SightListScreen> {
       body: Stack(
         children: [
           SingleChildScrollView(
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(left: 16.0, right: 16.0, top: 30.0),
-              child: Stack(
-                children: [
-                  Column(
-                    children: [
-                      SearchField(),
-                      SizedBox(height: 30),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 70.0),
-                    child: sightList(),
-                  ),
-                ],
-              ),
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 30.0),
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    SearchField(),
+                    SizedBox(height: 30),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 70.0),
+                  child: sightList(),
+                ),
+              ],
             ),
           ),
           ButtonAdd(),
@@ -121,8 +118,12 @@ class _SearchFieldState extends State<SearchField> {
   }
 
   void _getFilteredList(BuildContext context) async {
-    await Navigator.push(context,
-        MaterialPageRoute(builder: (BuildContext context) => FilterScreen()));
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => FilterScreen(
+                  categories: [],
+                )));
   }
 }
 
