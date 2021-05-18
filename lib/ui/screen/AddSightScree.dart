@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
@@ -57,6 +58,8 @@ class _AddNewSightState extends State<AddNewSight> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                PhotoCreation(),
+                SizedBox(height: 20),
                 _category(),
                 SizedBox(height: 20),
                 _name(),
@@ -368,6 +371,124 @@ class _AddNewSightState extends State<AddNewSight> {
             fontSize: 16,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class PhotoCreation extends StatefulWidget {
+  PhotoCreation({Key key}) : super(key: key);
+
+  @override
+  _PhotoCreationState createState() => _PhotoCreationState();
+}
+
+class _PhotoCreationState extends State<PhotoCreation> {
+  int i = -1;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 96,
+      child: Row(
+        children: [
+          InkWell(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: buttonColor,
+                  width: 2,
+                ),
+              ),
+              height: 72,
+              width: 72,
+              child: const Icon(
+                Icons.add,
+                color: buttonColor,
+                size: 24,
+              ),
+            ),
+            onTap: () {
+              setState(() {
+                i++;
+                newSightPhotos.add(newSightsMocksPhotosList[i]);
+              });
+            },
+          ),
+          SizedBox(width: 16),
+          Expanded(
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: newSightPhotos.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Row(
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                          height: 72,
+                          width: 72,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              newSightPhotos[index],
+                              height: double.infinity,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes
+                                        : null,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 6,
+                          right: 6,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                newSightPhotos.removeAt(index);
+                              });
+                            },
+                            child: Container(
+                              height: 20,
+                              width: 20,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                              ),
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  closeIcon,
+                                  color: primaryColor,
+                                  height: 20,
+                                  width: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(width: 16),
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
