@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
@@ -57,6 +58,8 @@ class _AddNewSightState extends State<AddNewSight> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                PhotoCreation(),
+                SizedBox(height: 20),
                 _category(),
                 SizedBox(height: 20),
                 _name(),
@@ -372,8 +375,6 @@ class _AddNewSightState extends State<AddNewSight> {
     );
   }
 }
-<<<<<<< Updated upstream
-=======
 
 class PhotoCreation extends StatefulWidget {
   PhotoCreation({Key key}) : super(key: key);
@@ -503,4 +504,3 @@ class _PhotoCreationState extends State<PhotoCreation> {
     );
   }
 }
->>>>>>> Stashed changes
