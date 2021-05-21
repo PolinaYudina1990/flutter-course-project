@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
-import 'Sight_details.dart';
+import 'sight_details.dart';
 
 class SightCard extends StatefulWidget {
   final Sight sight;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../sight_list_screen.dart';
-import 'SettingsScreen.dart';
-import 'VisitingScreen.dart';
+import 'settingsScreen.dart';
+import 'visitingScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

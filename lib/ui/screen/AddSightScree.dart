@@ -6,7 +6,7 @@ import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 
 import '../../mocks.dart';
-import 'SelectCategoryScreen.dart';
+import 'selectCategoryScreen.dart';
 
 class AddNewSight extends StatefulWidget {
   AddNewSight({Key key}) : super(key: key);
