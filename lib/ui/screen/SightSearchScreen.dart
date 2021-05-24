@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
@@ -36,6 +38,9 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Stack(
         children: [
           SingleChildScrollView(
+            physics: Platform.isAndroid
+                ? ClampingScrollPhysics()
+                : BouncingScrollPhysics(),
             padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 30.0),
             child: Column(
               children: [

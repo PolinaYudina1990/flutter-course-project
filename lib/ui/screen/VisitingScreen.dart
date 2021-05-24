@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/components/sightVisited.dart';
@@ -78,7 +80,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       return SingleChildScrollView(
         child: ListView.builder(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: Platform.isAndroid
+              ? ClampingScrollPhysics()
+              : BouncingScrollPhysics(),
           itemCount: visSight.length,
           itemBuilder: (context, index) => FavoriteWishVisit(
             sight: visSight[index],
@@ -102,7 +106,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       return SingleChildScrollView(
         child: ListView.builder(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: Platform.isAndroid
+              ? ClampingScrollPhysics()
+              : BouncingScrollPhysics(),
           itemCount: visitedSight.length,
           itemBuilder: (context, index) => FavoriteVisited(
             sight: visitedSight[index],
