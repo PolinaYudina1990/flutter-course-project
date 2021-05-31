@@ -79,7 +79,7 @@ class FavoriteWishVisit extends StatelessWidget {
                           topRight: const Radius.circular(15),
                         ),
                         child: Image.network(
-                          '${sight.url}',
+                          sight.urlImages[0],
                           height: double.infinity,
                           width: double.infinity,
                           fit: BoxFit.cover,

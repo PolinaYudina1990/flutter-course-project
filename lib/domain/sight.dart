@@ -2,20 +2,22 @@ class Sight {
   final String name;
   final String workHours;
   final CoordinatePoint coordinatePoint;
-  final String url;
+  // final String url;
   final String details;
   final SightType type;
   final String titleType;
+  final List<String> urlImages;
   bool wantToVisit;
   bool visited;
   Sight(
       {this.name,
       this.workHours,
       this.coordinatePoint,
-      this.url,
+      // this.url,
       this.details,
       this.type,
       this.titleType,
+      this.urlImages,
       this.wantToVisit,
       this.visited});
 }

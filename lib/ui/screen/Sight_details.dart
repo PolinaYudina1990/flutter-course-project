@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
@@ -6,7 +8,30 @@ import 'package:places/res/colors.dart';
 
 class SightDetail extends StatelessWidget {
   final Sight sight;
-  const SightDetail({this.sight});
+  final PageController _pageController = PageController();
+
+  SightDetail({this.sight}) {
+    _initPageController();
+  }
+
+  void _initPageController() {
+    int currentPage = 0;
+
+    Timer.periodic(
+      Duration(seconds: 3),
+      (timer) {
+        currentPage++;
+        if (currentPage > sight.urlImages.length - 1) {
+          currentPage = 0;
+        }
+        _pageController.animateToPage(
+          currentPage,
+          duration: Duration(milliseconds: 500),
+          curve: Curves.linear,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,48 +40,15 @@ class SightDetail extends StatelessWidget {
         elevation: 0,
         toolbarHeight: 320,
         backgroundColor: appBarColor,
-        flexibleSpace: Stack(
-          children: [
-            Container(
-              child: Image.network(
-                '${sight.url}',
-                height: double.infinity,
-                width: double.infinity,
-                fit: BoxFit.fill,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
-                          : null,
-                    ),
-                  );
-                },
-              ),
-            ),
-            Positioned(
-              top: 40,
-              left: 15,
-              child: AppBarBackButton(),
-            ),
-            Positioned(
-              bottom: 1,
-              left: 1,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).dividerColor,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(3),
-                  ),
-                ),
-                width: 150,
-                height: 8,
-              ),
-            ),
-          ],
+        flexibleSpace: PageView.builder(
+          controller: _pageController,
+          itemCount: sight.urlImages.length,
+          itemBuilder: (BuildContext context, int index) {
+            return PhotoGalery(
+              sight: sight,
+              pageNumber: index,
+            );
+          },
         ),
       ),
       body: SafeArea(
@@ -240,6 +232,61 @@ class FavoriteButton extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class PhotoGalery extends StatelessWidget {
+  final Sight sight;
+  final int pageNumber;
+  const PhotoGalery({this.sight, this.pageNumber});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          child: Image.network(
+            sight.urlImages[pageNumber],
+            height: double.infinity,
+            width: double.infinity,
+            fit: BoxFit.fill,
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+
+              return Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                          loadingProgress.expectedTotalBytes
+                      : null,
+                ),
+              );
+            },
+          ),
+        ),
+        Positioned(
+          top: 40,
+          left: 15,
+          child: AppBarBackButton(),
+        ),
+        Positioned(
+          bottom: 1,
+          left: MediaQuery.of(context).size.width /
+              sight.urlImages.length *
+              pageNumber,
+          child: Container(
+            decoration: BoxDecoration(
+              color: primaryColor2,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(3),
+              ),
+            ),
+            width: MediaQuery.of(context).size.width / sight.urlImages.length,
+            height: 8,
+          ),
+        ),
+      ],
     );
   }
 }

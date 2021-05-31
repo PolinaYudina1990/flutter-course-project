@@ -349,7 +349,7 @@ class _AddNewSightState extends State<AddNewSight> {
                   double.tryParse(_controllerLatitude.text),
                   double.tryParse(_controllerLongitude.text),
                 ),
-                url: '',
+                urlImages: [],
                 details: _controllerDetails.text,
                 titleType: selectedCat.toString(),
                 workHours: 'закрыто до 09:00',

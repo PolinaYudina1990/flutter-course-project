@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/res/themes.dart';
+import 'package:places/ui/screen/onboarding.dart';
 import 'package:places/ui/screen/settingsScreen.dart';
 import 'package:places/ui/screen/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ class _MyAppState extends State<MyApp> {
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: notifier.darkTheme ? ThemeMode.dark : ThemeMode.light,
-            home: HomeScreen(),
+            home: OnBoardingScreen(),
           );
         },
       ),
