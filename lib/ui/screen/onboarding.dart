@@ -17,7 +17,7 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   OnBoardingItem item;
   int selectedPage = 0;
-  final _pageController = PageController(viewportFraction: 1);
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +51,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
+                itemCount: itemOnBoardList.length,
                 onPageChanged: (page) {
                   setState(() {
                     selectedPage = page;
@@ -84,7 +85,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
 class OnBoardPage extends StatelessWidget {
   final OnBoardingItem item;
-  // final int index;
+
   const OnBoardPage({
     Key key,
     this.item,

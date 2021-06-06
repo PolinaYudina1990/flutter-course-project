@@ -4,6 +4,7 @@ import 'colors.dart';
 
 final lightTheme = ThemeData(
   brightness: Brightness.light,
+  scaffoldBackgroundColor: lmBackgroundColor,
   primaryColor: lmBackgroundColor,
   dividerColor: lmDividerColor,
   backgroundColor: lmboxDescription,
@@ -43,6 +44,7 @@ final lightTheme = ThemeData(
 
 final darkTheme = ThemeData(
   brightness: Brightness.dark,
+  scaffoldBackgroundColor: dmBackgroundColor,
   primaryColor: dmBackgroundColor,
   backgroundColor: dmBoxDescription,
   dividerColor: dmDividerColor,

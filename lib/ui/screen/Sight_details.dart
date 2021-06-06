@@ -5,18 +5,16 @@ import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class SightDetail extends StatelessWidget {
   final Sight sight;
-  final PageController _pageController = PageController();
 
   SightDetail({this.sight}) {
     _initPageController();
   }
-
   void _initPageController() {
     int currentPage = 0;
-
     Timer.periodic(
       Duration(seconds: 3),
       (timer) {
@@ -33,86 +31,106 @@ class SightDetail extends StatelessWidget {
     );
   }
 
+  final PageController _pageController = PageController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        toolbarHeight: 320,
-        backgroundColor: appBarColor,
-        flexibleSpace: PageView.builder(
-          controller: _pageController,
-          itemCount: sight.urlImages.length,
-          itemBuilder: (BuildContext context, int index) {
-            return PhotoGalery(
-              sight: sight,
-              pageNumber: index,
-            );
-          },
-        ),
-      ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: CustomScrollView(slivers: [
+          SliverAppBar(
+            elevation: 0,
+            toolbarHeight: 320,
+            backgroundColor: appBarColor,
+            flexibleSpace: Stack(
               children: [
-                SizedBox(
-                  height: 30,
+                PageView.builder(
+                  controller: _pageController,
+                  itemCount: sight.urlImages.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return PhotoGalery(
+                      sight: sight,
+                      pageNumber: index,
+                    );
+                  },
                 ),
-                Text('${sight.name}',
-                    style: Theme.of(context).textTheme.headline2),
-                SizedBox(
-                  height: 10,
+                Positioned(
+                  bottom: 0,
+                  child: SmoothPageIndicator(
+                      controller: _pageController,
+                      count: sight.urlImages.length,
+                      effect: WormEffect(
+                          dotColor: Colors.transparent,
+                          activeDotColor: primaryColor2,
+                          dotHeight: 10,
+                          dotWidth: (MediaQuery.of(context).size.width - 25) /
+                              sight.urlImages.length)),
                 ),
-                Row(
-                  children: [
-                    Text('${sight.titleType}',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline5
-                            .copyWith(fontWeight: FontWeight.bold)),
-                    SizedBox(
-                      width: 30,
-                    ),
-                    Text('${sight.workHours}',
-                        style: Theme.of(context).textTheme.subtitle2),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text('${sight.details}',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5
-                        .copyWith(fontWeight: FontWeight.normal)),
-                SizedBox(
-                  height: 30,
-                ),
-                NavigationButton(),
-                SizedBox(
-                  height: 20,
-                ),
-                Divider(color: primaryColor2),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    PlanButton(),
-                    SizedBox(
-                      width: 30,
-                    ),
-                    FavoriteButton(),
-                  ],
-                )
               ],
             ),
           ),
-        ),
+          SliverFillRemaining(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Text('${sight.name}',
+                      style: Theme.of(context).textTheme.headline2),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Text('${sight.titleType}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline5
+                              .copyWith(fontWeight: FontWeight.bold)),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Text('${sight.workHours}',
+                          style: Theme.of(context).textTheme.subtitle2),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text('${sight.details}',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5
+                          .copyWith(fontWeight: FontWeight.normal)),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  NavigationButton(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Divider(color: primaryColor2),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      PlanButton(),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      FavoriteButton(),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ]),
       ),
     );
   }
@@ -269,22 +287,6 @@ class PhotoGalery extends StatelessWidget {
           top: 40,
           left: 15,
           child: AppBarBackButton(),
-        ),
-        Positioned(
-          bottom: 1,
-          left: MediaQuery.of(context).size.width /
-              sight.urlImages.length *
-              pageNumber,
-          child: Container(
-            decoration: BoxDecoration(
-              color: primaryColor2,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(3),
-              ),
-            ),
-            width: MediaQuery.of(context).size.width / sight.urlImages.length,
-            height: 8,
-          ),
         ),
       ],
     );

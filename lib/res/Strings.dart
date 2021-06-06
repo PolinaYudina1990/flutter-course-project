@@ -1,6 +1,7 @@
 //SightListScreen
 
-const String titleSightListScreen = 'Список интересных мест',
+const String titleSightListScreen = 'Список\nинтересных мест',
+    titleSightListScreen2 = 'Список интересных мест',
     addButtonName = 'НОВОЕ МЕСТО',
 
 //svg Icons
