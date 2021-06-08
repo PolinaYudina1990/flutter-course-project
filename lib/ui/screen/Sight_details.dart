@@ -39,6 +39,7 @@ class SightDetail extends StatelessWidget {
       body: SafeArea(
         child: CustomScrollView(slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             elevation: 0,
             toolbarHeight: 320,
             backgroundColor: appBarColor,

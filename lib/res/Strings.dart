@@ -23,6 +23,7 @@ const String titleSightListScreen = 'Список\nинтересных мест
     bag = 'lib/res/icons/bag.svg',
     signpost = 'lib/res/icons/signpost.svg',
     tapHand = 'lib/res/icons/tap.svg',
+    splashMap = 'lib/res/icons/splashMap.svg',
 
 //SightDetail.dart
     buildNavigation = 'ПОСТРОИТЬ МАРШРУТ',
