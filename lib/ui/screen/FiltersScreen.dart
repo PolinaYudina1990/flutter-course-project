@@ -11,6 +11,7 @@ import '../../mocks.dart';
 
 class FilterScreen extends StatefulWidget {
   final List<FilterType> categories;
+  static const routeName = 'filtersScreen';
   FilterScreen({@required this.categories});
 
   @override

@@ -4,6 +4,7 @@ import 'settingsScreen.dart';
 import 'visitingScreen.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const routeName = '/home';
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }

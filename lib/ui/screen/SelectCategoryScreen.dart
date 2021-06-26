@@ -5,6 +5,7 @@ import 'package:places/res/colors.dart';
 
 class SelectCategoryScreen extends StatefulWidget {
   SelectCategoryScreen({Key key}) : super(key: key);
+  static const routeName = '/categorySelectionScreen';
 
   @override
   _SelectCategoryScreenState createState() => _SelectCategoryScreenState();

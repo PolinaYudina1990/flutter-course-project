@@ -12,6 +12,7 @@ import 'selectCategoryScreen.dart';
 
 class AddNewSight extends StatefulWidget {
   AddNewSight({Key key}) : super(key: key);
+  static const routeName = '/addSight';
 
   @override
   _AddNewSightState createState() => _AddNewSightState();
