@@ -30,11 +30,58 @@ class _SightCardState extends State<SightCard> {
           type: MaterialType.transparency,
           child: InkWell(
             onTap: () {
-              Navigator.pushNamed(
-                context,
-                SightDetail.routeName,
-                arguments: widget.sight.id,
+              showModalBottomSheet(
+                isScrollControlled: true,
+                context: context,
+                builder: (context) {
+                  return SafeArea(
+                    minimum: const EdgeInsets.only(top: 50),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16),
+                        topRight: Radius.circular(16),
+                      ),
+                      child: Stack(
+                        children: [
+                          SightDetail(sightId: widget.sight.id),
+                          Positioned(
+                            top: 16,
+                            right: 16,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  Navigator.pop(context);
+                                });
+                              },
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                ),
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                    closeIcon,
+                                    color: primaryColor,
+                                    height: 40,
+                                    width: 40,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                },
               );
+              // Navigator.pushNamed(
+              //   context,
+              //   '/sightDetails',
+              //   arguments: widget.sight.id,
+              // );
             },
           ),
         ),

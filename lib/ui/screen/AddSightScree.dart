@@ -415,6 +415,12 @@ class _PhotoCreationState extends State<PhotoCreation> {
               setState(() {
                 photosCount++;
                 newSightPhotos.add(newSightsMocksPhotosList[photosCount]);
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return DialogAddFoto();
+                    });
               });
             },
           ),
@@ -507,6 +513,124 @@ class _PhotoCreationState extends State<PhotoCreation> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class DialogAddFoto extends StatelessWidget {
+  const DialogAddFoto({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: primaryColor,
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 17),
+            child: Column(
+              children: [
+                ItemsDialog(),
+              ],
+            ),
+          ),
+          SizedBox(height: 8),
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Container(
+                width: double.infinity,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 17),
+                child: Center(
+                  child: Text(actionAppBar.toUpperCase(),
+                      style: Theme.of(context).textTheme.bodyText2.copyWith(
+                          fontWeight: FontWeight.w700, color: greenYellow)),
+                )),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ItemsDialog extends StatelessWidget {
+  const ItemsDialog({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 13.0),
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                iconDialogAddPhoto,
+                color: secondary2,
+                height: 22,
+                width: 22,
+              ),
+              SizedBox(width: 13),
+              Text(dialog1,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5
+                      .copyWith(fontWeight: FontWeight.w400, color: secondary2))
+            ],
+          ),
+        ),
+        Divider(height: 0.8, thickness: 1, color: secondary2.withOpacity(0.56)),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 13.0),
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                iconDialogAddPhoto2,
+                color: secondary2,
+                height: 22,
+                width: 22,
+              ),
+              SizedBox(width: 13),
+              Text(dialog2,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5
+                      .copyWith(fontWeight: FontWeight.w400, color: secondary2))
+            ],
+          ),
+        ),
+        Divider(height: 0.8, thickness: 1, color: secondary2.withOpacity(0.56)),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 13.0),
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                iconDialogAddPhoto3,
+                color: secondary2,
+                height: 22,
+                width: 22,
+              ),
+              SizedBox(width: 13),
+              Text(dialog3,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5
+                      .copyWith(fontWeight: FontWeight.w400, color: secondary2))
+            ],
+          ),
+        )
+      ],
     );
   }
 }

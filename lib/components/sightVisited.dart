@@ -45,11 +45,10 @@ class FavoriteVisited extends StatelessWidget {
       type: MaterialType.transparency,
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(
-            context,
-            SightDetail.routeName,
-            arguments: sight.id,
-          );
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => SightDetail(sightId: sight.id)));
         },
         child: Container(
           padding: EdgeInsets.only(left: 16, right: 16, top: 30, bottom: 30),
