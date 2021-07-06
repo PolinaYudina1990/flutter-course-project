@@ -18,6 +18,10 @@ const String titleSightListScreen = 'Список интересных мест'
     closeIcon = 'lib/res/icons/close-circle.svg',
     favorite2 = 'lib/res/icons/heart2.svg',
     favoriteempty1 = 'lib/res/icons/photo.svg',
+    delete = 'lib/res/icons/trash.svg',
+    bag = 'lib/res/icons/bag.svg',
+    signpost = 'lib/res/icons/signpost.svg',
+    tapHand = 'lib/res/icons/tap.svg',
 
 //SightDetail.dart
     buildNavigation = 'ПОСТРОИТЬ МАРШРУТ',
@@ -31,6 +35,7 @@ const String titleSightListScreen = 'Список интересных мест'
     emptyScreenWantToVisit = 'Пусто',
     emptyScreenWantToVisit2 =
         'Отмечайте понравившиеся места и они появятся здесь',
+    backgroundTitle = 'Удалить',
 
 //Categories
     firstCategory = 'Отель',
@@ -67,6 +72,17 @@ const String titleSightListScreen = 'Список интересных мест'
     emptyScreenText2 = 'Попробуйте изменить параметры поиска',
     historyScreenText1 = 'ВЫ ИСКАЛИ',
     historyScreenText2 = 'Очистить историю',
+
+// OnBoardingScreen
+    onBoardingTitle = 'Добро пожаловать в Путеводитель',
+    onBoardingTitle2 = 'Построй маршрут и отправляйся в путь',
+    onBoardingTitle3 = 'Добавляй места, которые нашёл сам',
+    onBoardingDescription = 'Ищи новые локации и сохраняй самые любимые.',
+    onBoardingDescription2 = 'Достигай цели максимально быстро и комфортно.',
+    onBoardingDescription3 =
+        'Делись самыми интересными и помоги нам стать лучше!',
+    onBoardButton = 'Пропустить',
+    onBoardButtonBottom = 'НА СТАРТ',
 
 //SettingsScreen
     tutorial = 'Смотреть туториал',

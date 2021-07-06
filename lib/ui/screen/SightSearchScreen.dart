@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 import '../../mocks.dart';
-import 'Sight_details.dart';
+import 'sight_details.dart';
 
 class SearchScreen extends StatefulWidget {
   SearchScreen({Key key}) : super(key: key);
@@ -36,6 +38,9 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Stack(
         children: [
           SingleChildScrollView(
+            physics: Platform.isAndroid
+                ? ClampingScrollPhysics()
+                : BouncingScrollPhysics(),
             padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 30.0),
             child: Column(
               children: [
@@ -257,7 +262,7 @@ class SearchCard extends StatelessWidget {
                   Radius.circular(15),
                 ),
                 child: Image.network(
-                  '${sight.url}',
+                  sight.urlImages[0],
                   height: double.infinity,
                   width: double.infinity,
                   fit: BoxFit.cover,

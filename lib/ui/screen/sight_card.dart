@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
-import 'Sight_details.dart';
+import 'sight_details.dart';
 
 class SightCard extends StatefulWidget {
   final Sight sight;
@@ -71,7 +71,6 @@ class DescriptionBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size.width;
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
@@ -125,7 +124,7 @@ class ImageBox extends StatelessWidget {
               topRight: const Radius.circular(15),
             ),
             child: Image.network(
-              '${sight.url}',
+              sight.urlImages[0],
               height: double.infinity,
               width: double.infinity,
               fit: BoxFit.cover,
