@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:places/res/themes.dart';
-import 'package:places/ui/screen/onboarding.dart';
-import 'package:places/ui/screen/settingsScreen.dart';
+import 'package:places/ui/screen/addSightScree.dart';
+import 'package:places/ui/screen/filtersScreen.dart';
 import 'package:places/ui/screen/home_screen.dart';
+import 'package:places/ui/screen/onboarding.dart';
+import 'package:places/ui/screen/selectCategoryScreen.dart';
+import 'package:places/ui/screen/settingsScreen.dart';
+import 'package:places/ui/screen/sightSearchScreen.dart';
+import 'package:places/ui/screen/sight_details.dart';
+import 'package:places/ui/screen/splashScreen.dart';
+import 'package:places/ui/sight_list_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -25,7 +32,20 @@ class _MyAppState extends State<MyApp> {
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: notifier.darkTheme ? ThemeMode.dark : ThemeMode.light,
-            home: OnBoardingScreen(),
+            // home: SplashScreen(),
+            initialRoute: SplashScreen.routeName,
+            routes: {
+              SplashScreen.routeName: (context) => SplashScreen(),
+              SightListScreen.routeName: (context) => SightListScreen(),
+              OnBoardingScreen.routeName: (context) => OnBoardingScreen(),
+              SightDetail.routeName: (context) => SightDetail(),
+              // FilterScreen.routeName: (context) => FilterScreen(),
+              HomeScreen.routeName: (context) => HomeScreen(),
+              SearchScreen.routeName: (context) => SearchScreen(),
+              AddNewSight.routeName: (context) => AddNewSight(),
+              SelectCategoryScreen.routeName: (context) =>
+                  SelectCategoryScreen(),
+            },
           );
         },
       ),

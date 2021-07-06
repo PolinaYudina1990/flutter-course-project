@@ -1,6 +1,7 @@
 //SightListScreen
 
-const String titleSightListScreen = 'Список интересных мест',
+const String titleSightListScreen = 'Список\nинтересных мест',
+    titleSightListScreen2 = 'Список интересных мест',
     addButtonName = 'НОВОЕ МЕСТО',
 
 //svg Icons
@@ -22,6 +23,7 @@ const String titleSightListScreen = 'Список интересных мест'
     bag = 'lib/res/icons/bag.svg',
     signpost = 'lib/res/icons/signpost.svg',
     tapHand = 'lib/res/icons/tap.svg',
+    splashMap = 'lib/res/icons/splashMap.svg',
 
 //SightDetail.dart
     buildNavigation = 'ПОСТРОИТЬ МАРШРУТ',

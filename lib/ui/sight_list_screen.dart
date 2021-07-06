@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
@@ -13,6 +11,7 @@ import 'package:places/mocks.dart';
 
 class SightListScreen extends StatefulWidget {
   final List<Sight> sights;
+  static const routeName = '/sightList';
 
   const SightListScreen({Key key, this.sights}) : super(key: key);
 
@@ -24,54 +23,49 @@ class _SightListScreenState extends State<SightListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        title: Text(
-          titleSightListScreen,
-          style: Theme.of(context).textTheme.headline3,
-        ),
-      ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            physics: Platform.isAndroid
-                ? ClampingScrollPhysics()
-                : BouncingScrollPhysics(),
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 30.0),
-            child: Stack(
-              children: [
-                Column(
-                  children: [
+      floatingActionButton: ButtonAdd(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverPadding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              sliver: SliverPersistentHeader(
+                pinned: true,
+                floating: true,
+                delegate: _SliverAppBarDelegate(),
+              ),
+            ),
+            SliverPadding(
+              padding: EdgeInsets.only(left: 16, right: 16),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate(
+                  [
                     SearchField(),
-                    SizedBox(height: 30),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 70.0),
-                  child: sightList(),
-                ),
-              ],
+              ),
             ),
-          ),
-          ButtonAdd(),
-        ],
+            SliverPadding(
+              padding: EdgeInsets.symmetric(vertical: 34, horizontal: 16),
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return Column(
+                      children: [
+                        SightCard(sight: mocks[index]),
+                        SizedBox(height: 30),
+                      ],
+                    );
+                  },
+                  childCount: mocks.length,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
-  }
-
-  Widget sightList() {
-    return Column(children: [
-      ListView.separated(
-        separatorBuilder: (BuildContext context, int index) =>
-            SizedBox(height: 30),
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: mocks.length,
-        itemBuilder: (context, index) => SightCard(sight: mocks[index]),
-      ),
-    ]);
   }
 }
 
@@ -94,8 +88,7 @@ class _SearchFieldState extends State<SearchField> {
         child: TextField(
           readOnly: true,
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SearchScreen()));
+            Navigator.pushNamed(context, SearchScreen.routeName);
           },
           textAlign: TextAlign.start,
           style: Theme.of(context).textTheme.headline5,
@@ -128,7 +121,7 @@ class _SearchFieldState extends State<SearchField> {
         MaterialPageRoute(
             builder: (BuildContext context) => FilterScreen(
                   categories: [],
-                )));
+                ))); //!
   }
 }
 
@@ -149,8 +142,7 @@ class _ButtonAddState extends State<ButtonAdd> {
           padding: EdgeInsets.only(bottom: 20),
           child: ElevatedButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddNewSight()));
+              Navigator.pushNamed(context, AddNewSight.routeName);
             },
             style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.zero,
@@ -176,5 +168,50 @@ class _ButtonAddState extends State<ButtonAdd> {
         ),
       ),
     );
+  }
+}
+
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return SizedBox.expand(
+      child: Container(
+        color: Colors.white,
+        child: shrinkOffset > 40
+            ? Center(
+                child: Text(
+                  titleSightListScreen2,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3
+                      .copyWith(fontSize: 18, fontWeight: FontWeight.w500),
+                ),
+              )
+            : Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  titleSightListScreen,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3
+                      .copyWith(fontSize: 32, fontWeight: FontWeight.w700),
+                ),
+              ),
+      ),
+    );
+  }
+
+  @override
+  double get maxExtent => 160;
+
+  @override
+  double get minExtent => 60;
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return true;
   }
 }

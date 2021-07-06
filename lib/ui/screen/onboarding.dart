@@ -5,10 +5,9 @@ import 'package:places/domain/onBoard.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 
-import 'home_screen.dart';
-
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key key}) : super(key: key);
+  static const routeName = '/onBoarding';
 
   @override
   _OnBoardingScreenState createState() => _OnBoardingScreenState();
@@ -17,7 +16,7 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   OnBoardingItem item;
   int selectedPage = 0;
-  final _pageController = PageController(viewportFraction: 1);
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +30,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ? SizedBox.shrink()
                 : TextButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
+                      Navigator.pushReplacementNamed(context, '/home');
                     },
                     child: Text(onBoardButton,
                         style: Theme.of(context)
@@ -51,6 +47,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
+                itemCount: itemOnBoardList.length,
                 onPageChanged: (page) {
                   setState(() {
                     selectedPage = page;
@@ -84,7 +81,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
 class OnBoardPage extends StatelessWidget {
   final OnBoardingItem item;
-  // final int index;
+
   const OnBoardPage({
     Key key,
     this.item,
@@ -153,8 +150,7 @@ class OnBoardBottomButton extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomeScreen()));
+            Navigator.pushReplacementNamed(context, '/home');
           },
         ),
       ),

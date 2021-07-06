@@ -53,10 +53,11 @@ class FavoriteWishVisit extends StatelessWidget {
         padding: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 30),
         child: InkWell(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => SightDetail(sight: sight)));
+            Navigator.pushNamed(
+              context,
+              SightDetail.routeName,
+              arguments: sight.id,
+            );
           },
           child: Dismissible(
             background: const SizedBox.shrink(),

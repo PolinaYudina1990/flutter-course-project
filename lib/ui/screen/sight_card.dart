@@ -30,10 +30,11 @@ class _SightCardState extends State<SightCard> {
           type: MaterialType.transparency,
           child: InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SightDetail(sight: widget.sight)));
+              Navigator.pushNamed(
+                context,
+                SightDetail.routeName,
+                arguments: widget.sight.id,
+              );
             },
           ),
         ),

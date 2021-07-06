@@ -2,6 +2,7 @@ import 'domain/sight.dart';
 
 final List<Sight> mocks = [
   Sight(
+      id: 1,
       name: 'Воронежский областной краеведческий музей',
       workHours: 'закрыто до 09:00',
       coordinatePoint: CoordinatePoint(52.512044, 107.027643),
@@ -17,6 +18,7 @@ final List<Sight> mocks = [
       wantToVisit: true,
       visited: false),
   Sight(
+      id: 2,
       name: 'Remy Coffee',
       workHours: 'закрыто до 09:00',
       coordinatePoint: CoordinatePoint(52.532044, 107.087643),
@@ -31,6 +33,7 @@ final List<Sight> mocks = [
       wantToVisit: true,
       visited: false),
   Sight(
+      id: 3,
       name: 'Кривоборье',
       workHours: 'закрыто до 09:00',
       coordinatePoint: CoordinatePoint(52.026349, 39.185882),

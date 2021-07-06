@@ -8,6 +8,7 @@ const Color primaryColor = Colors.white,
     secondary2 = Color(0xFF7C7E92),
     secondary1 = Color(0xFF3B3E5B),
     greenLight = Color(0xFF81C784),
+    green = Color(0xFFFCDD3D),
     greenYellow = Color(0xFF4CAF50),
     red = Color(0xFFEF4343),
     buttonColor = Colors.green;
