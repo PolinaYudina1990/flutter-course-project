@@ -40,6 +40,9 @@ final lightTheme = ThemeData(
     overlayShape: RoundSliderOverlayShape(overlayRadius: 10),
     trackHeight: 1,
   ),
+  bottomSheetTheme: BottomSheetThemeData(
+    backgroundColor: Colors.transparent,
+  ),
 );
 
 final darkTheme = ThemeData(

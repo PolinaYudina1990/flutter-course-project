@@ -134,11 +134,11 @@ class _SearchScreenState extends State<SearchScreen> {
           return InkWell(
             onTap: () {
               history.add(result[index].name);
-              Navigator.pushNamed(
-                context,
-                SightDetail.routeName,
-                arguments: result[index].id,
-              );
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          SightDetail(sightId: result[index].id)));
             },
             child: SearchCard(
               sight: result[index],
