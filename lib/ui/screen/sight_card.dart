@@ -49,9 +49,7 @@ class _SightCardState extends State<SightCard> {
                             right: 16,
                             child: GestureDetector(
                               onTap: () {
-                                setState(() {
-                                  Navigator.pop(context);
-                                });
+                                Navigator.pop(context);
                               },
                               child: Container(
                                 height: 40,
