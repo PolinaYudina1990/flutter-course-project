@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -384,7 +386,7 @@ class PhotoCreation extends StatefulWidget {
 }
 
 class _PhotoCreationState extends State<PhotoCreation> {
-  int i = -1;
+  int photosCount = -1;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -410,8 +412,8 @@ class _PhotoCreationState extends State<PhotoCreation> {
             ),
             onTap: () {
               setState(() {
-                i++;
-                newSightPhotos.add(newSightsMocksPhotosList[i]);
+                photosCount++;
+                newSightPhotos.add(newSightsMocksPhotosList[photosCount]);
               });
             },
           ),
@@ -419,6 +421,9 @@ class _PhotoCreationState extends State<PhotoCreation> {
           Expanded(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
+              physics: Platform.isAndroid
+                  ? ClampingScrollPhysics()
+                  : BouncingScrollPhysics(),
               itemCount: newSightPhotos.length,
               itemBuilder: (BuildContext context, int index) {
                 return Row(
