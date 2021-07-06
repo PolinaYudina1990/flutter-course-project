@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/res/themes.dart';
-import 'package:places/ui/screen/SettingsScreen.dart';
+import 'package:places/ui/screen/settingsScreen.dart';
 import 'package:places/ui/screen/home_screen.dart';
 import 'package:provider/provider.dart';
 

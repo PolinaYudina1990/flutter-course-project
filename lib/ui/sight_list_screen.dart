@@ -3,9 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
-import 'package:places/ui/screen/AddSightScree.dart';
-import 'package:places/ui/screen/FiltersScreen.dart';
-import 'package:places/ui/screen/SightSearchScreen.dart';
+import 'package:places/ui/screen/addSightScree.dart';
+import 'package:places/ui/screen/filtersScreen.dart';
+import 'package:places/ui/screen/sightSearchScreen.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/mocks.dart';
 
