@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
@@ -57,6 +58,8 @@ class _AddNewSightState extends State<AddNewSight> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                PhotoCreation(),
+                SizedBox(height: 20),
                 _category(),
                 SizedBox(height: 20),
                 _name(),
@@ -372,8 +375,6 @@ class _AddNewSightState extends State<AddNewSight> {
     );
   }
 }
-<<<<<<< Updated upstream
-=======
 
 class PhotoCreation extends StatefulWidget {
   PhotoCreation({Key key}) : super(key: key);
@@ -491,6 +492,66 @@ class _PhotoCreationState extends State<PhotoCreation> {
                           )
                         ],
                       ),
+
+                    Stack(
+                      children: [
+                        Container(
+                          height: 72,
+                          width: 72,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              newSightPhotos[index],
+                              height: double.infinity,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes
+                                        : null,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 6,
+                          right: 6,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                newSightPhotos.removeAt(index);
+                              });
+                            },
+                            child: Container(
+                              height: 20,
+                              width: 20,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                              ),
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  closeIcon,
+                                  color: primaryColor,
+                                  height: 20,
+                                  width: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+
                     ),
                     SizedBox(width: 16),
                   ],
@@ -503,4 +564,4 @@ class _PhotoCreationState extends State<PhotoCreation> {
     );
   }
 }
->>>>>>> Stashed changes
+

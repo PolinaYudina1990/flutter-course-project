@@ -62,9 +62,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           children: [
             sightWantToVisitList(),
             sightVisited(),
-            // FavoriteVisited(
-            //   sight: mocks[0],
-            // ),
           ],
         ),
       ),
