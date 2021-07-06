@@ -36,3 +36,10 @@ final List<Sight> mocks = [
 List<String> history = [];
 List<Sight> visSight = [];
 List<Sight> visitedSight = [];
+List<String> newSightsMocksPhotosList = [
+  'https://kuda-mo.ru/uploads/9565f99c9a90ddbbbe2a671c548c28a2.jpeg',
+  'https://ic.pics.livejournal.com/alik_morozov/68038780/1002703/1002703_original.jpg',
+  'https://4.404content.com/1/97/66/2089225708088067566/fullsize.jpg',
+  'https://fotovmire.ru/wp-content/uploads/2019/02/8745/vechernij-traffik-u-podnozhja-kolizeja-v-rime.jpg',
+];
+List<String> newSightPhotos = [];
