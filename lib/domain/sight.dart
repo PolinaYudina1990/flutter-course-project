@@ -1,4 +1,5 @@
 class Sight {
+  final int id;
   final String name;
   final String workHours;
   final CoordinatePoint coordinatePoint;
@@ -10,7 +11,8 @@ class Sight {
   bool wantToVisit;
   bool visited;
   Sight(
-      {this.name,
+      {this.id,
+      this.name,
       this.workHours,
       this.coordinatePoint,
       // this.url,

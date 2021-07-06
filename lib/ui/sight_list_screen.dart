@@ -11,6 +11,7 @@ import 'package:places/mocks.dart';
 
 class SightListScreen extends StatefulWidget {
   final List<Sight> sights;
+  static const routeName = '/sightList';
 
   const SightListScreen({Key key, this.sights}) : super(key: key);
 
@@ -87,8 +88,7 @@ class _SearchFieldState extends State<SearchField> {
         child: TextField(
           readOnly: true,
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SearchScreen()));
+            Navigator.pushNamed(context, SearchScreen.routeName);
           },
           textAlign: TextAlign.start,
           style: Theme.of(context).textTheme.headline5,
@@ -121,7 +121,7 @@ class _SearchFieldState extends State<SearchField> {
         MaterialPageRoute(
             builder: (BuildContext context) => FilterScreen(
                   categories: [],
-                )));
+                ))); //!
   }
 }
 
@@ -142,8 +142,7 @@ class _ButtonAddState extends State<ButtonAdd> {
           padding: EdgeInsets.only(bottom: 20),
           child: ElevatedButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddNewSight()));
+              Navigator.pushNamed(context, AddNewSight.routeName);
             },
             style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.zero,

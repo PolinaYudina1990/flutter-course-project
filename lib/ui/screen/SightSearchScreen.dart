@@ -10,6 +10,7 @@ import 'sight_details.dart';
 
 class SearchScreen extends StatefulWidget {
   SearchScreen({Key key}) : super(key: key);
+  static const routeName = '/search';
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -133,13 +134,10 @@ class _SearchScreenState extends State<SearchScreen> {
           return InkWell(
             onTap: () {
               history.add(result[index].name);
-              Navigator.push(
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => SightDetail(
-                    sight: result[index],
-                  ),
-                ),
+                SightDetail.routeName,
+                arguments: result[index].id,
               );
             },
             child: SearchCard(

@@ -5,10 +5,9 @@ import 'package:places/domain/onBoard.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 
-import 'home_screen.dart';
-
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key key}) : super(key: key);
+  static const routeName = '/onBoarding';
 
   @override
   _OnBoardingScreenState createState() => _OnBoardingScreenState();
@@ -31,10 +30,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ? SizedBox.shrink()
                 : TextButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
+                      Navigator.pushReplacementNamed(context, '/home');
                     },
                     child: Text(onBoardButton,
                         style: Theme.of(context)
@@ -154,8 +150,7 @@ class OnBoardBottomButton extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomeScreen()));
+            Navigator.pushReplacementNamed(context, '/home');
           },
         ),
       ),

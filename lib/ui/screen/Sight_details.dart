@@ -3,23 +3,31 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/mocks.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class SightDetail extends StatelessWidget {
-  final Sight sight;
+class SightDetail extends StatefulWidget {
+  static const routeName = '/sightDetails';
 
-  SightDetail({this.sight}) {
-    _initPageController();
-  }
-  void _initPageController() {
+  SightDetail() : super();
+
+  @override
+  _SightDetailState createState() => _SightDetailState();
+}
+
+class _SightDetailState extends State<SightDetail> {
+  final PageController _pageController = PageController();
+
+  @override
+  void initState() {
     int currentPage = 0;
     Timer.periodic(
       Duration(seconds: 3),
       (timer) {
         currentPage++;
-        if (currentPage > sight.urlImages.length - 1) {
+        if (currentPage > 3) {
           currentPage = 0;
         }
         _pageController.animateToPage(
@@ -29,12 +37,13 @@ class SightDetail extends StatelessWidget {
         );
       },
     );
+    super.initState();
   }
-
-  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
+    final int sightId = ModalRoute.of(context).settings.arguments as int;
+    var sight = mocks.firstWhere((sight) => sight.id == sightId);
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(slivers: [
@@ -155,6 +164,7 @@ class AppBarBackButton extends StatelessWidget {
           child: IconButton(
         onPressed: () {
           print('button "back" pressed ');
+          Navigator.pop(context);
         },
         icon: Icon(Icons.keyboard_arrow_left),
       )),

@@ -6,6 +6,7 @@ import 'package:places/ui/screen/onboarding.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({Key key}) : super(key: key);
+  static const routeName = '/splashScreen';
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -22,13 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _navigateToNext() async {
     return _isInitialized.then(
-      (value) => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) {
-          return OnBoardingScreen();
-        }),
-      ),
-    );
+        (value) => Navigator.pushNamed(context, OnBoardingScreen.routeName));
   }
 
   @override
