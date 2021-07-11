@@ -25,30 +25,96 @@ class _SightListScreenState extends State<SightListScreen> {
     return Scaffold(
       floatingActionButton: ButtonAdd(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              sliver: SliverPersistentHeader(
-                pinned: true,
-                floating: true,
-                delegate: _SliverAppBarDelegate(),
+      body: OrientationBuilder(
+        builder: (BuildContext context, Orientation orientation) {
+          if (orientation == Orientation.portrait) {
+            return PortraitMode();
+          } else {
+            return LandscapeMode();
+          }
+        },
+      ),
+    );
+  }
+}
+
+class PortraitMode extends StatelessWidget {
+  const PortraitMode({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverPersistentHeader(
+              pinned: true,
+              floating: true,
+              delegate: _SliverAppBarDelegate(),
+            ),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.only(left: 16, right: 16),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  SearchField(),
+                ],
               ),
             ),
-            SliverPadding(
-              padding: EdgeInsets.only(left: 16, right: 16),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    SearchField(),
-                  ],
-                ),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(vertical: 34, horizontal: 16),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return Column(
+                    children: [
+                      SightCard(sight: mocks[index]),
+                      SizedBox(height: 30),
+                    ],
+                  );
+                },
+                childCount: mocks.length,
               ),
             ),
-            SliverPadding(
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class LandscapeMode extends StatelessWidget {
+  const LandscapeMode({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverPersistentHeader(
+              pinned: true,
+              floating: true,
+              delegate: _SliverAppBarDelegate(),
+            ),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.only(left: 16, right: 16),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  SearchField(),
+                ],
+              ),
+            ),
+          ),
+          SliverPadding(
               padding: EdgeInsets.symmetric(vertical: 34, horizontal: 16),
-              sliver: SliverList(
+              sliver: SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
                     return Column(
@@ -60,10 +126,13 @@ class _SightListScreenState extends State<SightListScreen> {
                   },
                   childCount: mocks.length,
                 ),
-              ),
-            ),
-          ],
-        ),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 36,
+                  childAspectRatio: 1.5,
+                ),
+              )),
+        ],
       ),
     );
   }

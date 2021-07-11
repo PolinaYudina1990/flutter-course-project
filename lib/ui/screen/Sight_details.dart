@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
@@ -214,26 +216,43 @@ class PlanButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<DateTime> _openDateTimeSlection() async {
-      return await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime.now().subtract(Duration(days: 30)),
-        lastDate: DateTime.now().add(Duration(days: 30)),
-        builder: (BuildContext context, Widget child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              colorScheme: ColorScheme.light(
-                primary: buttonColor,
-                onPrimary: lmheadline2Color,
-                surface: buttonColor,
-                onSurface: lmheadline2Color,
+      if (Platform.isAndroid)
+        return await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime.now().subtract(Duration(days: 30)),
+          lastDate: DateTime.now().add(Duration(days: 30)),
+          builder: (BuildContext context, Widget child) {
+            return Theme(
+              data: ThemeData.light().copyWith(
+                colorScheme: ColorScheme.light(
+                  primary: buttonColor,
+                  onPrimary: lmheadline2Color,
+                  surface: buttonColor,
+                  onSurface: lmheadline2Color,
+                ),
+                dialogBackgroundColor: Theme.of(context).primaryColor,
               ),
-              dialogBackgroundColor: Theme.of(context).primaryColor,
+              child: child,
+            );
+          },
+        );
+      else if (Platform.isIOS)
+        return await showCupertinoModalPopup(
+          context: context,
+          builder: (context) => Container(
+            height: 300,
+            child: CupertinoDatePicker(
+              onDateTimeChanged: (DateTime value) {
+                print(value);
+              },
+              initialDateTime: DateTime.now(),
+              minimumDate: DateTime.now().subtract(Duration(days: 30)),
+              maximumDate: DateTime.now().add(Duration(days: 30)),
+              backgroundColor: Theme.of(context).backgroundColor,
             ),
-            child: child,
-          );
-        },
-      );
+          ),
+        );
     }
 
     return TextButton(
