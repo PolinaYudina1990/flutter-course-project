@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
+import 'package:places/data/model/places_filter_request_dto.dart';
+import 'package:places/domain/categories.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
@@ -69,11 +73,38 @@ class PortraitMode extends StatelessWidget {
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  return Column(
-                    children: [
-                      SightCard(sight: mocks[index]),
-                      SizedBox(height: 30),
-                    ],
+                  return FutureBuilder(
+                    future: placeInteractor.getPlaces(
+                      PlacesFilterRequestDto(
+                        lat: GeoPoint.getMyCoordinates()['lat'],
+                        lng: GeoPoint.getMyCoordinates()['lon'],
+                        radius: 10000.0,
+                        typeFilter: typeFilters,
+                        nameFilter: '',
+                      ),
+                    ),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<Place>> snapshot) {
+                      if (snapshot.hasData) {
+                        final placesList = snapshot.data;
+                        if (placesList.isEmpty) {
+                          return const SizedBox.shrink();
+                        } else
+                          return SightCard(
+                            place: Place(
+                              name: snapshot.data[index].name,
+                              lat: snapshot.data[index].lat,
+                              lng: snapshot.data[index].lng,
+                              urls: snapshot.data[index].urls,
+                              description: snapshot.data[index].description,
+                              id: snapshot.data[index].id,
+                            ),
+                          );
+                      } else if (snapshot.hasError) {
+                        print('error');
+                      }
+                      return const SizedBox.shrink();
+                    },
                   );
                 },
                 childCount: mocks.length,
@@ -87,8 +118,8 @@ class PortraitMode extends StatelessWidget {
 }
 
 class LandscapeMode extends StatelessWidget {
-  const LandscapeMode({Key key}) : super(key: key);
-
+  const LandscapeMode({Key key, this.placeInteractor}) : super(key: key);
+  final PlaceInteractor placeInteractor;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -117,14 +148,41 @@ class LandscapeMode extends StatelessWidget {
               sliver: SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        SightCard(sight: mocks[index]),
-                        SizedBox(height: 30),
-                      ],
+                    return FutureBuilder(
+                      future: placeInteractor.getPlaces(
+                        PlacesFilterRequestDto(
+                          lat: GeoPoint.getMyCoordinates()['lat'],
+                          lng: GeoPoint.getMyCoordinates()['lon'],
+                          radius: 10000.0,
+                          typeFilter: typeFilters,
+                          nameFilter: '',
+                        ),
+                      ),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<Place>> snapshot) {
+                        if (snapshot.hasData) {
+                          final placesList = snapshot.data;
+                          if (placesList.isEmpty) {
+                            return const SizedBox.shrink();
+                          } else
+                            return SightCard(
+                              place: Place(
+                                name: snapshot.data[index].name,
+                                lat: snapshot.data[index].lat,
+                                lng: snapshot.data[index].lng,
+                                urls: snapshot.data[index].urls,
+                                description: snapshot.data[index].description,
+                                id: snapshot.data[index].id,
+                              ),
+                            );
+                        } else if (snapshot.hasError) {
+                          print('error');
+                        }
+                        return const SizedBox.shrink();
+                      },
                     );
                   },
-                  childCount: mocks.length,
+                  childCount: null,
                 ),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,

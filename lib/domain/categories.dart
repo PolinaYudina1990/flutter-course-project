@@ -20,3 +20,15 @@ class FilterType {
     isSelected = !isSelected;
   }
 }
+
+List<String> typeFilters = [
+  'temple',
+  'monument',
+  'park',
+  'theatre',
+  'museum',
+  'hotel',
+  'restaurant',
+  'cafe',
+  'other'
+];
