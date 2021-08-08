@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:places/data/model/place.dart';
@@ -10,6 +11,21 @@ class PlaceInteractor {
   final PlaceRepository placeRepository;
 
   PlaceInteractor({this.placeRepository});
+
+  StreamController<List<Place>> _addToFavoritesController =
+      StreamController.broadcast();
+
+  Stream<List<Place>> get favoriteListStream =>
+      _addToFavoritesController.stream;
+
+  StreamController<List<Place>> placesStreamController =
+      StreamController.broadcast();
+  Stream<List<Place>> get placeStream => placesStreamController.stream;
+
+  void dispose() {
+    placesStreamController.close();
+    _addToFavoritesController.close();
+  }
 
   Future<List<Place>> getPlaces(PlacesFilterRequestDto filter) async {
     final places = await (placeRepository.getFilteredPlaces(filter));
@@ -25,7 +41,7 @@ class PlaceInteractor {
                 b.lat,
                 b.lng)
             .toInt()));
-
+    placesStreamController.sink.add(places);
     return places;
   }
 
@@ -50,7 +66,7 @@ class PlaceInteractor {
                     b.lat,
                     b.lng)
                 .toInt()));
-
+    _addToFavoritesController.add(favoritesPlaces);
     return favoritesPlaces;
   }
 
@@ -65,7 +81,7 @@ class PlaceInteractor {
       },
     );
     if (result) favoritesPlaces.add(place);
-
+    _addToFavoritesController.add(favoritesPlaces);
     return result;
   }
 
@@ -81,7 +97,7 @@ class PlaceInteractor {
     );
 
     if (result) favoritesPlaces.remove(place);
-
+    _addToFavoritesController.add(favoritesPlaces);
     return result;
   }
 
