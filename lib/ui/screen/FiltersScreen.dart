@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/components/geoposition.dart';
+import 'package:places/data/interactor/search_interactor.dart';
 import 'package:places/domain/categories.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
@@ -22,11 +23,13 @@ class FilterScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<FilterScreen> {
-  RangeValues distance = RangeValues(100, 10000);
+  // RangeValues distance = RangeValues(100, 10000);
   List<Sight> filteredList = [];
 
   @override
   Widget build(BuildContext context) {
+    final double phoneHeigh = MediaQuery.of(context).size.height;
+    final double phoneWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -40,6 +43,7 @@ class _FilterScreenState extends State<FilterScreen> {
             TextButton(
                 onPressed: () {
                   setState(() {
+                    SearchInteractor.rangeValues = RangeValues(100, 10000);
                     categories.forEach((element) {
                       element.isSelected = false;
                     });
@@ -68,15 +72,27 @@ class _FilterScreenState extends State<FilterScreen> {
                     .copyWith(color: planIcon, fontWeight: FontWeight.normal),
               ),
             ),
-            Expanded(
-              child: GridView.count(
-                  primary: false,
-                  padding: const EdgeInsets.all(20),
-                  crossAxisCount: 3,
-                  children: categories
-                      .map((element) => WidgetCategory(element))
-                      .toList()),
-            ),
+            phoneHeigh > 800 && phoneWidth > 480
+                ? Expanded(
+                    child: GridView.count(
+                        primary: false,
+                        padding: const EdgeInsets.all(20),
+                        crossAxisCount: 3,
+                        children: categories
+                            .map((element) => WidgetCategory(element))
+                            .toList()),
+                  )
+                : Expanded(
+                    child: ListView(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        children: categories
+                            .map((element) => Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 24, horizontal: 20),
+                                  child: WidgetCategory(element),
+                                ))
+                            .toList())),
             Expanded(
               child: Column(
                 children: [
@@ -91,7 +107,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                   .headline5
                                   .copyWith(fontWeight: FontWeight.normal)),
                           Text(
-                            'от ${distance.start.round()} до ${distance.end.round()} м',
+                            'от ${SearchInteractor.rangeValues.start.round()} до ${SearchInteractor.rangeValues.end.round()} м',
                             style: Theme.of(context)
                                 .textTheme
                                 .headline5
@@ -109,10 +125,10 @@ class _FilterScreenState extends State<FilterScreen> {
                     child: RangeSlider(
                       min: 100,
                       max: 10000,
-                      values: distance,
+                      values: SearchInteractor.rangeValues,
                       onChanged: (RangeValues values) {
                         setState(() {
-                          distance = values;
+                          SearchInteractor.rangeValues = values;
                           print(sortedByRadius);
                         });
                       },
@@ -160,8 +176,10 @@ class _FilterScreenState extends State<FilterScreen> {
     int result = 0;
     mocks.forEach((sight) {
       if (selectedTypes.contains(sight.titleType) &&
-          arePointsNear(sight.coordinatePoint,
-              CoordinatePoint(52.512044, 107.037643), distance)) {
+          arePointsNear(
+              sight.coordinatePoint,
+              CoordinatePoint(52.512044, 107.037643),
+              SearchInteractor.rangeValues)) {
         result++;
       }
     });

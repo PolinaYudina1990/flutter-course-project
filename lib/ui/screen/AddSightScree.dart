@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:places/domain/sight.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 
@@ -76,7 +77,7 @@ class _AddNewSightState extends State<AddNewSight> {
                         .copyWith(color: buttonColor)),
                 SizedBox(height: 20),
                 _descr(),
-                _createNewSightButton(),
+                _createNewSightButton(placeInteractor),
               ],
             ),
           ),
@@ -340,22 +341,20 @@ class _AddNewSightState extends State<AddNewSight> {
         _controllerDetails.text.isNotEmpty;
   }
 
-  Widget _createNewSightButton() {
+  Widget _createNewSightButton(PlaceInteractor placeInteractor) {
     return TextButton(
       onPressed: _checkIfClear()
           ? () {
-              Sight newSight = Sight(
+              Place place = Place(
                 name: _controllerTitle.text,
-                coordinatePoint: CoordinatePoint(
-                  double.tryParse(_controllerLatitude.text),
-                  double.tryParse(_controllerLongitude.text),
-                ),
-                urlImages: [],
-                details: _controllerDetails.text,
-                titleType: selectedCat.toString(),
-                workHours: 'закрыто до 09:00',
+                urls: [],
+                description: _controllerDetails.text,
+                placeType: selectedCat.toString(),
+                lat: double.tryParse(_controllerLatitude.text),
+                lng: double.tryParse(_controllerLongitude.text),
               );
-              mocks.add(newSight);
+              placeInteractor.addNewPlace(place);
+
               Navigator.pop(context);
             }
           : null,

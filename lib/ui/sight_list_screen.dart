@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
+import 'package:places/data/model/places_filter_request_dto.dart';
+import 'package:places/domain/categories.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
@@ -25,45 +29,168 @@ class _SightListScreenState extends State<SightListScreen> {
     return Scaffold(
       floatingActionButton: ButtonAdd(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              sliver: SliverPersistentHeader(
-                pinned: true,
-                floating: true,
-                delegate: _SliverAppBarDelegate(),
+      body: OrientationBuilder(
+        builder: (BuildContext context, Orientation orientation) {
+          if (orientation == Orientation.portrait) {
+            return PortraitMode();
+          } else {
+            return LandscapeMode();
+          }
+        },
+      ),
+    );
+  }
+}
+
+class PortraitMode extends StatelessWidget {
+  const PortraitMode({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverPersistentHeader(
+              pinned: true,
+              floating: true,
+              delegate: _SliverAppBarDelegate(),
+            ),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.only(left: 16, right: 16),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  SearchField(),
+                ],
               ),
             ),
-            SliverPadding(
-              padding: EdgeInsets.only(left: 16, right: 16),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    SearchField(),
-                  ],
-                ),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(vertical: 34, horizontal: 16),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return FutureBuilder(
+                    future: placeInteractor.getPlaces(
+                      PlacesFilterRequestDto(
+                        lat: GeoPoint.getMyCoordinates()['lat'],
+                        lng: GeoPoint.getMyCoordinates()['lon'],
+                        radius: 10000.0,
+                        typeFilter: typeFilters,
+                        nameFilter: '',
+                      ),
+                    ),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<Place>> snapshot) {
+                      if (snapshot.hasData) {
+                        final placesList = snapshot.data;
+                        if (placesList.isEmpty) {
+                          return const SizedBox.shrink();
+                        } else
+                          return SightCard(
+                            place: Place(
+                              name: snapshot.data[index].name,
+                              lat: snapshot.data[index].lat,
+                              lng: snapshot.data[index].lng,
+                              urls: snapshot.data[index].urls,
+                              description: snapshot.data[index].description,
+                              id: snapshot.data[index].id,
+                            ),
+                          );
+                      } else if (snapshot.hasError) {
+                        print('error');
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  );
+                },
+                childCount: mocks.length,
               ),
             ),
-            SliverPadding(
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class LandscapeMode extends StatelessWidget {
+  const LandscapeMode({Key key, this.placeInteractor}) : super(key: key);
+  final PlaceInteractor placeInteractor;
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverPersistentHeader(
+              pinned: true,
+              floating: true,
+              delegate: _SliverAppBarDelegate(),
+            ),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.only(left: 16, right: 16),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  SearchField(),
+                ],
+              ),
+            ),
+          ),
+          SliverPadding(
               padding: EdgeInsets.symmetric(vertical: 34, horizontal: 16),
-              sliver: SliverList(
+              sliver: SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        SightCard(sight: mocks[index]),
-                        SizedBox(height: 30),
-                      ],
+                    return FutureBuilder(
+                      future: placeInteractor.getPlaces(
+                        PlacesFilterRequestDto(
+                          lat: GeoPoint.getMyCoordinates()['lat'],
+                          lng: GeoPoint.getMyCoordinates()['lon'],
+                          radius: 10000.0,
+                          typeFilter: typeFilters,
+                          nameFilter: '',
+                        ),
+                      ),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<Place>> snapshot) {
+                        if (snapshot.hasData) {
+                          final placesList = snapshot.data;
+                          if (placesList.isEmpty) {
+                            return const SizedBox.shrink();
+                          } else
+                            return SightCard(
+                              place: Place(
+                                name: snapshot.data[index].name,
+                                lat: snapshot.data[index].lat,
+                                lng: snapshot.data[index].lng,
+                                urls: snapshot.data[index].urls,
+                                description: snapshot.data[index].description,
+                                id: snapshot.data[index].id,
+                              ),
+                            );
+                        } else if (snapshot.hasError) {
+                          print('error');
+                        }
+                        return const SizedBox.shrink();
+                      },
                     );
                   },
-                  childCount: mocks.length,
+                  childCount: null,
                 ),
-              ),
-            ),
-          ],
-        ),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 36,
+                  childAspectRatio: 1.5,
+                ),
+              )),
+        ],
       ),
     );
   }

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 import 'package:places/ui/screen/sight_details.dart';
 
 class FavoriteVisited extends StatelessWidget {
-  final Sight sight;
+  final Place place;
   final VoidCallback onDelete;
   final VoidCallback onFilterChange;
   final VoidCallback isDissmissed;
 
   const FavoriteVisited(
       {Key key,
-      this.sight,
+      this.place,
       this.onDelete,
       this.onFilterChange,
       this.isDissmissed});
@@ -27,7 +28,7 @@ class FavoriteVisited extends StatelessWidget {
         List<dynamic> rejectedData,
       ) {
         return LongPressDraggable(
-          data: sight,
+          data: place,
           axis: Axis.vertical,
           feedback: ConstrainedBox(
               constraints:
@@ -48,7 +49,7 @@ class FavoriteVisited extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => SightDetail(sightId: sight.id)));
+                  builder: (context) => SightDetail(sightId: place.id)));
         },
         child: Container(
           padding: EdgeInsets.only(left: 16, right: 16, top: 30, bottom: 30),
@@ -58,8 +59,8 @@ class FavoriteVisited extends StatelessWidget {
             key: UniqueKey(),
             direction: DismissDirection.endToStart,
             onDismissed: (direction) {
-              sight.wantToVisit = !sight.wantToVisit;
-              sight.visited = !sight.visited;
+              // sight.wantToVisit = !sight.wantToVisit;
+              // sight.visited = !sight.visited;
               onDelete();
             },
             child: Column(
@@ -76,7 +77,7 @@ class FavoriteVisited extends StatelessWidget {
                           topRight: const Radius.circular(15),
                         ),
                         child: Image.network(
-                          sight.urlImages[0],
+                          place.urls[0],
                           height: double.infinity,
                           width: double.infinity,
                           fit: BoxFit.cover,
@@ -108,7 +109,7 @@ class FavoriteVisited extends StatelessWidget {
                         top: 16,
                         left: 16,
                         child: Text(
-                          '${sight.titleType}',
+                          '${place.placeType}',
                           style: Theme.of(context).textTheme.bodyText2,
                         )),
                     Positioned(
@@ -131,7 +132,7 @@ class FavoriteVisited extends StatelessWidget {
                         onPressed: () {
                           onDelete();
                           print('fyui');
-                          sight.visited = !sight.visited;
+                          // sight.visited = !sight.visited;
                         },
                       ),
                     ),
@@ -152,7 +153,7 @@ class FavoriteVisited extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${sight.name}',
+                        '${place.name}',
                         maxLines: 2,
                         style: Theme.of(context).textTheme.headline5,
                       ),
@@ -166,10 +167,10 @@ class FavoriteVisited extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text(
-                        '${sight.workHours}',
-                        style: Theme.of(context).textTheme.subtitle2,
-                      ),
+                      // Text(
+                      //   '${place.workHours}',
+                      //   style: Theme.of(context).textTheme.subtitle2,
+                      // ),
                     ],
                   ),
                 ),
