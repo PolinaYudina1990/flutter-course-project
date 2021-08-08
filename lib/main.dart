@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:places/dio_test.dart';
 import 'package:places/res/themes.dart';
 import 'package:places/ui/screen/addSightScree.dart';
 import 'package:places/ui/screen/filtersScreen.dart';
@@ -21,7 +22,18 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
+void testDioCall() async {
+  final responce = await getDioPosts();
+  return responce;
+}
+
 class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    testDioCall();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
