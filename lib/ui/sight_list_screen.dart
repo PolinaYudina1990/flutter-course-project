@@ -47,6 +47,15 @@ class PortraitMode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    placeInteractor.getPlaces(
+      PlacesFilterRequestDto(
+        lat: GeoPoint.getMyCoordinates()['lat'],
+        lng: GeoPoint.getMyCoordinates()['lon'],
+        radius: 10000.0,
+        typeFilter: typeFilters,
+        nameFilter: '',
+      ),
+    );
     return SafeArea(
       child: CustomScrollView(
         slivers: <Widget>[
@@ -73,18 +82,9 @@ class PortraitMode extends StatelessWidget {
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  return FutureBuilder(
-                    future: placeInteractor.getPlaces(
-                      PlacesFilterRequestDto(
-                        lat: GeoPoint.getMyCoordinates()['lat'],
-                        lng: GeoPoint.getMyCoordinates()['lon'],
-                        radius: 10000.0,
-                        typeFilter: typeFilters,
-                        nameFilter: '',
-                      ),
-                    ),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<Place>> snapshot) {
+                  return StreamBuilder<List<Place>>(
+                    stream: placeInteractor.placeStream,
+                    builder: (BuildContext context, snapshot) {
                       if (snapshot.hasData) {
                         final placesList = snapshot.data;
                         if (placesList.isEmpty) {
@@ -148,18 +148,9 @@ class LandscapeMode extends StatelessWidget {
               sliver: SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return FutureBuilder(
-                      future: placeInteractor.getPlaces(
-                        PlacesFilterRequestDto(
-                          lat: GeoPoint.getMyCoordinates()['lat'],
-                          lng: GeoPoint.getMyCoordinates()['lon'],
-                          radius: 10000.0,
-                          typeFilter: typeFilters,
-                          nameFilter: '',
-                        ),
-                      ),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<Place>> snapshot) {
+                    return StreamBuilder<List<Place>>(
+                      stream: placeInteractor.placeStream,
+                      builder: (BuildContext context, snapshot) {
                         if (snapshot.hasData) {
                           final placesList = snapshot.data;
                           if (placesList.isEmpty) {
@@ -176,9 +167,9 @@ class LandscapeMode extends StatelessWidget {
                               ),
                             );
                         } else if (snapshot.hasError) {
-                          print('error');
-                        }
-                        return const SizedBox.shrink();
+                          return const SizedBox.shrink();
+                        } else
+                          return const CircularProgressIndicator();
                       },
                     );
                   },
