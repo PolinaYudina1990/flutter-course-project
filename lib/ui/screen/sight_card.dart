@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:places/domain/sight.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 import 'sight_details.dart';
 
-class SightCard extends StatefulWidget {
-  final Sight sight;
+class SightCard extends StatelessWidget {
+  final Place place;
 
-  const SightCard({Key key, this.sight}) : super(key: key);
+  const SightCard({Key key, this.place}) : super(key: key);
 
-  @override
-  _SightCardState createState() => _SightCardState();
-}
-
-class _SightCardState extends State<SightCard> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
       Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ImageBox(sight: widget.sight),
-          DescriptionBox(sight: widget.sight),
+          ImageBox(place: place),
+          DescriptionBox(place: place),
         ],
       ),
       Positioned.fill(
@@ -43,7 +39,7 @@ class _SightCardState extends State<SightCard> {
                       ),
                       child: Stack(
                         children: [
-                          SightDetail(sightId: widget.sight.id),
+                          SightDetail(sightId: place.id),
                           Positioned(
                             top: 16,
                             right: 16,
@@ -89,18 +85,17 @@ class _SightCardState extends State<SightCard> {
         right: 10,
         child: InkWell(
           onTap: () {
-            setState(() {
-              widget.sight.wantToVisit = !widget.sight.wantToVisit;
-              print(widget.sight.wantToVisit);
-            });
+            placeInteractor.addToFavorites(place);
           },
-          child: widget.sight.wantToVisit
-              ? SvgPicture.asset(favorite2, width: 25, color: iconColor)
-              : SvgPicture.asset(
-                  favorite,
-                  width: 25,
-                  color: iconColor,
-                ),
+          child:
+              // place.wantToVisit
+              //     ? SvgPicture.asset(favorite2, width: 25, color: iconColor)
+              // :
+              SvgPicture.asset(
+            favorite,
+            width: 25,
+            color: iconColor,
+          ),
         ),
       ),
     ]);
@@ -108,11 +103,11 @@ class _SightCardState extends State<SightCard> {
 }
 
 class DescriptionBox extends StatelessWidget {
-  final Sight sight;
+  final Place place;
 
   const DescriptionBox({
     Key key,
-    @required this.sight,
+    @required this.place,
   }) : super(key: key);
 
   @override
@@ -131,7 +126,7 @@ class DescriptionBox extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${sight.name}',
+            '${place.name}',
             maxLines: 1,
             style: Theme.of(context).textTheme.headline5,
           ),
@@ -139,7 +134,7 @@ class DescriptionBox extends StatelessWidget {
             height: 10,
           ),
           Text(
-            '${sight.details}',
+            '${place.description}',
             maxLines: 2,
             style: Theme.of(context).textTheme.subtitle2,
           ),
@@ -150,11 +145,11 @@ class DescriptionBox extends StatelessWidget {
 }
 
 class ImageBox extends StatelessWidget {
-  final Sight sight;
+  final Place place;
 
   const ImageBox({
     Key key,
-    @required this.sight,
+    @required this.place,
   }) : super(key: key);
 
   static const double Height = 100;
@@ -170,7 +165,7 @@ class ImageBox extends StatelessWidget {
               topRight: const Radius.circular(15),
             ),
             child: Image.network(
-              sight.urlImages[0],
+              place.urls[0],
               height: double.infinity,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -200,7 +195,7 @@ class ImageBox extends StatelessWidget {
             top: 16,
             left: 16,
             child: Text(
-              '${sight.titleType}',
+              '${place.placeType}',
               style: Theme.of(context).textTheme.bodyText2,
             )),
       ],

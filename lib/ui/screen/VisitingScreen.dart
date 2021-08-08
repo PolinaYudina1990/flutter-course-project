@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/components/sightVisited.dart';
 import 'package:places/components/sightWantVisit.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 import '../../mocks.dart';
@@ -68,34 +70,52 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     );
   }
 
-  void _onChange() {
+  void onDismissedCard(place) {
     setState(() {
-      visSight = mocks.where((sight) => sight.wantToVisit == true).toList();
-      visitedSight = mocks.where((sight) => sight.visited == true).toList();
+      onDelete(place);
+    });
+  }
+
+  void onDelete(place) {
+    setState(() {
+      placeInteractor.removeFromFavorites(place);
     });
   }
 
   Widget sightWantToVisitList() {
     if (visSight.length > 0) {
       return SingleChildScrollView(
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: Platform.isAndroid
-              ? ClampingScrollPhysics()
-              : BouncingScrollPhysics(),
-          itemCount: visSight.length,
-          itemBuilder: (context, index) => FavoriteWishVisit(
-            sight: visSight[index],
-            key: ObjectKey(visSight[index]),
-            onFilterChange: () {
-              setState(() {});
-            },
-            onDelete: () {
-              visitedSight.add(visSight[index]);
-              _onChange();
-            },
-          ),
-        ),
+        child: FutureBuilder<List<Place>>(
+            future: placeInteractor.getVisitPlaces(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: Platform.isAndroid
+                      ? ClampingScrollPhysics()
+                      : BouncingScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    return AspectRatio(
+                      aspectRatio: 3 / 2,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width),
+                        child: FavoriteWishVisit(
+                          key: ValueKey(snapshot.data[index].name),
+                          place: snapshot.data[index],
+                          onDelete: () => onDelete(snapshot.data[index]),
+                          onFilterChange: () => setState(() {}),
+                          candidateDataList: snapshot.data,
+                        ),
+                      ),
+                    );
+                  },
+                  itemCount: snapshot.data.length,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                );
+              } else
+                return SizedBox.shrink();
+            }),
       );
     } else
       return _emptyWantToVisitScreen();
@@ -104,21 +124,37 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   Widget sightVisited() {
     if (visitedSight.length > 0) {
       return SingleChildScrollView(
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: Platform.isAndroid
-              ? ClampingScrollPhysics()
-              : BouncingScrollPhysics(),
-          itemCount: visitedSight.length,
-          itemBuilder: (context, index) => FavoriteVisited(
-            sight: visitedSight[index],
-            key: ObjectKey(visitedSight[index]),
-            onDelete: () {
-              visitedSight.remove(visitedSight[index]);
-              _onChange();
-            },
-          ),
-        ),
+        child: FutureBuilder<List<Place>>(
+            future: placeInteractor.getVisitPlaces(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: Platform.isAndroid
+                      ? ClampingScrollPhysics()
+                      : BouncingScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    return AspectRatio(
+                      aspectRatio: 3 / 2,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width),
+                        child: FavoriteVisited(
+                          key: ValueKey(snapshot.data[index].name),
+                          place: snapshot.data[index],
+                          onDelete: () => onDelete(snapshot.data[index]),
+                          onFilterChange: () => setState(() {}),
+                          isDissmissed: () => onDelete(snapshot.data[index]),
+                        ),
+                      ),
+                    );
+                  },
+                  itemCount: snapshot.data.length,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                );
+              } else
+                return SizedBox.shrink();
+            }),
       );
     } else
       return _emptyVisitedScreen();

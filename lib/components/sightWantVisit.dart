@@ -1,31 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:places/domain/sight.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 import 'package:places/ui/screen/sight_details.dart';
 
-import '../mocks.dart';
-
 class FavoriteWishVisit extends StatelessWidget {
-  final Sight sight;
+  final Place place;
   final VoidCallback onDelete;
   final VoidCallback onFilterChange;
+  final List<Place> candidateDataList;
 
   const FavoriteWishVisit(
-      {Key key, this.sight, this.onDelete, this.onFilterChange});
+      {Key key,
+      this.place,
+      this.onDelete,
+      this.onFilterChange,
+      this.candidateDataList});
   static const double Height = 120;
 
   @override
   Widget build(BuildContext context) {
-    return DragTarget<Sight>(
+    return DragTarget<Place>(
       builder: (
         BuildContext context,
-        List<Sight> candidateData,
+        List<Place> candidateData,
         List<dynamic> rejectedData,
       ) {
         return LongPressDraggable(
-          data: sight,
+          data: place,
           axis: Axis.vertical,
           feedback: ConstrainedBox(
               constraints:
@@ -36,11 +39,19 @@ class FavoriteWishVisit extends StatelessWidget {
         );
       },
       onAccept: (data) {
-        final int oldIndex = visSight.indexOf(sight);
-        final int newIndex = visSight.indexOf(data);
+        int targetIndex = 0;
+        candidateDataList.forEach((element) {
+          if (element.id == place.id)
+            targetIndex = candidateDataList.indexOf(element);
+        });
+        int acceptedIndex = 0;
+        candidateDataList.forEach((element) {
+          if (element.id == data.id)
+            acceptedIndex = candidateDataList.indexOf(element);
+        });
 
-        visSight[oldIndex] = data;
-        visSight[newIndex] = sight;
+        candidateDataList[targetIndex] = data;
+        candidateDataList[acceptedIndex] = place;
         onFilterChange();
       },
     );
@@ -56,7 +67,7 @@ class FavoriteWishVisit extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SightDetail(sightId: sight.id)));
+                    builder: (context) => SightDetail(sightId: place.id)));
           },
           child: Dismissible(
             background: const SizedBox.shrink(),
@@ -64,8 +75,8 @@ class FavoriteWishVisit extends StatelessWidget {
             key: UniqueKey(),
             direction: DismissDirection.endToStart,
             onDismissed: (direction) {
-              sight.wantToVisit = !sight.wantToVisit;
-              sight.visited = !sight.visited;
+              // sight.wantToVisit = !sight.wantToVisit;
+              // sight.visited = !sight.visited;
               onDelete();
             },
             child: Column(
@@ -79,7 +90,7 @@ class FavoriteWishVisit extends StatelessWidget {
                           topRight: const Radius.circular(15),
                         ),
                         child: Image.network(
-                          sight.urlImages[0],
+                          place.urls[0],
                           height: double.infinity,
                           width: double.infinity,
                           fit: BoxFit.cover,
@@ -111,7 +122,7 @@ class FavoriteWishVisit extends StatelessWidget {
                         top: 16,
                         left: 16,
                         child: Text(
-                          '${sight.titleType}',
+                          '${place.placeType}',
                           style: Theme.of(context).textTheme.bodyText2,
                         )),
                     Positioned(
@@ -132,9 +143,9 @@ class FavoriteWishVisit extends StatelessWidget {
                       child: IconButton(
                         icon: Icon(Icons.close, size: 30, color: iconColor),
                         onPressed: () {
-                          sight.wantToVisit = !sight.wantToVisit;
-                          sight.visited = !sight.visited;
-                          print(sight.wantToVisit);
+                          // sight.wantToVisit = !sight.wantToVisit;
+                          // sight.visited = !sight.visited;
+                          // print(sight.wantToVisit);
                           onDelete();
                         },
                       ),
@@ -156,7 +167,7 @@ class FavoriteWishVisit extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${sight.name}',
+                        '${place.name}',
                         maxLines: 2,
                         style: Theme.of(context).textTheme.headline5,
                       ),
@@ -170,10 +181,10 @@ class FavoriteWishVisit extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text(
-                        '${sight.workHours}',
-                        style: Theme.of(context).textTheme.subtitle2,
-                      ),
+                      // Text(
+                      //   '${sight.workHours}',
+                      //   style: Theme.of(context).textTheme.subtitle2,
+                      // ),
                     ],
                   ),
                 ),
