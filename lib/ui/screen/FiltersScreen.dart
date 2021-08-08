@@ -27,6 +27,8 @@ class _FilterScreenState extends State<FilterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double phoneHeigh = MediaQuery.of(context).size.height;
+    final double phoneWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -68,15 +70,27 @@ class _FilterScreenState extends State<FilterScreen> {
                     .copyWith(color: planIcon, fontWeight: FontWeight.normal),
               ),
             ),
-            Expanded(
-              child: GridView.count(
-                  primary: false,
-                  padding: const EdgeInsets.all(20),
-                  crossAxisCount: 3,
-                  children: categories
-                      .map((element) => WidgetCategory(element))
-                      .toList()),
-            ),
+            phoneHeigh > 800 && phoneWidth > 480
+                ? Expanded(
+                    child: GridView.count(
+                        primary: false,
+                        padding: const EdgeInsets.all(20),
+                        crossAxisCount: 3,
+                        children: categories
+                            .map((element) => WidgetCategory(element))
+                            .toList()),
+                  )
+                : Expanded(
+                    child: ListView(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        children: categories
+                            .map((element) => Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 24, horizontal: 20),
+                                  child: WidgetCategory(element),
+                                ))
+                            .toList())),
             Expanded(
               child: Column(
                 children: [
