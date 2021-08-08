@@ -9,9 +9,12 @@ import 'package:places/res/colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class SightDetail extends StatefulWidget {
-  static const routeName = '/sightDetails';
+  final int sightId;
 
-  SightDetail() : super();
+  SightDetail({
+    Key key,
+    @required this.sightId,
+  }) : super();
 
   @override
   _SightDetailState createState() => _SightDetailState();
@@ -42,8 +45,8 @@ class _SightDetailState extends State<SightDetail> {
 
   @override
   Widget build(BuildContext context) {
-    final int sightId = ModalRoute.of(context).settings.arguments as int;
-    var sight = mocks.firstWhere((sight) => sight.id == sightId);
+    // final int sightId = ModalRoute.of(context).settings.arguments as int;
+    var sight = mocks.firstWhere((sight) => sight.id == widget.sightId);
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(slivers: [
@@ -79,7 +82,7 @@ class _SightDetailState extends State<SightDetail> {
               ],
             ),
           ),
-          SliverFillRemaining(
+          SliverToBoxAdapter(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
@@ -210,8 +213,32 @@ class PlanButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<DateTime> _openDateTimeSlection() async {
+      return await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now().subtract(Duration(days: 30)),
+        lastDate: DateTime.now().add(Duration(days: 30)),
+        builder: (BuildContext context, Widget child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              colorScheme: ColorScheme.light(
+                primary: buttonColor,
+                onPrimary: lmheadline2Color,
+                surface: buttonColor,
+                onSurface: lmheadline2Color,
+              ),
+              dialogBackgroundColor: Theme.of(context).primaryColor,
+            ),
+            child: child,
+          );
+        },
+      );
+    }
+
     return TextButton(
       onPressed: () {
+        _openDateTimeSlection();
         print('button "plan" pressed ');
       },
       child: Row(

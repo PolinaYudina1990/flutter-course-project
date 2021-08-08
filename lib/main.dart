@@ -38,8 +38,6 @@ class _MyAppState extends State<MyApp> {
               SplashScreen.routeName: (context) => SplashScreen(),
               SightListScreen.routeName: (context) => SightListScreen(),
               OnBoardingScreen.routeName: (context) => OnBoardingScreen(),
-              SightDetail.routeName: (context) => SightDetail(),
-              // FilterScreen.routeName: (context) => FilterScreen(),
               HomeScreen.routeName: (context) => HomeScreen(),
               SearchScreen.routeName: (context) => SearchScreen(),
               AddNewSight.routeName: (context) => AddNewSight(),

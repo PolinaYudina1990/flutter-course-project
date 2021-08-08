@@ -24,6 +24,9 @@ const String titleSightListScreen = 'Список\nинтересных мест
     signpost = 'lib/res/icons/signpost.svg',
     tapHand = 'lib/res/icons/tap.svg',
     splashMap = 'lib/res/icons/splashMap.svg',
+    iconDialogAddPhoto = 'lib/res/icons/union.svg',
+    iconDialogAddPhoto2 = 'lib/res/icons/photoadd.svg',
+    iconDialogAddPhoto3 = 'lib/res/icons/photoaddicon3.svg',
 
 //SightDetail.dart
     buildNavigation = 'ПОСТРОИТЬ МАРШРУТ',
@@ -62,6 +65,9 @@ const String titleSightListScreen = 'Список\nинтересных мест
     chooseOnMap = 'Указать на карте',
     descriptionTitle = 'ОПИСАНИЕ',
     showOnMap = 'Указать на карте',
+    dialog1 = 'Камера',
+    dialog2 = 'Фотография',
+    dialog3 = 'Файл',
 
 // AddCategoryScreen
     titleAddCategory = 'Категория',
