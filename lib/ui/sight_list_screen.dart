@@ -8,6 +8,7 @@ import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 import 'package:places/ui/screen/addSightScree.dart';
+import 'package:places/ui/screen/error_screen.dart';
 import 'package:places/ui/screen/filtersScreen.dart';
 import 'package:places/ui/screen/sightSearchScreen.dart';
 import 'package:places/ui/screen/sight_card.dart';
@@ -101,9 +102,9 @@ class PortraitMode extends StatelessWidget {
                             ),
                           );
                       } else if (snapshot.hasError) {
-                        print('error');
-                      }
-                      return const SizedBox.shrink();
+                        return ErrorScreen();
+                      } else
+                        return const CircularProgressIndicator();
                     },
                   );
                 },
@@ -167,7 +168,7 @@ class LandscapeMode extends StatelessWidget {
                               ),
                             );
                         } else if (snapshot.hasError) {
-                          return const SizedBox.shrink();
+                          return ErrorScreen();
                         } else
                           return const CircularProgressIndicator();
                       },
