@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:places/data/repository/network_exception.dart';
 
 final dio = Dio(baseOptions);
 BaseOptions baseOptions = BaseOptions(
-    baseUrl: 'https://jsonplaceholder.typicode.com',
+    baseUrl: 'https://test-backend-flutter.surfstudio.ru/',
     connectTimeout: 5000,
     receiveTimeout: 5000,
     sendTimeout: 5000,
@@ -20,7 +21,12 @@ void initInterceptors() {
   dio.interceptors.add(
     InterceptorsWrapper(
       onError: (error, handler) {
-        print('Error: $error');
+        print(
+          NetworkException(
+              response: error.requestOptions.method,
+              message: error.error,
+              errorCode: error.response.statusCode.toString()),
+        );
       },
       onRequest: (options, handler) {
         print('Request sent: ${options.baseUrl}${options.path}');

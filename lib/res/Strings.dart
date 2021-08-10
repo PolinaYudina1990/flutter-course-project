@@ -23,6 +23,7 @@ const String titleSightListScreen = 'Список\nинтересных мест
     bag = 'lib/res/icons/bag.svg',
     signpost = 'lib/res/icons/signpost.svg',
     tapHand = 'lib/res/icons/tap.svg',
+    errorScreen = 'lib/res/icons/errorScreenMessage.svg',
     splashMap = 'lib/res/icons/splashMap.svg',
     iconDialogAddPhoto = 'lib/res/icons/union.svg',
     iconDialogAddPhoto2 = 'lib/res/icons/photoadd.svg',
