@@ -4,6 +4,7 @@ import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
+import 'package:provider/provider.dart';
 import 'sight_details.dart';
 
 class SightCard extends StatelessWidget {
@@ -85,7 +86,7 @@ class SightCard extends StatelessWidget {
         right: 10,
         child: InkWell(
           onTap: () {
-            placeInteractor.addToFavorites(place);
+            Provider.of<PlaceInteractor>(context).addToFavorites(place);
           },
           child:
               // place.wantToVisit

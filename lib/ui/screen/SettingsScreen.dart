@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/settings_interactor.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,9 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool isSwitched = false;
   var switchText = 'Тёмная тема';
+  bool _darkTheme;
+  BuildContext context;
+  bool get darkTheme => _darkTheme;
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +39,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           .textTheme
                           .headline5
                           .copyWith(fontWeight: FontWeight.normal)),
-                  Consumer<ThemeNotifier>(
-                    builder: (context, notifier, child) => CupertinoSwitch(
-                      value: notifier.darkTheme,
-                      onChanged: (value) {
-                        notifier.changeTheme();
-                      },
-                    ),
-                  ),
+                  Switch.adaptive(
+                    value: _darkTheme,
+                    activeColor: buttonColor,
+                    onChanged: (isDark) {
+                      setState(() {
+                        _darkTheme = isDark;
+                      });
+                      context.read<SettingsInteractor>().changeTheme(isDark);
+                    },
+                  )
                 ],
               ),
               Divider(),
@@ -64,20 +70,5 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
         ));
-  }
-}
-
-class ThemeNotifier extends ChangeNotifier {
-  bool _darkTheme;
-
-  bool get darkTheme => _darkTheme;
-
-  ThemeNotifier() {
-    _darkTheme = false;
-  }
-
-  changeTheme() {
-    _darkTheme = !_darkTheme;
-    notifyListeners();
   }
 }

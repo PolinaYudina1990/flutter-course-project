@@ -7,7 +7,7 @@ import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
-
+import 'package:provider/provider.dart';
 import '../../mocks.dart';
 import 'selectCategoryScreen.dart';
 
@@ -77,7 +77,7 @@ class _AddNewSightState extends State<AddNewSight> {
                         .copyWith(color: buttonColor)),
                 SizedBox(height: 20),
                 _descr(),
-                _createNewSightButton(placeInteractor),
+                _createNewSightButton(),
               ],
             ),
           ),
@@ -341,7 +341,7 @@ class _AddNewSightState extends State<AddNewSight> {
         _controllerDetails.text.isNotEmpty;
   }
 
-  Widget _createNewSightButton(PlaceInteractor placeInteractor) {
+  Widget _createNewSightButton() {
     return TextButton(
       onPressed: _checkIfClear()
           ? () {
@@ -353,7 +353,7 @@ class _AddNewSightState extends State<AddNewSight> {
                 lat: double.tryParse(_controllerLatitude.text),
                 lng: double.tryParse(_controllerLongitude.text),
               );
-              placeInteractor.addNewPlace(place);
+              context.read<PlaceInteractor>().addNewPlace(place);
 
               Navigator.pop(context);
             }
