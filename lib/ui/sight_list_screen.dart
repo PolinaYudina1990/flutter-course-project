@@ -13,6 +13,7 @@ import 'package:places/ui/screen/filtersScreen.dart';
 import 'package:places/ui/screen/sightSearchScreen.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/mocks.dart';
+import 'package:provider/provider.dart';
 
 class SightListScreen extends StatefulWidget {
   final List<Sight> sights;
@@ -48,15 +49,15 @@ class PortraitMode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    placeInteractor.getPlaces(
-      PlacesFilterRequestDto(
-        lat: GeoPoint.getMyCoordinates()['lat'],
-        lng: GeoPoint.getMyCoordinates()['lon'],
-        radius: 10000.0,
-        typeFilter: typeFilters,
-        nameFilter: '',
-      ),
-    );
+    context.read<PlaceInteractor>().getPlaces(
+          PlacesFilterRequestDto(
+            lat: GeoPoint.getMyCoordinates()['lat'],
+            lng: GeoPoint.getMyCoordinates()['lon'],
+            radius: 10000.0,
+            typeFilter: typeFilters,
+            nameFilter: '',
+          ),
+        );
     return SafeArea(
       child: CustomScrollView(
         slivers: <Widget>[
@@ -84,7 +85,7 @@ class PortraitMode extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
                   return StreamBuilder<List<Place>>(
-                    stream: placeInteractor.placeStream,
+                    stream: context.read<PlaceInteractor>().placeStream,
                     builder: (BuildContext context, snapshot) {
                       if (snapshot.hasData) {
                         final placesList = snapshot.data;
@@ -101,10 +102,8 @@ class PortraitMode extends StatelessWidget {
                               id: snapshot.data[index].id,
                             ),
                           );
-                      } else if (snapshot.hasError) {
-                        return ErrorScreen();
-                      } else
-                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) return ErrorScreen();
+                      return const SizedBox.shrink();
                     },
                   );
                 },
@@ -150,7 +149,7 @@ class LandscapeMode extends StatelessWidget {
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
                     return StreamBuilder<List<Place>>(
-                      stream: placeInteractor.placeStream,
+                      stream: context.read<PlaceInteractor>().placeStream,
                       builder: (BuildContext context, snapshot) {
                         if (snapshot.hasData) {
                           final placesList = snapshot.data;
