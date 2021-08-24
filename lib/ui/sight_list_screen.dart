@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mobx/mobx.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/data/model/places_filter_request_dto.dart';
@@ -7,12 +9,12 @@ import 'package:places/domain/categories.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
+import 'package:places/store/place_list_store.dart';
 import 'package:places/ui/screen/addSightScree.dart';
 import 'package:places/ui/screen/error_screen.dart';
 import 'package:places/ui/screen/filtersScreen.dart';
 import 'package:places/ui/screen/sightSearchScreen.dart';
 import 'package:places/ui/screen/sight_card.dart';
-import 'package:places/mocks.dart';
 import 'package:provider/provider.dart';
 
 class SightListScreen extends StatefulWidget {
@@ -49,15 +51,16 @@ class PortraitMode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<PlaceInteractor>().getPlaces(
-          PlacesFilterRequestDto(
-            lat: GeoPoint.getMyCoordinates()['lat'],
-            lng: GeoPoint.getMyCoordinates()['lon'],
-            radius: 10000.0,
-            typeFilter: typeFilters,
-            nameFilter: '',
-          ),
-        );
+    PlaceListStore _store = PlaceListStore(context.read<PlaceInteractor>());
+    _store.getFilteredPlace(
+      filter: PlacesFilterRequestDto(
+        lat: GeoPoint.getMyCoordinates()['lat'],
+        lng: GeoPoint.getMyCoordinates()['lon'],
+        radius: 10000.0,
+        typeFilter: typeFilters,
+        nameFilter: '',
+      ),
+    );
     return SafeArea(
       child: CustomScrollView(
         slivers: <Widget>[
@@ -81,33 +84,44 @@ class PortraitMode extends StatelessWidget {
           ),
           SliverPadding(
             padding: EdgeInsets.symmetric(vertical: 34, horizontal: 16),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return StreamBuilder<List<Place>>(
-                    stream: context.read<PlaceInteractor>().placeStream,
-                    builder: (BuildContext context, snapshot) {
-                      if (snapshot.hasData) {
-                        final placesList = snapshot.data;
-                        if (placesList.isEmpty) {
-                          return const SizedBox.shrink();
-                        } else
-                          return SightCard(
+            sliver: SliverToBoxAdapter(
+              child: Observer(
+                builder: (BuildContext context) {
+                  final future = _store.listPlacesFuture;
+                  if (future == null) {
+                    return const CircularProgressIndicator();
+                  }
+                  if (future.status == FutureStatus.pending) {
+                    return const CircularProgressIndicator();
+                  }
+
+                  if (future.status == FutureStatus.rejected) {
+                    return ErrorScreen();
+                  }
+
+                  if (future.status == FutureStatus.fulfilled) {
+                    return ListView.builder(
+                      itemCount: future.result.length,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: SightCard(
                             place: Place(
-                              name: snapshot.data[index].name,
-                              lat: snapshot.data[index].lat,
-                              lng: snapshot.data[index].lng,
-                              urls: snapshot.data[index].urls,
-                              description: snapshot.data[index].description,
-                              id: snapshot.data[index].id,
+                              name: future.result[index].name,
+                              lat: future.result[index].lat,
+                              lng: future.result[index].lng,
+                              urls: future.result[index].urls,
+                              description: future.result[index].description,
+                              id: future.result[index].id,
                             ),
-                          );
-                      } else if (snapshot.hasError) return ErrorScreen();
-                      return const SizedBox.shrink();
-                    },
-                  );
+                          ),
+                        );
+                      },
+                    );
+                  }
+                  return const SizedBox.shrink();
                 },
-                childCount: mocks.length,
               ),
             ),
           ),
@@ -118,10 +132,21 @@ class PortraitMode extends StatelessWidget {
 }
 
 class LandscapeMode extends StatelessWidget {
-  const LandscapeMode({Key key, this.placeInteractor}) : super(key: key);
-  final PlaceInteractor placeInteractor;
+  const LandscapeMode({
+    Key key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    PlaceListStore _store = PlaceListStore(context.read<PlaceInteractor>());
+    _store.getFilteredPlace(
+      filter: PlacesFilterRequestDto(
+        lat: GeoPoint.getMyCoordinates()['lat'],
+        lng: GeoPoint.getMyCoordinates()['lon'],
+        radius: 10000.0,
+        typeFilter: typeFilters,
+        nameFilter: '',
+      ),
+    );
     return SafeArea(
       child: CustomScrollView(
         slivers: <Widget>[
@@ -144,43 +169,55 @@ class LandscapeMode extends StatelessWidget {
             ),
           ),
           SliverPadding(
-              padding: EdgeInsets.symmetric(vertical: 34, horizontal: 16),
-              sliver: SliverGrid(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return StreamBuilder<List<Place>>(
-                      stream: context.read<PlaceInteractor>().placeStream,
-                      builder: (BuildContext context, snapshot) {
-                        if (snapshot.hasData) {
-                          final placesList = snapshot.data;
-                          if (placesList.isEmpty) {
-                            return const SizedBox.shrink();
-                          } else
-                            return SightCard(
-                              place: Place(
-                                name: snapshot.data[index].name,
-                                lat: snapshot.data[index].lat,
-                                lng: snapshot.data[index].lng,
-                                urls: snapshot.data[index].urls,
-                                description: snapshot.data[index].description,
-                                id: snapshot.data[index].id,
+            padding: EdgeInsets.symmetric(vertical: 34, horizontal: 16),
+            sliver: SliverToBoxAdapter(
+              child: Observer(
+                builder: (BuildContext context) {
+                  final future = _store.listPlacesFuture;
+                  if (future == null) {
+                    return SliverToBoxAdapter(
+                        child: const CircularProgressIndicator());
+                  }
+                  if (future.status == FutureStatus.pending) {
+                    return SliverToBoxAdapter(
+                        child: const CircularProgressIndicator());
+                  }
+
+                  if (future.status == FutureStatus.rejected) {
+                    return ErrorScreen();
+                  }
+                  if (future.status == FutureStatus.fulfilled) {
+                    return SliverGrid(
+                      delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        return Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: SightCard(
+                                place: Place(
+                                  name: future.result[index].name,
+                                  lat: future.result[index].lat,
+                                  lng: future.result[index].lng,
+                                  urls: future.result[index].urls,
+                                  description: future.result[index].description,
+                                  id: future.result[index].id,
+                                ),
                               ),
-                            );
-                        } else if (snapshot.hasError) {
-                          return ErrorScreen();
-                        } else
-                          return const CircularProgressIndicator();
-                      },
+                            ));
+                      }),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 36,
+                        childAspectRatio: 1.5,
+                      ),
                     );
-                  },
-                  childCount: null,
-                ),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 36,
-                  childAspectRatio: 1.5,
-                ),
-              )),
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -197,49 +234,54 @@ class SearchField extends StatefulWidget {
 class _SearchFieldState extends State<SearchField> {
   @override
   Widget build(BuildContext context) {
-    return Stack(alignment: Alignment.centerRight, children: [
-      Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: TextField(
-          readOnly: true,
-          onTap: () {
-            Navigator.pushNamed(context, SearchScreen.routeName);
-          },
-          textAlign: TextAlign.start,
-          style: Theme.of(context).textTheme.headline5,
-          decoration: InputDecoration(
-            prefixIcon: Icon(
-              Icons.search,
-              color: planIcon,
+    return Stack(
+      alignment: Alignment.centerRight,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).backgroundColor,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: TextField(
+            readOnly: true,
+            onTap: () {
+              Navigator.pushNamed(context, SearchScreen.routeName);
+            },
+            textAlign: TextAlign.start,
+            style: Theme.of(context).textTheme.headline5,
+            decoration: InputDecoration(
+              prefixIcon: Icon(
+                Icons.search,
+                color: planIcon,
+              ),
+              border: InputBorder.none,
+              hintText: hintText,
             ),
-            border: InputBorder.none,
-            hintText: hintText,
           ),
         ),
-      ),
-      IconButton(
-        icon: SvgPicture.asset(
-          filterIcon,
-          width: 20,
-          color: buttonColor,
+        IconButton(
+          icon: SvgPicture.asset(
+            filterIcon,
+            width: 20,
+            color: buttonColor,
+          ),
+          onPressed: () {
+            _getFilteredList(context);
+          },
         ),
-        onPressed: () {
-          _getFilteredList(context);
-        },
-      ),
-    ]);
+      ],
+    );
   }
 
   void _getFilteredList(BuildContext context) async {
     await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => FilterScreen(
-                  categories: [],
-                ))); //!
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => FilterScreen(
+          categories: [],
+        ),
+      ),
+    ); //!
   }
 }
 
