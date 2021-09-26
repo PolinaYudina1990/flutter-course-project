@@ -1,0 +1,674 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
+import 'package:places/mocks.dart';
+import 'package:places/res/Strings.dart';
+import 'package:places/res/colors.dart';
+import 'package:places/ui/screen/select_category_screen.dart';
+import 'package:provider/provider.dart';
+
+class AddNewSight extends StatefulWidget {
+  static const routeName = '/addSight';
+  const AddNewSight({Key key}) : super(key: key);
+
+  @override
+  _AddNewSightState createState() => _AddNewSightState();
+}
+
+class _AddNewSightState extends State<AddNewSight> {
+  final TextEditingController _controllerCategory = TextEditingController();
+  final TextEditingController _controllerTitle = TextEditingController();
+  final TextEditingController _controllerLatitude = TextEditingController();
+  final TextEditingController _controllerLongitude = TextEditingController();
+  final TextEditingController _controllerDetails = TextEditingController();
+  FocusNode categoryNode;
+  FocusNode name;
+  FocusNode latitude;
+  FocusNode longitude;
+  FocusNode description;
+
+  String selectedCat;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        SystemChannels.textInput.invokeMethod('TextInput.hide');
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          leadingWidth: 100,
+          centerTitle: true,
+          title: const Text(titleAddSight),
+          leading: TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              actionAppBar,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5
+                  .copyWith(color: planIcon),
+            ),
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const PhotoCreation(),
+                const SizedBox(height: 20),
+                _category(),
+                const SizedBox(height: 20),
+                _name(),
+                const SizedBox(height: 20),
+                _longLat(),
+                const SizedBox(height: 20),
+                Text(
+                  showOnMap,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5
+                      .copyWith(color: buttonColor),
+                ),
+                const SizedBox(height: 20),
+                _descr(),
+                _createNewSightButton(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _category() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          categoryTitle,
+          style: Theme.of(context).textTheme.bodyText2.copyWith(
+                fontWeight: FontWeight.normal,
+                color: planIcon,
+              ),
+        ),
+        const SizedBox(height: 20),
+        TextField(
+          onTap: () async {
+            _chooseSightCategory(context);
+          },
+          readOnly: true,
+          focusNode: categoryNode,
+          autofocus: true,
+          decoration: InputDecoration(
+            focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: buttonColor,
+                width: 2.0,
+              ),
+            ),
+            hintText: selectedCat != null ? selectedCat : 'Не выбрано',
+            hintStyle: Theme.of(context)
+                .textTheme
+                .headline5
+                .copyWith(fontWeight: FontWeight.normal, color: planIcon),
+            suffixIcon: const Icon(
+              Icons.keyboard_arrow_right,
+              color: primaryColor2,
+            ),
+          ),
+          textInputAction: TextInputAction.next,
+          onChanged: (text) {
+            categoryNode.unfocus();
+            FocusScope.of(context).requestFocus(name);
+          },
+          controller: _controllerCategory,
+        ),
+      ],
+    );
+  }
+
+  Widget _name() {
+    return Column(
+      children: [
+        Text(
+          nameTitle,
+          style: Theme.of(context).textTheme.bodyText2.copyWith(
+                fontWeight: FontWeight.normal,
+                color: planIcon,
+              ),
+        ),
+        const SizedBox(height: 20),
+        TextField(
+          focusNode: name,
+          cursorColor: primaryColor2,
+          cursorHeight: 24,
+          style: Theme.of(context)
+              .textTheme
+              .headline5
+              .copyWith(fontWeight: FontWeight.normal),
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(
+                color: buttonColor,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(
+                color: buttonColor,
+                width: 2.0,
+              ),
+            ),
+          ),
+          textInputAction: TextInputAction.next,
+          onSubmitted: (text) {
+            name.unfocus();
+            FocusScope.of(context).requestFocus(latitude);
+          },
+          controller: _controllerTitle,
+        ),
+      ],
+    );
+  }
+
+  Widget _longLat() {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Expanded(
+            flex: 1,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  point1Title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      .copyWith(fontWeight: FontWeight.normal, color: planIcon),
+                ),
+                const SizedBox(height: 20),
+                TextField(
+                  keyboardType: TextInputType.number,
+                  focusNode: latitude,
+                  cursorColor: primaryColor2,
+                  cursorHeight: 25,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5
+                      .copyWith(fontWeight: FontWeight.normal),
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: buttonColor,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: buttonColor,
+                        width: 2.0,
+                      ),
+                    ),
+                  ),
+                  textInputAction: TextInputAction.next,
+                  onSubmitted: (text) {
+                    latitude.unfocus();
+                    FocusScope.of(context).requestFocus(longitude);
+                  },
+                  controller: _controllerLatitude,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 20),
+          Expanded(
+            flex: 1,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  point2Title,
+                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        fontWeight: FontWeight.normal,
+                        color: planIcon,
+                      ),
+                ),
+                const SizedBox(height: 20),
+                TextField(
+                  keyboardType: TextInputType.number,
+                  focusNode: longitude,
+                  cursorColor: primaryColor2,
+                  cursorHeight: 25,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5
+                      .copyWith(fontWeight: FontWeight.normal),
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: buttonColor,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: buttonColor,
+                        width: 2.0,
+                      ),
+                    ),
+                  ),
+                  textInputAction: TextInputAction.next,
+                  onSubmitted: (text) {
+                    longitude.unfocus();
+                    FocusScope.of(context).requestFocus(description);
+                  },
+                  controller: _controllerLongitude,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _descr() {
+    return Column(
+      children: [
+        Text(
+          descriptionTitle,
+          style: Theme.of(context).textTheme.bodyText2.copyWith(
+                fontWeight: FontWeight.normal,
+                color: planIcon,
+              ),
+        ),
+        const SizedBox(height: 20),
+        TextField(
+          focusNode: description,
+          minLines: 4,
+          maxLines: null,
+          cursorColor: primaryColor2,
+          cursorHeight: 25,
+          style: Theme.of(context)
+              .textTheme
+              .headline5
+              .copyWith(fontWeight: FontWeight.normal),
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(
+                color: buttonColor,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(
+                color: buttonColor,
+                width: 2.0,
+              ),
+            ),
+          ),
+          textInputAction: TextInputAction.done,
+          onSubmitted: (value) => FocusManager.instance.primaryFocus.unfocus(),
+          controller: _controllerDetails,
+        ),
+      ],
+    );
+  }
+
+  void _chooseSightCategory(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => SelectCategoryScreen(),
+      ),
+    );
+    setState(() {
+      selectedCat = result;
+    });
+  }
+
+  bool _checkIfClear() {
+    return _controllerCategory != null &&
+        _controllerTitle.text.isNotEmpty &&
+        _controllerLatitude.text.isNotEmpty &&
+        _controllerLongitude.text.isNotEmpty &&
+        _controllerDetails.text.isNotEmpty;
+  }
+
+  Widget _createNewSightButton() {
+    return TextButton(
+      onPressed: _checkIfClear()
+          ? () {
+              final Place place = Place(
+                name: _controllerTitle.text,
+                urls: [],
+                description: _controllerDetails.text,
+                placeType: selectedCat.toString(),
+                lat: double.tryParse(_controllerLatitude.text),
+                lng: double.tryParse(_controllerLongitude.text),
+              );
+              context.read<PlaceInteractor>().addNewPlace(place);
+
+              Navigator.pop(context);
+            }
+          : null,
+      child: Container(
+        alignment: Alignment.center,
+        width: MediaQuery.of(context).size.width,
+        height: 40,
+        decoration: BoxDecoration(
+          color: _checkIfClear() ? buttonColor : planIcon,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+        child: const Text(
+          buttonSave,
+          style: TextStyle(
+            color: iconColor,
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PhotoCreation extends StatefulWidget {
+  const PhotoCreation({Key key}) : super(key: key);
+
+  @override
+  _PhotoCreationState createState() => _PhotoCreationState();
+}
+
+class _PhotoCreationState extends State<PhotoCreation> {
+  int photosCount = -1;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 96,
+      child: Row(
+        children: [
+          InkWell(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: buttonColor,
+                  width: 2,
+                ),
+              ),
+              height: 72,
+              width: 72,
+              child: const Icon(
+                Icons.add,
+                color: buttonColor,
+                size: 24,
+              ),
+            ),
+            onTap: () {
+              setState(
+                () {
+                  photosCount++;
+                  newSightPhotos.add(
+                    newSightsMocksPhotosList[photosCount],
+                  );
+                  showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return const DialogAddFoto();
+                    },
+                  );
+                },
+              );
+            },
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              physics: Platform.isAndroid
+                  ? const ClampingScrollPhysics()
+                  : const BouncingScrollPhysics(),
+              itemCount: newSightPhotos.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Row(
+                  children: [
+                    Dismissible(
+                      key: ValueKey(newSightPhotos[index]),
+                      direction: DismissDirection.up,
+                      onDismissed: (direction) {
+                        setState(() {
+                          newSightPhotos.removeAt(index);
+                          print(newSightPhotos);
+                        });
+                      },
+                      child: Stack(
+                        children: [
+                          SizedBox(
+                            height: 72,
+                            width: 72,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.network(
+                                newSightPhotos[index],
+                                height: double.infinity,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                                loadingBuilder:
+                                    (context, child, loadingProgress) {
+                                  if (loadingProgress == null) return child;
+
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value: loadingProgress
+                                                  .expectedTotalBytes !=
+                                              null
+                                          ? loadingProgress
+                                                  .cumulativeBytesLoaded /
+                                              loadingProgress.expectedTotalBytes
+                                          : null,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 6,
+                            right: 6,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  newSightPhotos.removeAt(index);
+                                });
+                              },
+                              child: Container(
+                                height: 20,
+                                width: 20,
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(12),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                    closeIcon,
+                                    color: primaryColor,
+                                    height: 20,
+                                    width: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DialogAddFoto extends StatelessWidget {
+  const DialogAddFoto({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              color: primaryColor,
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 17),
+            child: const ItemsDialog(),
+          ),
+          const SizedBox(height: 8),
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Container(
+              width: double.infinity,
+              height: 48,
+              decoration: const BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 17),
+              child: Center(
+                child: Text(
+                  actionAppBar.toUpperCase(),
+                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: greenYellow,
+                      ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ItemsDialog extends StatelessWidget {
+  const ItemsDialog({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 13.0),
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                iconDialogAddPhoto,
+                color: secondary2,
+                height: 22,
+                width: 22,
+              ),
+              const SizedBox(width: 13),
+              Text(
+                dialog1,
+                style: Theme.of(context).textTheme.headline5.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: secondary2,
+                    ),
+              ),
+            ],
+          ),
+        ),
+        Divider(
+          height: 0.8,
+          thickness: 1,
+          color: secondary2.withOpacity(0.56),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 13.0),
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                iconDialogAddPhoto2,
+                color: secondary2,
+                height: 22,
+                width: 22,
+              ),
+              const SizedBox(width: 13),
+              Text(
+                dialog2,
+                style: Theme.of(context).textTheme.headline5.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: secondary2,
+                    ),
+              ),
+            ],
+          ),
+        ),
+        Divider(
+          height: 0.8,
+          thickness: 1,
+          color: secondary2.withOpacity(0.56),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 13.0),
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                iconDialogAddPhoto3,
+                color: secondary2,
+                height: 22,
+                width: 22,
+              ),
+              const SizedBox(width: 13),
+              Text(
+                dialog3,
+                style: Theme.of(context).textTheme.headline5.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: secondary2,
+                    ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}

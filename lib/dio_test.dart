@@ -3,11 +3,12 @@ import 'package:places/data/repository/network_exception.dart';
 
 final dio = Dio(baseOptions);
 BaseOptions baseOptions = BaseOptions(
-    baseUrl: 'https://test-backend-flutter.surfstudio.ru/',
-    connectTimeout: 5000,
-    receiveTimeout: 5000,
-    sendTimeout: 5000,
-    responseType: ResponseType.json);
+  baseUrl: 'https://test-backend-flutter.surfstudio.ru/',
+  connectTimeout: 5000,
+  receiveTimeout: 5000,
+  sendTimeout: 5000,
+  responseType: ResponseType.json,
+);
 Future<dynamic> getDioPosts() async {
   initInterceptors();
   final postResponse = await dio.get('/users');
@@ -23,9 +24,10 @@ void initInterceptors() {
       onError: (error, handler) {
         print(
           NetworkException(
-              response: error.requestOptions.method,
-              message: error.error,
-              errorCode: error.response.statusCode.toString()),
+            response: error.requestOptions.method,
+            message: error.error,
+            errorCode: error.response.statusCode.toString(),
+          ),
         );
       },
       onRequest: (options, handler) {

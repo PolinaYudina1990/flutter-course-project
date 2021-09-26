@@ -10,16 +10,16 @@ import 'package:places/domain/sight.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 import 'package:places/store/place_list_store.dart';
-import 'package:places/ui/screen/addSightScree.dart';
+import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/error_screen.dart';
-import 'package:places/ui/screen/filtersScreen.dart';
-import 'package:places/ui/screen/sightSearchScreen.dart';
+import 'package:places/ui/screen/filters_screen.dart';
+import 'package:places/ui/screen/sight_search_screen.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:provider/provider.dart';
 
 class SightListScreen extends StatefulWidget {
-  final List<Sight> sights;
   static const routeName = '/sightList';
+  final List<Sight> sights;
 
   const SightListScreen({Key key, this.sights}) : super(key: key);
 
@@ -31,14 +31,14 @@ class _SightListScreenState extends State<SightListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: ButtonAdd(),
+      floatingActionButton: const ButtonAdd(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: OrientationBuilder(
         builder: (BuildContext context, Orientation orientation) {
           if (orientation == Orientation.portrait) {
-            return PortraitMode();
+            return const PortraitMode();
           } else {
-            return LandscapeMode();
+            return const LandscapeMode();
           }
         },
       ),
@@ -51,7 +51,8 @@ class PortraitMode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PlaceListStore _store = PlaceListStore(context.read<PlaceInteractor>());
+    final PlaceListStore _store =
+        PlaceListStore(context.read<PlaceInteractor>());
     _store.getFilteredPlace(
       filter: PlacesFilterRequestDto(
         lat: GeoPoint.getMyCoordinates()['lat'],
@@ -65,7 +66,7 @@ class PortraitMode extends StatelessWidget {
       child: CustomScrollView(
         slivers: <Widget>[
           SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             sliver: SliverPersistentHeader(
               pinned: true,
               floating: true,
@@ -73,17 +74,17 @@ class PortraitMode extends StatelessWidget {
             ),
           ),
           SliverPadding(
-            padding: EdgeInsets.only(left: 16, right: 16),
+            padding: const EdgeInsets.only(left: 16, right: 16),
             sliver: SliverList(
               delegate: SliverChildListDelegate(
                 [
-                  SearchField(),
+                  const SearchField(),
                 ],
               ),
             ),
           ),
           SliverPadding(
-            padding: EdgeInsets.symmetric(vertical: 34, horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 34, horizontal: 16),
             sliver: SliverToBoxAdapter(
               child: Observer(
                 builder: (BuildContext context) {
@@ -96,7 +97,7 @@ class PortraitMode extends StatelessWidget {
                   }
 
                   if (future.status == FutureStatus.rejected) {
-                    return ErrorScreen();
+                    return const ErrorScreen();
                   }
 
                   if (future.status == FutureStatus.fulfilled) {
@@ -137,7 +138,8 @@ class LandscapeMode extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    PlaceListStore _store = PlaceListStore(context.read<PlaceInteractor>());
+    final PlaceListStore _store =
+        PlaceListStore(context.read<PlaceInteractor>());
     _store.getFilteredPlace(
       filter: PlacesFilterRequestDto(
         lat: GeoPoint.getMyCoordinates()['lat'],
@@ -151,7 +153,7 @@ class LandscapeMode extends StatelessWidget {
       child: CustomScrollView(
         slivers: <Widget>[
           SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             sliver: SliverPersistentHeader(
               pinned: true,
               floating: true,
@@ -159,38 +161,40 @@ class LandscapeMode extends StatelessWidget {
             ),
           ),
           SliverPadding(
-            padding: EdgeInsets.only(left: 16, right: 16),
+            padding: const EdgeInsets.only(left: 16, right: 16),
             sliver: SliverList(
               delegate: SliverChildListDelegate(
                 [
-                  SearchField(),
+                  const SearchField(),
                 ],
               ),
             ),
           ),
           SliverPadding(
-            padding: EdgeInsets.symmetric(vertical: 34, horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 34, horizontal: 16),
             sliver: SliverToBoxAdapter(
               child: Observer(
                 builder: (BuildContext context) {
                   final future = _store.listPlacesFuture;
                   if (future == null) {
-                    return SliverToBoxAdapter(
-                        child: const CircularProgressIndicator());
+                    return const SliverToBoxAdapter(
+                      child: CircularProgressIndicator(),
+                    );
                   }
                   if (future.status == FutureStatus.pending) {
-                    return SliverToBoxAdapter(
-                        child: const CircularProgressIndicator());
+                    return const SliverToBoxAdapter(
+                      child: CircularProgressIndicator(),
+                    );
                   }
 
                   if (future.status == FutureStatus.rejected) {
-                    return ErrorScreen();
+                    return const ErrorScreen();
                   }
                   if (future.status == FutureStatus.fulfilled) {
                     return SliverGrid(
                       delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        return Padding(
+                        (BuildContext context, int index) {
+                          return Padding(
                             padding: const EdgeInsets.all(16),
                             child: SizedBox(
                               width: double.infinity,
@@ -204,9 +208,12 @@ class LandscapeMode extends StatelessWidget {
                                   id: future.result[index].id,
                                 ),
                               ),
-                            ));
-                      }),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            ),
+                          );
+                        },
+                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 36,
                         childAspectRatio: 1.5,
@@ -225,7 +232,7 @@ class LandscapeMode extends StatelessWidget {
 }
 
 class SearchField extends StatefulWidget {
-  SearchField({Key key}) : super(key: key);
+  const SearchField({Key key}) : super(key: key);
 
   @override
   _SearchFieldState createState() => _SearchFieldState();
@@ -247,9 +254,8 @@ class _SearchFieldState extends State<SearchField> {
             onTap: () {
               Navigator.pushNamed(context, SearchScreen.routeName);
             },
-            textAlign: TextAlign.start,
             style: Theme.of(context).textTheme.headline5,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               prefixIcon: Icon(
                 Icons.search,
                 color: planIcon,
@@ -277,7 +283,7 @@ class _SearchFieldState extends State<SearchField> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (BuildContext context) => FilterScreen(
+        builder: (BuildContext context) => const FilterScreen(
           categories: [],
         ),
       ),
@@ -286,7 +292,7 @@ class _SearchFieldState extends State<SearchField> {
 }
 
 class ButtonAdd extends StatefulWidget {
-  ButtonAdd({Key key}) : super(key: key);
+  const ButtonAdd({Key key}) : super(key: key);
 
   @override
   _ButtonAddState createState() => _ButtonAddState();
@@ -299,27 +305,31 @@ class _ButtonAddState extends State<ButtonAdd> {
       alignment: FractionalOffset.bottomCenter,
       child: UnconstrainedBox(
         child: Container(
-          padding: EdgeInsets.only(bottom: 20),
+          padding: const EdgeInsets.only(bottom: 20),
           child: ElevatedButton(
             onPressed: () {
               Navigator.pushNamed(context, AddNewSight.routeName);
             },
             style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.zero,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20))),
+              padding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
             child: Ink(
               decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [greenYellow, buttonColor]),
-                  borderRadius: BorderRadius.circular(20)),
+                gradient:
+                    const LinearGradient(colors: [greenYellow, buttonColor]),
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Icon(Icons.add),
                     SizedBox(width: 7),
-                    Text(addButtonName)
+                    Text(addButtonName),
                   ],
                 ),
               ),

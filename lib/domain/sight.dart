@@ -10,18 +10,19 @@ class Sight {
   final List<String> urlImages;
   bool wantToVisit;
   bool visited;
-  Sight(
-      {this.id,
-      this.name,
-      this.workHours,
-      this.coordinatePoint,
-      // this.url,
-      this.details,
-      this.type,
-      this.titleType,
-      this.urlImages,
-      this.wantToVisit,
-      this.visited});
+  Sight({
+    this.id,
+    this.name,
+    this.workHours,
+    this.coordinatePoint,
+    // this.url,
+    this.details,
+    this.type,
+    this.titleType,
+    this.urlImages,
+    this.wantToVisit,
+    this.visited,
+  });
 }
 
 class CoordinatePoint {

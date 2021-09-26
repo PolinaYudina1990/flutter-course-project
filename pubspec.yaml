@@ -13,8 +13,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-    
-
+  dart_code_metrics: ^4.1.0
+  equatable: ^2.0.3
+  flutter_bloc: ^7.3.0
   cupertino_icons: ^1.0.3
   flutter_svg: ^0.22.0
   provider: ^6.0.0
