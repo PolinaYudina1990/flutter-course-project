@@ -6,8 +6,8 @@ import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 
 class OnBoardingScreen extends StatefulWidget {
-  const OnBoardingScreen({Key key}) : super(key: key);
   static const routeName = '/onBoarding';
+  const OnBoardingScreen({Key key}) : super(key: key);
 
   @override
   _OnBoardingScreenState createState() => _OnBoardingScreenState();
@@ -22,22 +22,26 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          centerTitle: true,
-          actions: <Widget>[
-            selectedPage == 2
-                ? SizedBox.shrink()
-                : TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/home');
-                    },
-                    child: Text(onBoardButton,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline5
-                            .copyWith(color: buttonColor))),
-          ]),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        actions: <Widget>[
+          selectedPage == 2
+              ? const SizedBox.shrink()
+              : TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/home');
+                  },
+                  child: Text(
+                    onBoardButton,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline5
+                        .copyWith(color: buttonColor),
+                  ),
+                ),
+        ],
+      ),
       body: Stack(children: [
         Column(
           children: [
@@ -59,21 +63,24 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 120),
+              padding: const EdgeInsets.only(bottom: 120),
               child: SmoothPageIndicator(
                 controller: _pageController,
                 count: itemOnBoardList.length,
-                effect: ExpandingDotsEffect(
-                    dotWidth: 8.0,
-                    dotHeight: 8.0,
-                    expansionFactor: 3,
-                    dotColor: secondary2,
-                    activeDotColor: greenYellow),
+                effect: const ExpandingDotsEffect(
+                  dotWidth: 8.0,
+                  dotHeight: 8.0,
+                  expansionFactor: 3,
+                  dotColor: secondary2,
+                  activeDotColor: greenYellow,
+                ),
               ),
             ),
           ],
         ),
-        selectedPage == 2 ? OnBoardBottomButton() : SizedBox.shrink(),
+        selectedPage == 2
+            ? const OnBoardBottomButton()
+            : const SizedBox.shrink(),
       ]),
     );
   }
@@ -112,9 +119,11 @@ class OnBoardPage extends StatelessWidget {
           const SizedBox(
             height: 8,
           ),
-          Text(item.description,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.subtitle2),
+          Text(
+            item.description,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.subtitle2,
+          ),
         ],
       ),
     );
@@ -139,9 +148,12 @@ class OnBoardBottomButton extends StatelessWidget {
           style: TextButton.styleFrom(
             backgroundColor: buttonColor,
             shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12))),
+              borderRadius: BorderRadius.all(
+                Radius.circular(12),
+              ),
+            ),
           ),
-          child: Text(
+          child: const Text(
             onBoardButtonBottom,
             style: TextStyle(
               color: iconColor,
@@ -150,7 +162,10 @@ class OnBoardBottomButton extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            Navigator.pushReplacementNamed(context, '/home');
+            Navigator.pushReplacementNamed(
+              context,
+              '/home',
+            );
           },
         ),
       ),

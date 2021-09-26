@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:places/res/colors.dart';
 import 'package:places/res/text_styles.dart';
-import 'colors.dart';
 
 final lightTheme = ThemeData(
   brightness: Brightness.light,
@@ -8,16 +8,18 @@ final lightTheme = ThemeData(
   primaryColor: lmBackgroundColor,
   dividerColor: lmDividerColor,
   backgroundColor: lmboxDescription,
-  iconTheme: IconThemeData(color: lmIconColor),
+  iconTheme: const IconThemeData(color: lmIconColor),
   tabBarTheme: TabBarTheme(
     labelColor: lmBackgroundColor,
     unselectedLabelColor: lmTabBarUnselected,
     indicator: BoxDecoration(
-        borderRadius: BorderRadius.circular(30), color: lmTabBarSelected),
+      borderRadius: BorderRadius.circular(30),
+      color: lmTabBarSelected,
+    ),
   ),
   floatingActionButtonTheme:
-      FloatingActionButtonThemeData(backgroundColor: buttonColor),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      const FloatingActionButtonThemeData(backgroundColor: buttonColor),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     backgroundColor: lmBackgroundColor,
     selectedItemColor: primaryColor2,
     unselectedItemColor: primaryColor2,
@@ -32,7 +34,7 @@ final lightTheme = ThemeData(
     bodyText1: textReg15.copyWith(color: lmBody1Color),
     bodyText2: textReg14.copyWith(color: lmBody2Color),
   ),
-  sliderTheme: SliderThemeData(
+  sliderTheme: const SliderThemeData(
     activeTrackColor: buttonColor,
     inactiveTrackColor: planIcon,
     thumbColor: primaryColor,
@@ -40,7 +42,7 @@ final lightTheme = ThemeData(
     overlayShape: RoundSliderOverlayShape(overlayRadius: 10),
     trackHeight: 1,
   ),
-  bottomSheetTheme: BottomSheetThemeData(
+  bottomSheetTheme: const BottomSheetThemeData(
     backgroundColor: Colors.transparent,
   ),
 );
@@ -56,11 +58,13 @@ final darkTheme = ThemeData(
     labelColor: dmBackgroundColor,
     unselectedLabelColor: dmTabBarUnselected,
     indicator: BoxDecoration(
-        borderRadius: BorderRadius.circular(30), color: dmTabBarSelected),
+      borderRadius: BorderRadius.circular(30),
+      color: dmTabBarSelected,
+    ),
   ),
   floatingActionButtonTheme:
-      FloatingActionButtonThemeData(backgroundColor: buttonColor),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      const FloatingActionButtonThemeData(backgroundColor: buttonColor),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     backgroundColor: dmColorPrimary,
     selectedItemColor: primaryColor,
     unselectedItemColor: primaryColor,
@@ -75,7 +79,7 @@ final darkTheme = ThemeData(
     bodyText1: textReg15.copyWith(color: dmBody1Color),
     bodyText2: textReg14.copyWith(color: dmBody2Color),
   ),
-  sliderTheme: SliderThemeData(
+  sliderTheme: const SliderThemeData(
     activeTrackColor: buttonColor,
     inactiveTrackColor: planIcon,
     thumbColor: primaryColor,

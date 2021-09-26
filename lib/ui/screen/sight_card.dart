@@ -4,7 +4,8 @@ import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
-import 'sight_details.dart';
+import 'package:places/ui/screen/sight_details.dart';
+import 'package:provider/provider.dart';
 
 class SightCard extends StatelessWidget {
   final Place place;
@@ -33,7 +34,7 @@ class SightCard extends StatelessWidget {
                   return SafeArea(
                     minimum: const EdgeInsets.only(top: 50),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(16),
                         topRight: Radius.circular(16),
                       ),
@@ -50,7 +51,7 @@ class SightCard extends StatelessWidget {
                               child: Container(
                                 height: 40,
                                 width: 40,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(12)),
                                 ),
@@ -64,7 +65,7 @@ class SightCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -85,7 +86,7 @@ class SightCard extends StatelessWidget {
         right: 10,
         child: InkWell(
           onTap: () {
-            placeInteractor.addToFavorites(place);
+            Provider.of<PlaceInteractor>(context).addToFavorites(place);
           },
           child:
               // place.wantToVisit
@@ -106,8 +107,8 @@ class DescriptionBox extends StatelessWidget {
   final Place place;
 
   const DescriptionBox({
-    Key key,
     @required this.place,
+    Key key,
   }) : super(key: key);
 
   @override
@@ -116,8 +117,8 @@ class DescriptionBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
         borderRadius: const BorderRadius.only(
-          bottomLeft: const Radius.circular(15),
-          bottomRight: const Radius.circular(15),
+          bottomLeft: Radius.circular(15),
+          bottomRight: Radius.circular(15),
         ),
       ),
       padding: const EdgeInsets.all(16),
@@ -126,15 +127,15 @@ class DescriptionBox extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${place.name}',
+            place.name,
             maxLines: 1,
             style: Theme.of(context).textTheme.headline5,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Text(
-            '${place.description}',
+            place.description,
             maxLines: 2,
             style: Theme.of(context).textTheme.subtitle2,
           ),
@@ -145,14 +146,13 @@ class DescriptionBox extends StatelessWidget {
 }
 
 class ImageBox extends StatelessWidget {
+  static const double Height = 100;
   final Place place;
 
   const ImageBox({
-    Key key,
     @required this.place,
+    Key key,
   }) : super(key: key);
-
-  static const double Height = 100;
 
   @override
   Widget build(BuildContext context) {
@@ -161,8 +161,8 @@ class ImageBox extends StatelessWidget {
         Container(
           child: ClipRRect(
             borderRadius: const BorderRadius.only(
-              topLeft: const Radius.circular(15),
-              topRight: const Radius.circular(15),
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
             ),
             child: Image.network(
               place.urls[0],
@@ -184,20 +184,21 @@ class ImageBox extends StatelessWidget {
             ),
           ),
           height: Height,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.only(
-              topLeft: const Radius.circular(15),
-              topRight: const Radius.circular(15),
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
             ),
           ),
         ),
         Positioned(
-            top: 16,
-            left: 16,
-            child: Text(
-              '${place.placeType}',
-              style: Theme.of(context).textTheme.bodyText2,
-            )),
+          top: 16,
+          left: 16,
+          child: Text(
+            place.placeType,
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
+        ),
       ],
     );
   }

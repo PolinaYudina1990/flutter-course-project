@@ -14,7 +14,11 @@ class FilterType {
   String title;
   bool isSelected;
 
-  FilterType(this.icon, this.title, this.isSelected);
+  FilterType(
+    this.icon,
+    this.title,
+    this.isSelected,
+  );
 
   void select() {
     isSelected = !isSelected;
@@ -30,5 +34,5 @@ List<String> typeFilters = [
   'hotel',
   'restaurant',
   'cafe',
-  'other'
+  'other',
 ];

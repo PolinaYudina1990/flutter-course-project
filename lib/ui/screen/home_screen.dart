@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import '../sight_list_screen.dart';
-import 'settingsScreen.dart';
-import 'visitingScreen.dart';
+import 'package:places/ui/screen/settings_screen.dart';
+import 'package:places/ui/screen/visiting_screen.dart';
+import 'package:places/ui/sight_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home';
+  const HomeScreen({
+    Key key,
+  }) : super(key: key);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -24,14 +27,20 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    tabController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: TabBarView(
         controller: tabController,
         children: [
-          SightListScreen(),
-          Center(child: Text('Here will be map')),
-          FavoriteScreen(),
+          const SightListScreen(),
+          const Center(child: Text('Here will be map')),
+          const FavoriteScreen(),
           SettingsScreen(),
         ],
       ),
@@ -40,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen>
         showUnselectedLabels: false,
         currentIndex: tabController.index,
         onTap: (index) => tabController.animateTo(index),
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(
               Icons.library_books,
