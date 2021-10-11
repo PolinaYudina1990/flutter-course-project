@@ -5,32 +5,31 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/mocks.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
+import 'package:places/ui/screen/select_category_screen.dart';
 import 'package:provider/provider.dart';
-import '../../mocks.dart';
-import 'selectCategoryScreen.dart';
 
 class AddNewSight extends StatefulWidget {
-  AddNewSight({Key key}) : super(key: key);
   static const routeName = '/addSight';
+  const AddNewSight({Key key}) : super(key: key);
 
   @override
   _AddNewSightState createState() => _AddNewSightState();
 }
 
 class _AddNewSightState extends State<AddNewSight> {
+  final TextEditingController _controllerCategory = TextEditingController();
+  final TextEditingController _controllerTitle = TextEditingController();
+  final TextEditingController _controllerLatitude = TextEditingController();
+  final TextEditingController _controllerLongitude = TextEditingController();
+  final TextEditingController _controllerDetails = TextEditingController();
   FocusNode categoryNode;
   FocusNode name;
   FocusNode latitude;
   FocusNode longitude;
   FocusNode description;
-
-  TextEditingController _controllerCategory = TextEditingController();
-  TextEditingController _controllerTitle = TextEditingController();
-  TextEditingController _controllerLatitude = TextEditingController();
-  TextEditingController _controllerLongitude = TextEditingController();
-  TextEditingController _controllerDetails = TextEditingController();
 
   String selectedCat;
 
@@ -45,16 +44,19 @@ class _AddNewSightState extends State<AddNewSight> {
           elevation: 0,
           leadingWidth: 100,
           centerTitle: true,
-          title: Text(titleAddSight),
+          title: const Text(titleAddSight),
           leading: TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(actionAppBar,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5
-                      .copyWith(color: planIcon))),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              actionAppBar,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5
+                  .copyWith(color: planIcon),
+            ),
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -62,20 +64,22 @@ class _AddNewSightState extends State<AddNewSight> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PhotoCreation(),
-                SizedBox(height: 20),
+                const PhotoCreation(),
+                const SizedBox(height: 20),
                 _category(),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 _name(),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 _longLat(),
-                SizedBox(height: 20),
-                Text(showOnMap,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5
-                        .copyWith(color: buttonColor)),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
+                Text(
+                  showOnMap,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5
+                      .copyWith(color: buttonColor),
+                ),
+                const SizedBox(height: 20),
                 _descr(),
                 _createNewSightButton(),
               ],
@@ -90,12 +94,14 @@ class _AddNewSightState extends State<AddNewSight> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(categoryTitle,
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(fontWeight: FontWeight.normal, color: planIcon)),
-        SizedBox(height: 20),
+        Text(
+          categoryTitle,
+          style: Theme.of(context).textTheme.bodyText2.copyWith(
+                fontWeight: FontWeight.normal,
+                color: planIcon,
+              ),
+        ),
+        const SizedBox(height: 20),
         TextField(
           onTap: () async {
             _chooseSightCategory(context);
@@ -104,19 +110,22 @@ class _AddNewSightState extends State<AddNewSight> {
           focusNode: categoryNode,
           autofocus: true,
           decoration: InputDecoration(
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: buttonColor,
-                  width: 2.0,
-                ),
+            focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: buttonColor,
+                width: 2.0,
               ),
-              hintText: selectedCat != null ? selectedCat : 'Не выбрано',
-              hintStyle: Theme.of(context)
-                  .textTheme
-                  .headline5
-                  .copyWith(fontWeight: FontWeight.normal, color: planIcon),
-              suffixIcon:
-                  Icon(Icons.keyboard_arrow_right, color: primaryColor2)),
+            ),
+            hintText: selectedCat != null ? selectedCat : 'Не выбрано',
+            hintStyle: Theme.of(context)
+                .textTheme
+                .headline5
+                .copyWith(fontWeight: FontWeight.normal, color: planIcon),
+            suffixIcon: const Icon(
+              Icons.keyboard_arrow_right,
+              color: primaryColor2,
+            ),
+          ),
           textInputAction: TextInputAction.next,
           onChanged: (text) {
             categoryNode.unfocus();
@@ -131,12 +140,14 @@ class _AddNewSightState extends State<AddNewSight> {
   Widget _name() {
     return Column(
       children: [
-        Text(nameTitle,
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(fontWeight: FontWeight.normal, color: planIcon)),
-        SizedBox(height: 20),
+        Text(
+          nameTitle,
+          style: Theme.of(context).textTheme.bodyText2.copyWith(
+                fontWeight: FontWeight.normal,
+                color: planIcon,
+              ),
+        ),
+        const SizedBox(height: 20),
         TextField(
           focusNode: name,
           cursorColor: primaryColor2,
@@ -146,18 +157,16 @@ class _AddNewSightState extends State<AddNewSight> {
               .headline5
               .copyWith(fontWeight: FontWeight.normal),
           decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 0.0, horizontal: 8),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 8),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: buttonColor,
-                width: 1.0,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: buttonColor,
                 width: 2.0,
               ),
@@ -175,7 +184,7 @@ class _AddNewSightState extends State<AddNewSight> {
   }
 
   Widget _longLat() {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -185,10 +194,14 @@ class _AddNewSightState extends State<AddNewSight> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(point1Title,
-                    style: Theme.of(context).textTheme.bodyText2.copyWith(
-                        fontWeight: FontWeight.normal, color: planIcon)),
-                SizedBox(height: 20),
+                Text(
+                  point1Title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      .copyWith(fontWeight: FontWeight.normal, color: planIcon),
+                ),
+                const SizedBox(height: 20),
                 TextField(
                   keyboardType: TextInputType.number,
                   focusNode: latitude,
@@ -199,18 +212,16 @@ class _AddNewSightState extends State<AddNewSight> {
                       .headline5
                       .copyWith(fontWeight: FontWeight.normal),
                   decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 0.0, horizontal: 8),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: buttonColor,
-                        width: 1.0,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: buttonColor,
                         width: 2.0,
                       ),
@@ -226,16 +237,20 @@ class _AddNewSightState extends State<AddNewSight> {
               ],
             ),
           ),
-          SizedBox(width: 20),
+          const SizedBox(width: 20),
           Expanded(
             flex: 1,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(point2Title,
-                    style: Theme.of(context).textTheme.bodyText2.copyWith(
-                        fontWeight: FontWeight.normal, color: planIcon)),
-                SizedBox(height: 20),
+                Text(
+                  point2Title,
+                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        fontWeight: FontWeight.normal,
+                        color: planIcon,
+                      ),
+                ),
+                const SizedBox(height: 20),
                 TextField(
                   keyboardType: TextInputType.number,
                   focusNode: longitude,
@@ -246,18 +261,16 @@ class _AddNewSightState extends State<AddNewSight> {
                       .headline5
                       .copyWith(fontWeight: FontWeight.normal),
                   decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 0.0, horizontal: 8),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: buttonColor,
-                        width: 1.0,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: buttonColor,
                         width: 2.0,
                       ),
@@ -272,7 +285,7 @@ class _AddNewSightState extends State<AddNewSight> {
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -281,12 +294,14 @@ class _AddNewSightState extends State<AddNewSight> {
   Widget _descr() {
     return Column(
       children: [
-        Text(descriptionTitle,
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(fontWeight: FontWeight.normal, color: planIcon)),
-        SizedBox(height: 20),
+        Text(
+          descriptionTitle,
+          style: Theme.of(context).textTheme.bodyText2.copyWith(
+                fontWeight: FontWeight.normal,
+                color: planIcon,
+              ),
+        ),
+        const SizedBox(height: 20),
         TextField(
           focusNode: description,
           minLines: 4,
@@ -298,18 +313,16 @@ class _AddNewSightState extends State<AddNewSight> {
               .headline5
               .copyWith(fontWeight: FontWeight.normal),
           decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 0.0, horizontal: 8),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 8),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: buttonColor,
-                width: 1.0,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: buttonColor,
                 width: 2.0,
               ),
@@ -325,9 +338,11 @@ class _AddNewSightState extends State<AddNewSight> {
 
   void _chooseSightCategory(BuildContext context) async {
     final result = await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => SelectCategoryScreen()));
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => SelectCategoryScreen(),
+      ),
+    );
     setState(() {
       selectedCat = result;
     });
@@ -345,7 +360,7 @@ class _AddNewSightState extends State<AddNewSight> {
     return TextButton(
       onPressed: _checkIfClear()
           ? () {
-              Place place = Place(
+              final Place place = Place(
                 name: _controllerTitle.text,
                 urls: [],
                 description: _controllerDetails.text,
@@ -363,9 +378,12 @@ class _AddNewSightState extends State<AddNewSight> {
         width: MediaQuery.of(context).size.width,
         height: 40,
         decoration: BoxDecoration(
-            color: _checkIfClear() ? buttonColor : planIcon,
-            borderRadius: BorderRadius.all(Radius.circular(10))),
-        child: Text(
+          color: _checkIfClear() ? buttonColor : planIcon,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+        child: const Text(
           buttonSave,
           style: TextStyle(
             color: iconColor,
@@ -379,7 +397,7 @@ class _AddNewSightState extends State<AddNewSight> {
 }
 
 class PhotoCreation extends StatefulWidget {
-  PhotoCreation({Key key}) : super(key: key);
+  const PhotoCreation({Key key}) : super(key: key);
 
   @override
   _PhotoCreationState createState() => _PhotoCreationState();
@@ -411,25 +429,30 @@ class _PhotoCreationState extends State<PhotoCreation> {
               ),
             ),
             onTap: () {
-              setState(() {
-                photosCount++;
-                newSightPhotos.add(newSightsMocksPhotosList[photosCount]);
-                showDialog(
+              setState(
+                () {
+                  photosCount++;
+                  newSightPhotos.add(
+                    newSightsMocksPhotosList[photosCount],
+                  );
+                  showDialog(
                     barrierDismissible: false,
                     context: context,
                     builder: (context) {
-                      return DialogAddFoto();
-                    });
-              });
+                      return const DialogAddFoto();
+                    },
+                  );
+                },
+              );
             },
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           Expanded(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               physics: Platform.isAndroid
-                  ? ClampingScrollPhysics()
-                  : BouncingScrollPhysics(),
+                  ? const ClampingScrollPhysics()
+                  : const BouncingScrollPhysics(),
               itemCount: newSightPhotos.length,
               itemBuilder: (BuildContext context, int index) {
                 return Row(
@@ -445,7 +468,7 @@ class _PhotoCreationState extends State<PhotoCreation> {
                       },
                       child: Stack(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 72,
                             width: 72,
                             child: ClipRRect(
@@ -486,9 +509,10 @@ class _PhotoCreationState extends State<PhotoCreation> {
                               child: Container(
                                 height: 20,
                                 width: 20,
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12)),
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(12),
+                                  ),
                                 ),
                                 child: Center(
                                   child: SvgPicture.asset(
@@ -500,11 +524,11 @@ class _PhotoCreationState extends State<PhotoCreation> {
                                 ),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                   ],
                 );
               },
@@ -527,35 +551,36 @@ class DialogAddFoto extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: primaryColor,
               borderRadius: BorderRadius.all(Radius.circular(12)),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 17),
-            child: Column(
-              children: [
-                ItemsDialog(),
-              ],
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 17),
+            child: const ItemsDialog(),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           GestureDetector(
             onTap: () {
               Navigator.pop(context);
             },
             child: Container(
-                width: double.infinity,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
+              width: double.infinity,
+              height: 48,
+              decoration: const BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 17),
+              child: Center(
+                child: Text(
+                  actionAppBar.toUpperCase(),
+                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: greenYellow,
+                      ),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 17),
-                child: Center(
-                  child: Text(actionAppBar.toUpperCase(),
-                      style: Theme.of(context).textTheme.bodyText2.copyWith(
-                          fontWeight: FontWeight.w700, color: greenYellow)),
-                )),
+              ),
+            ),
           ),
         ],
       ),
@@ -580,16 +605,22 @@ class ItemsDialog extends StatelessWidget {
                 height: 22,
                 width: 22,
               ),
-              SizedBox(width: 13),
-              Text(dialog1,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5
-                      .copyWith(fontWeight: FontWeight.w400, color: secondary2))
+              const SizedBox(width: 13),
+              Text(
+                dialog1,
+                style: Theme.of(context).textTheme.headline5.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: secondary2,
+                    ),
+              ),
             ],
           ),
         ),
-        Divider(height: 0.8, thickness: 1, color: secondary2.withOpacity(0.56)),
+        Divider(
+          height: 0.8,
+          thickness: 1,
+          color: secondary2.withOpacity(0.56),
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 13.0),
           child: Row(
@@ -600,16 +631,22 @@ class ItemsDialog extends StatelessWidget {
                 height: 22,
                 width: 22,
               ),
-              SizedBox(width: 13),
-              Text(dialog2,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5
-                      .copyWith(fontWeight: FontWeight.w400, color: secondary2))
+              const SizedBox(width: 13),
+              Text(
+                dialog2,
+                style: Theme.of(context).textTheme.headline5.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: secondary2,
+                    ),
+              ),
             ],
           ),
         ),
-        Divider(height: 0.8, thickness: 1, color: secondary2.withOpacity(0.56)),
+        Divider(
+          height: 0.8,
+          thickness: 1,
+          color: secondary2.withOpacity(0.56),
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 13.0),
           child: Row(
@@ -620,15 +657,17 @@ class ItemsDialog extends StatelessWidget {
                 height: 22,
                 width: 22,
               ),
-              SizedBox(width: 13),
-              Text(dialog3,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5
-                      .copyWith(fontWeight: FontWeight.w400, color: secondary2))
+              const SizedBox(width: 13),
+              Text(
+                dialog3,
+                style: Theme.of(context).textTheme.headline5.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: secondary2,
+                    ),
+              ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

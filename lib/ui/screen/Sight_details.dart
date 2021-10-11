@@ -13,10 +13,10 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class SightDetail extends StatefulWidget {
   final int sightId;
 
-  SightDetail({
-    Key key,
+  const SightDetail({
     @required this.sightId,
-  }) : super();
+    Key key,
+  }) : super(key: key);
 
   @override
   _SightDetailState createState() => _SightDetailState();
@@ -29,7 +29,7 @@ class _SightDetailState extends State<SightDetail> {
   void initState() {
     int currentPage = 0;
     Timer.periodic(
-      Duration(seconds: 3),
+      const Duration(seconds: 3),
       (timer) {
         currentPage++;
         if (currentPage > 3) {
@@ -37,7 +37,7 @@ class _SightDetailState extends State<SightDetail> {
         }
         _pageController.animateToPage(
           currentPage,
-          duration: Duration(milliseconds: 500),
+          duration: const Duration(milliseconds: 500),
           curve: Curves.linear,
         );
       },
@@ -48,7 +48,7 @@ class _SightDetailState extends State<SightDetail> {
   @override
   Widget build(BuildContext context) {
     // final int sightId = ModalRoute.of(context).settings.arguments as int;
-    var sight = mocks.firstWhere((sight) => sight.id == widget.sightId);
+    final sight = mocks.firstWhere((sight) => sight.id == widget.sightId);
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(slivers: [
@@ -72,75 +72,84 @@ class _SightDetailState extends State<SightDetail> {
                 Positioned(
                   bottom: 0,
                   child: SmoothPageIndicator(
-                      controller: _pageController,
-                      count: sight.urlImages.length,
-                      effect: WormEffect(
-                          dotColor: Colors.transparent,
-                          activeDotColor: primaryColor2,
-                          dotHeight: 10,
-                          dotWidth: (MediaQuery.of(context).size.width - 25) /
-                              sight.urlImages.length)),
+                    controller: _pageController,
+                    count: sight.urlImages.length,
+                    effect: WormEffect(
+                      dotColor: Colors.transparent,
+                      activeDotColor: primaryColor2,
+                      dotHeight: 10,
+                      dotWidth: (MediaQuery.of(context).size.width - 25) /
+                          sight.urlImages.length,
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
           SliverToBoxAdapter(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
-                  Text('${sight.name}',
-                      style: Theme.of(context).textTheme.headline2),
-                  SizedBox(
+                  Text(
+                    sight.name,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
                     children: [
-                      Text('${sight.titleType}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5
-                              .copyWith(fontWeight: FontWeight.bold)),
-                      SizedBox(
+                      Text(
+                        sight.titleType,
+                        style: Theme.of(context).textTheme.headline5.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      const SizedBox(
                         width: 30,
                       ),
-                      Text('${sight.workHours}',
-                          style: Theme.of(context).textTheme.subtitle2),
+                      Text(
+                        sight.workHours,
+                        style: Theme.of(context).textTheme.subtitle2,
+                      ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text('${sight.details}',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline5
-                          .copyWith(fontWeight: FontWeight.normal)),
-                  SizedBox(
+                  Text(
+                    sight.details,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline5
+                        .copyWith(fontWeight: FontWeight.normal),
+                  ),
+                  const SizedBox(
                     height: 30,
                   ),
-                  NavigationButton(),
-                  SizedBox(
+                  const NavigationButton(),
+                  const SizedBox(
                     height: 20,
                   ),
-                  Divider(color: primaryColor2),
-                  SizedBox(
+                  const Divider(color: primaryColor2),
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       PlanButton(),
                       SizedBox(
                         width: 30,
                       ),
                       FavoriteButton(),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
@@ -166,13 +175,14 @@ class AppBarBackButton extends StatelessWidget {
         ),
       ),
       child: Center(
-          child: IconButton(
-        onPressed: () {
-          print('button "back" pressed ');
-          Navigator.pop(context);
-        },
-        icon: Icon(Icons.keyboard_arrow_left),
-      )),
+        child: IconButton(
+          onPressed: () {
+            print('button "back" pressed ');
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.keyboard_arrow_left),
+        ),
+      ),
     );
   }
 }
@@ -186,14 +196,17 @@ class NavigationButton extends StatelessWidget {
       style: TextButton.styleFrom(
         backgroundColor: buttonColor,
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10))),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
       ),
       icon: SvgPicture.asset(
         navigation,
         width: 30,
         color: iconColor,
       ),
-      label: Text(
+      label: const Text(
         buildNavigation,
         style: TextStyle(
           color: iconColor,
@@ -216,16 +229,16 @@ class PlanButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<DateTime> _openDateTimeSlection() async {
-      if (Platform.isAndroid)
+      if (Platform.isAndroid) {
         return await showDatePicker(
           context: context,
           initialDate: DateTime.now(),
-          firstDate: DateTime.now().subtract(Duration(days: 30)),
-          lastDate: DateTime.now().add(Duration(days: 30)),
+          firstDate: DateTime.now().subtract(const Duration(days: 30)),
+          lastDate: DateTime.now().add(const Duration(days: 30)),
           builder: (BuildContext context, Widget child) {
             return Theme(
               data: ThemeData.light().copyWith(
-                colorScheme: ColorScheme.light(
+                colorScheme: const ColorScheme.light(
                   primary: buttonColor,
                   onPrimary: lmheadline2Color,
                   surface: buttonColor,
@@ -237,22 +250,23 @@ class PlanButton extends StatelessWidget {
             );
           },
         );
-      else if (Platform.isIOS)
+      } else if (Platform.isIOS) {
         return await showCupertinoModalPopup(
           context: context,
-          builder: (context) => Container(
+          builder: (context) => SizedBox(
             height: 300,
             child: CupertinoDatePicker(
               onDateTimeChanged: (DateTime value) {
                 print(value);
               },
               initialDateTime: DateTime.now(),
-              minimumDate: DateTime.now().subtract(Duration(days: 30)),
-              maximumDate: DateTime.now().add(Duration(days: 30)),
+              minimumDate: DateTime.now().subtract(const Duration(days: 30)),
+              maximumDate: DateTime.now().add(const Duration(days: 30)),
               backgroundColor: Theme.of(context).backgroundColor,
             ),
           ),
         );
+      }
     }
 
     return TextButton(
@@ -262,15 +276,17 @@ class PlanButton extends StatelessWidget {
       },
       child: Row(
         children: [
-          Icon(Icons.calendar_today, color: planIcon),
-          SizedBox(
+          const Icon(Icons.calendar_today, color: planIcon),
+          const SizedBox(
             width: 5,
           ),
-          Text(toPlan,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline5
-                  .copyWith(fontWeight: FontWeight.normal, color: planIcon))
+          Text(
+            toPlan,
+            style: Theme.of(context).textTheme.headline5.copyWith(
+                  fontWeight: FontWeight.normal,
+                  color: planIcon,
+                ),
+          ),
         ],
       ),
     );
@@ -295,7 +311,7 @@ class FavoriteButton extends StatelessWidget {
             width: 25,
             color: Theme.of(context).iconTheme.color,
           ),
-          SizedBox(
+          const SizedBox(
             width: 5,
           ),
           Text(
@@ -304,7 +320,7 @@ class FavoriteButton extends StatelessWidget {
                 .textTheme
                 .headline5
                 .copyWith(fontWeight: FontWeight.normal),
-          )
+          ),
         ],
       ),
     );
@@ -314,33 +330,35 @@ class FavoriteButton extends StatelessWidget {
 class PhotoGalery extends StatelessWidget {
   final Sight sight;
   final int pageNumber;
-  const PhotoGalery({this.sight, this.pageNumber});
+  const PhotoGalery({
+    this.sight,
+    this.pageNumber,
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          child: Image.network(
-            sight.urlImages[pageNumber],
-            height: double.infinity,
-            width: double.infinity,
-            fit: BoxFit.fill,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) return child;
+        Image.network(
+          sight.urlImages[pageNumber],
+          height: double.infinity,
+          width: double.infinity,
+          fit: BoxFit.fill,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
 
-              return Center(
-                child: CircularProgressIndicator(
-                  value: loadingProgress.expectedTotalBytes != null
-                      ? loadingProgress.cumulativeBytesLoaded /
-                          loadingProgress.expectedTotalBytes
-                      : null,
-                ),
-              );
-            },
-          ),
+            return Center(
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                        loadingProgress.expectedTotalBytes
+                    : null,
+              ),
+            );
+          },
         ),
-        Positioned(
+        const Positioned(
           top: 40,
           left: 15,
           child: AppBarBackButton(),

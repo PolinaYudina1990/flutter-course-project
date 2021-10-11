@@ -9,6 +9,7 @@ import 'package:places/data/model/place.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 import '../../mocks.dart';
+import 'package:provider/provider.dart';
 
 class FavoriteScreen extends StatefulWidget {
   FavoriteScreen({Key key}) : super(key: key);
@@ -86,7 +87,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     if (visSight.length > 0) {
       return SingleChildScrollView(
         child: FutureBuilder<List<Place>>(
-            future: placeInteractor.getVisitPlaces(),
+            future: context.read<PlaceInteractor>().getVisitPlaces(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
@@ -125,7 +126,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     if (visitedSight.length > 0) {
       return SingleChildScrollView(
         child: FutureBuilder<List<Place>>(
-            future: placeInteractor.getVisitPlaces(),
+            future: context.read<PlaceInteractor>().getVisitPlaces(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
