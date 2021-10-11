@@ -1,9 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
+import 'package:places/redux/actions/search_actions.dart';
+import 'package:places/redux/state/app_state.dart';
+import 'package:places/redux/state/search_state.dart';
 import 'package:places/res/Strings.dart';
 import 'package:places/res/colors.dart';
 import 'package:places/ui/screen/sight_details.dart';
@@ -96,13 +100,25 @@ class _SearchScreenState extends State<SearchScreen> {
                 const SizedBox(height: 30),
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 400),
-                  child: _queryText.text.isEmpty
-                      ? _historyValues()
-                      : _load
-                          ? const CircularProgressIndicator()
-                          : result.isEmpty
-                              ? _emptyScreen()
-                              : _searchResult(),
+                  child: StoreConnector<AppState, SearchState>(
+                    converter: (store) => store.state.searchState,
+                    builder: (context, state) {
+                      if (state is InitialSearchState) {
+                        return _historyValues();
+                      }
+
+                      if (state is ResultSearchState) {
+                        result.isEmpty ? _emptyScreen() : _searchResult();
+                        return _searchResult();
+                      }
+
+                      return Container(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
@@ -113,20 +129,8 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void _onChangedSearch(String value) async {
-    setState(() {
-      _load = true;
-    });
-    founded = mocks
-        .where(
-          (sight) => sight.name.toLowerCase().contains(value.toLowerCase()),
-        )
-        .toList();
-
-    await Future.delayed(const Duration(milliseconds: 500));
-    setState(() {
-      _load = false;
-      result = founded;
-    });
+    result = StoreProvider.of<AppState>(context)
+        .dispatch(QueryChangedSearchAction(_queryText.text));
   }
 
   Widget _searchResult() {
